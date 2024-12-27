@@ -1,49 +1,62 @@
-name: Encrypt Secret Data
+name: Encrypt with Repository Key
 on:
   repository_dispatch:
     types: [encrypt_secret]
 
 jobs:
-  encrypt:
+  encrypt-with-repo-key:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pynacl
 
-      - name: Encrypt Values
-        id: encrypt
+      - name: Encrypt Data
+        env:
+          PUBLIC_KEY: ${{ github.event.client_payload.public_key }}
         run: |
           python -c '
           import json
-          import sys
+          import os
           from base64 import b64decode, b64encode
           from nacl import encoding, public
           
           def encrypt(public_key: str, secret_value: str) -> str:
-              """Encrypt a string using the provided public key."""
+              """Encrypt a value using the repository public key"""
               public_key = public.PublicKey(b64decode(public_key), encoding.Base64Encoder)
               sealed_box = public.SealedBox(public_key)
               encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
               return b64encode(encrypted).decode("utf-8")
           
-          # Get the input data
-          data = """${{ toJSON(github.event.client_payload) }}"""
-          payload = json.loads(data)
+          # Get input data and public key
+          payload = """${{ toJSON(github.event.client_payload.data) }}"""
+          data = json.loads(payload)
+          repo_public_key = os.environ["PUBLIC_KEY"]
           
-          # Get the public key
-          public_key = payload["public_key"]
+          # Encrypt each field
+          encrypted_data = {}
+          for field, value in data.items():
+              if value:
+                  encrypted_data[field] = encrypt(repo_public_key, value)
           
-          # Encrypt single value if provided
-          if "value_to_encrypt" in payload:
-              result = encrypt(public_key, payload["value_to_encrypt"])
-              print(f"::set-output name=encrypted_value::{result}")
+          # Save results
+          with open("encrypted_values.json", "w") as f:
+              json.dump(encrypted_data, f, indent=2)
           
-          # Encrypt multiple fields if provided
-          if "data" in payload:
-              encrypted_data = {}
-              for key, value in payload["data"].items():
-                  encrypted_data[key] = encrypt(public_key, str(value))
-              print(f"::set-output name=encrypted_data::{json.dumps(encrypted_data)}")
+          print("Encryption completed with repository public key")
           '
+
+      - name: Upload encrypted data
+        uses: actions/upload-artifact@v3
+        with:
+          name: encrypted-values
+          path: encrypted_values.json
