@@ -16,27 +16,16 @@ jobs:
         run: |
           pip install pynacl
 
-      - name: Get public key
-        id: get_key
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Debug received public key
         run: |
-          RESPONSE=$(curl -s \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key)
-          echo "public_key=$(echo $RESPONSE | jq -r .key)" >> $GITHUB_OUTPUT
-          echo "key_id=$(echo $RESPONSE | jq -r .key_id)" >> $GITHUB_OUTPUT
-
-      - name: Debug public key
-        run: |
-          echo "Public key length (base64): $(echo "${{ steps.get_key.outputs.public_key }}" | wc -c)"
-          echo "Public key: ${{ steps.get_key.outputs.public_key }}"
+          echo "Received public key (base64): ${{ github.event.client_payload.key }}"
+          echo "Public key length (base64): $(echo '${{ github.event.client_payload.key }}' | wc -c)"
 
       - name: Encrypt secret
         id: encrypt
         env:
           SECRET_VALUE: ${{ github.event.client_payload.secret_value }}
+          PUBLIC_KEY: ${{ github.event.client_payload.key }}
         run: |
           python - <<EOF
           from base64 import b64encode, b64decode
@@ -72,7 +61,7 @@ jobs:
                   raise
 
           # Get the values from environment
-          public_key = "${{ steps.get_key.outputs.public_key }}"
+          public_key = "${{ env.PUBLIC_KEY }}"
           secret_value = os.environ['SECRET_VALUE']
 
           try:
@@ -93,4 +82,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $GH_TOKEN" \
             https://api.github.com/repos/${{ github.repository }}/actions/secrets/${{ github.event.client_payload.secret_name }} \
-            -d "{\"encrypted_value\":\"${{ steps.encrypt.outputs.encrypted_value }}\",\"key_id\":\"${{ steps.get_key.outputs.key_id }}\"}"
+            -d "{\"encrypted_value\":\"${{ steps.encrypt.outputs.encrypted_value }}\",\"key_id\":\"${{ github.event.client_payload.key_id }}\"}"
