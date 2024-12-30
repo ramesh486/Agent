@@ -1,62 +1,71 @@
-name: Encrypt with Repository Key
+name: Encrypt Secret from Power Automate
 on:
   repository_dispatch:
-    types: [encrypt_secret]
+    types: [encrypt-secret]
 
 jobs:
-  encrypt-with-repo-key:
+  encrypt-secret:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-
+          
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install pynacl
 
-      - name: Encrypt Data
+      - name: Get public key
+        id: get_key
         env:
-          PUBLIC_KEY: ${{ github.event.client_payload.public_key }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python -c '
-          import json
-          import os
-          from base64 import b64decode, b64encode
+          PUBLIC_KEY=$(curl -s \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key \
+            | jq -r .key)
+          KEY_ID=$(curl -s \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key \
+            | jq -r .key_id)
+          echo "public_key=$PUBLIC_KEY" >> $GITHUB_OUTPUT
+          echo "key_id=$KEY_ID" >> $GITHUB_OUTPUT
+
+      - name: Encrypt secret
+        id: encrypt
+        env:
+          SECRET_VALUE: ${{ github.event.client_payload.secret_value }}
+        run: |
+          python - <<EOF
+          from base64 import b64encode, b64decode
           from nacl import encoding, public
-          
+          import sys, json, os
+
           def encrypt(public_key: str, secret_value: str) -> str:
-              """Encrypt a value using the repository public key"""
-              public_key = public.PublicKey(b64decode(public_key), encoding.Base64Encoder)
-              sealed_box = public.SealedBox(public_key)
+              """Encrypt a secret using libsodium"""
+              public_key = b64decode(public_key)
+              sealed_box = public.SealedBox(public.PublicKey(public_key))
               encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
               return b64encode(encrypted).decode("utf-8")
-          
-          # Get input data and public key
-          payload = """${{ toJSON(github.event.client_payload.data) }}"""
-          data = json.loads(payload)
-          repo_public_key = os.environ["PUBLIC_KEY"]
-          
-          # Encrypt each field
-          encrypted_data = {}
-          for field, value in data.items():
-              if value:
-                  encrypted_data[field] = encrypt(repo_public_key, value)
-          
-          # Save results
-          with open("encrypted_values.json", "w") as f:
-              json.dump(encrypted_data, f, indent=2)
-          
-          print("Encryption completed with repository public key")
-          '
 
-      - name: Upload encrypted data
-        uses: actions/upload-artifact@v3
-        with:
-          name: encrypted-values
-          path: encrypted_values.json
+          # Encrypt the secret
+          encrypted_value = encrypt(
+              "${{ steps.get_key.outputs.public_key }}", 
+              os.environ['SECRET_VALUE']
+          )
+          
+          print(f"::set-output name=encrypted_value::{encrypted_value}")
+          EOF
+
+      - name: Create or update secret
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -X PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/actions/secrets/${{ github.event.client_payload.secret_name }} \
+            -d "{\"encrypted_value\":\"${{ steps.encrypt.outputs.encrypted_value }}\",\"key_id\":\"${{ steps.get_key.outputs.key_id }}\"}"
