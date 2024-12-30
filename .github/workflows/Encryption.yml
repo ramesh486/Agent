@@ -3,6 +3,10 @@ on:
   repository_dispatch:
     types: [encrypt-secret]
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   encrypt-secret:
     runs-on: ubuntu-latest
