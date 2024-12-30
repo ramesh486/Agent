@@ -79,11 +79,9 @@ jobs:
 
       - name: Create or update secret
         if: success()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl -X PUT \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/actions/secrets/${{ github.event.client_payload.secret_name }} \
+            -H "Authorization: Bearer ${{ github.event.client_payload.token }}" \
+            https://api.github.com/repos/rameh486/Agent/actions/secrets/${{ github.event.client_payload.secret_name }} \
             -d "{\"encrypted_value\":\"${{ steps.encrypt.outputs.encrypted_value }}\",\"key_id\":\"${{ github.event.client_payload.key_id }}\"}"
