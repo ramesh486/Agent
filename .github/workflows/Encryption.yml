@@ -21,18 +21,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PUBLIC_KEY=$(curl -s \
+          RESPONSE=$(curl -s \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $GH_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key \
-            | jq -r .key)
-          KEY_ID=$(curl -s \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key \
-            | jq -r .key_id)
-          echo "public_key=$PUBLIC_KEY" >> $GITHUB_OUTPUT
-          echo "key_id=$KEY_ID" >> $GITHUB_OUTPUT
+            https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key)
+          echo "public_key=$(echo $RESPONSE | jq -r .key)" >> $GITHUB_OUTPUT
+          echo "key_id=$(echo $RESPONSE | jq -r .key_id)" >> $GITHUB_OUTPUT
 
       - name: Encrypt secret
         id: encrypt
@@ -46,17 +40,28 @@ jobs:
 
           def encrypt(public_key: str, secret_value: str) -> str:
               """Encrypt a secret using libsodium"""
-              public_key = b64decode(public_key)
-              sealed_box = public.SealedBox(public.PublicKey(public_key))
-              encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
-              return b64encode(encrypted).decode("utf-8")
+              try:
+                  # Decode the public key from base64
+                  public_key_bytes = b64decode(public_key.encode('utf-8'))
+                  
+                  # Create a sealed box with the public key
+                  box = public.SealedBox(public.PublicKey(public_key_bytes))
+                  
+                  # Encrypt the secret value
+                  encrypted = box.encrypt(secret_value.encode('utf-8'))
+                  
+                  # Return base64 encoded encrypted value
+                  return b64encode(encrypted).decode('utf-8')
+              except Exception as e:
+                  print(f"Error during encryption: {str(e)}")
+                  sys.exit(1)
 
-          # Encrypt the secret
-          encrypted_value = encrypt(
-              "${{ steps.get_key.outputs.public_key }}", 
-              os.environ['SECRET_VALUE']
-          )
-          
+          # Get the values from environment
+          public_key = "${{ steps.get_key.outputs.public_key }}"
+          secret_value = os.environ['SECRET_VALUE']
+
+          # Encrypt and print the result
+          encrypted_value = encrypt(public_key, secret_value)
           print(f"::set-output name=encrypted_value::{encrypted_value}")
           EOF
 
