@@ -83,5 +83,5 @@ jobs:
           curl -X PUT \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ github.event.client_payload.token }}" \
-            https://api.github.com/repos/rameh486/Agent/actions/secrets/${{ github.event.client_payload.secret_name }} \
+            https://api.github.com/repos/ramesh486/Agent/actions/secrets/${{ github.event.client_payload.secret_name }} \
             -d "{\"encrypted_value\":\"${{ steps.encrypt.outputs.encrypted_value }}\",\"key_id\":\"${{ github.event.client_payload.key_id }}\"}"
