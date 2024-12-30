@@ -25,13 +25,6 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $GH_TOKEN" \
             https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key)
-            echo "API Response: $RESPONSE"
-            PUBLIC_KEY=$(echo $RESPONSE | jq -r .key)
-            KEY_ID=$(echo $RESPONSE | jq -r .key_id)
-            if [ "$PUBLIC_KEY" == "null" ] || [ -z "$PUBLIC_KEY" ]; then
-            echo "Failed to fetch the public key. Please check repository and token permissions."
-            exit 1
-            fi
           echo "public_key=$(echo $RESPONSE | jq -r .key)" >> $GITHUB_OUTPUT
           echo "key_id=$(echo $RESPONSE | jq -r .key_id)" >> $GITHUB_OUTPUT
 
