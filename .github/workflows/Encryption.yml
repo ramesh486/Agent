@@ -28,6 +28,11 @@ jobs:
           echo "public_key=$(echo $RESPONSE | jq -r .key)" >> $GITHUB_OUTPUT
           echo "key_id=$(echo $RESPONSE | jq -r .key_id)" >> $GITHUB_OUTPUT
 
+      - name: Debug public key
+        run: |
+          echo "Public key length (base64): $(echo "${{ steps.get_key.outputs.public_key }}" | wc -c)"
+          echo "Public key: ${{ steps.get_key.outputs.public_key }}"
+
       - name: Encrypt secret
         id: encrypt
         env:
@@ -41,11 +46,20 @@ jobs:
           def encrypt(public_key: str, secret_value: str) -> str:
               """Encrypt a secret using libsodium"""
               try:
-                  # Decode the public key from base64
-                  public_key_bytes = b64decode(public_key.encode('utf-8'))
+                  # Remove any whitespace from the public key
+                  public_key = public_key.strip()
                   
-                  # Create a sealed box with the public key
-                  box = public.SealedBox(public.PublicKey(public_key_bytes))
+                  # Decode the public key from base64
+                  public_key_bytes = b64decode(public_key)
+                  
+                  # Print debug information
+                  print(f"Decoded public key length: {len(public_key_bytes)} bytes")
+                  
+                  # Create public key object
+                  public_key_obj = public.PublicKey(public_key_bytes)
+                  
+                  # Create sealed box
+                  box = public.SealedBox(public_key_obj)
                   
                   # Encrypt the secret value
                   encrypted = box.encrypt(secret_value.encode('utf-8'))
@@ -54,18 +68,24 @@ jobs:
                   return b64encode(encrypted).decode('utf-8')
               except Exception as e:
                   print(f"Error during encryption: {str(e)}")
-                  sys.exit(1)
+                  print(f"Public key (base64): {public_key}")
+                  raise
 
           # Get the values from environment
           public_key = "${{ steps.get_key.outputs.public_key }}"
           secret_value = os.environ['SECRET_VALUE']
 
-          # Encrypt and print the result
-          encrypted_value = encrypt(public_key, secret_value)
-          print(f"::set-output name=encrypted_value::{encrypted_value}")
+          try:
+              # Encrypt and print the result
+              encrypted_value = encrypt(public_key, secret_value)
+              print(f"::set-output name=encrypted_value::{encrypted_value}")
+          except Exception as e:
+              print(f"Failed to encrypt: {str(e)}")
+              sys.exit(1)
           EOF
 
       - name: Create or update secret
+        if: success()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
