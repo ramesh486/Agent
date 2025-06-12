@@ -1,0 +1,25 @@
+name: Call Protected Backend API
+
+on: [workflow_dispatch]
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get OAuth2 access token
+      id: get_token
+      run: |
+        response=$(curl -X POST \
+          http://129.213.42.115:8006/login/oauth/access_token \
+          -H "Content-Type: application/x-www-form-urlencoded" \
+          -d "client_id=${{ secrets.CLIENT_ID }}" \
+          -d "client_secret=${{ secrets.CLIENT_SECRET }}" \
+          -d "grant_type=client_credentials")
+        
+        access_token=$(echo $response | jq -r '.access_token')
+        echo "access_token=$access_token" >> $GITHUB_OUTPUT
+
+    - name: Call protected API
+      run: |
+        curl -X GET \
+          http://129.213.42.115:8006/get/oci-credentials \
+          -H "Authorization: Bearer ${{ steps.get_token.outputs.access_token }}" what this code will do
