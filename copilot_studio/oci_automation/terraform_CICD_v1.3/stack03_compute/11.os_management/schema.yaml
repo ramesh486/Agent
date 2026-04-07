@@ -1,0 +1,114 @@
+title: os management
+description: os management
+schemaVersion: 1.1.0
+version: "15062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${project_tag}
+
+
+  - title: "Select managed instance group Variables"
+    variables:
+      - ${managed_instance_group_display_name}
+      - ${managed_instance_group_description}
+      
+
+  - title: "Select osmanagement software source Variables"
+    variables:
+      - ${software_source_arch_type}
+      - ${software_source_display_name}
+
+variables:
+
+######################
+### Common Compartment
+###################### 
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+    
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+####################################
+### managed instance group Variables
+####################################
+
+  managed_instance_group_display_name:
+    description: "The display name for the managed instance group."
+    type: string
+    default: "TF-managed-instance-group"
+    title: "Instance Group Display Name"
+    required: true
+    visible: true
+
+  managed_instance_group_description:
+    description: "The description of the managed instance group."
+    type: string
+    default: "Description of the managed instance"
+    title: "Instance Group Description"
+    required: true
+    visible: true
+
+##############################
+### software source Variables
+##############################
+
+  software_source_arch_type:
+    description: "The architecture type of the software source."
+    type: string
+    default: "X86_64"
+    title: "Software Source Architecture Type"
+    required: true
+    visible: true
+
+  software_source_display_name:
+    description: "The display name for the software source."
+    type: string
+    default: "Example_software_source"
+    title: "Software Source Display Name"
+    required: true
+    visible: true
+
+
+      
+     

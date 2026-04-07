@@ -1,0 +1,94 @@
+title: Create  Volume group
+description: Volume group Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+ 
+ 
+  - title: "Volume group Configuration"
+    variables:
+      - ${volume_group_display_name}
+      - ${volume_ocids}
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${availability_domain}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${project_tag}            
+
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+variables:
+
+  compartment_name:
+    type: string
+    default: ""
+    title: "Target Compartment Name"
+    description: "Target Compartment Name"
+    visible: true
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: "true"
+    description: "Compartment ID in Subtree"
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+ 
+  availability_domain:
+    type: oci:identity:availabilitydomain:name
+    visible: true
+    title: Select the availability domain to deploy resources
+    description: Choose the availability domain to deploy the resources
+    dependsOn: 
+      compartmentId: ${compartment_ocid}   
+      
+
+########### Volume group #########################
+
+  volume_group_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "test_volume_group"
+    title: "Enter Volume group display name"
+
+  volume_ocid:
+    type: list(string)
+    visible: true
+    title: "volume_ocid"
+    description: Select the volume ocid
+    required: true
+    default: "ocid1.volume.oc1.iad.abuwcljsrbmc73sttcqep7hexydfnz3xfmu54nbfqn4w3vxvlol3tt3yloxq"
+    
+ 
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+

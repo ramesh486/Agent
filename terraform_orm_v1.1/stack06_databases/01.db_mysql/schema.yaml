@@ -1,0 +1,225 @@
+title: Create DB MYSQL
+description: DB MYSQL Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_ocid}
+      - ${compartment_id_in_subtree}
+      - ${tenancy_ocid}
+      - ${compartment_name}
+      - ${subnet_display_name}
+      - ${region}
+      - ${availability_domain}
+     
+
+############# DB MYSQL CONFIG ##########
+
+  - title: "DB MYSQL CONFIGURATION"
+    variables:
+      - ${admin_username}
+      - ${admin_password}
+      - ${shape_name}
+      - ${data_storage_size_in_gb}
+      - ${is_enabled}
+      - ${retention_in_days}
+      - ${description}
+      - ${display_name}
+      - ${fault_domain}
+      - ${hostname_label}
+      - ${ip_address}
+      - ${window_start_time_1}
+      - ${port}
+      - ${port_x}
+      - ${state}
+     
+    
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: "network"
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  subnet_display_name:
+    type: string
+    title: "Subnet Display Name"
+    default: "subnet_oci_vcn1"
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+  
+  region:
+    visible: true
+    title: Region
+    description: Region where the deployment will be created
+
+  availability_domain:
+    type: string
+    title: "Availability Domain"
+    default: "LCnL:AP-HYDERABAD-1-AD-1"
+    description: "Availability Domain in which the MySQL database system is deployed"
+    visible: true
+    required: true
+  #####################################
+  ## MYSQL CONFIG
+  #####################################
+  admin_username:
+    type: string
+    default: "admin"
+    title: "DB MYSQL Admin Username"
+    description: "Username for the admin account of the MySQL database"
+    required: true
+    visible: true
+
+  admin_password:
+    type: string
+    default: "Admin_1234"
+    title: "DB MYSQL Admin Password"
+    description: "Password for the admin account of the MySQL database"
+    required: true
+    visible: true
+  
+  shape_name:
+    type: string
+    default: "MySQL.VM.Standard.E3.1.8GB"
+    title: "DB MYSQL Shape Name"
+    description: "Shape name or configuration of the virtual machine that hosts the MySQL database"
+    required: true
+    visible: true
+
+  data_storage_size_in_gb:
+    type: number
+    default: 50
+    title: "DB Size"
+    description: "Size of the data storage in gigabytes for the MySQL database."
+    required: true
+    visible: true
+
+  is_enabled:
+    type: bool
+    default: true
+    title: "Do you want to enable backup"
+    description: "Boolean value indicating whether the feature is enabled or not"
+    required: true
+    visible: true
+
+  retention_in_days:
+    type: number
+    default: 10
+    title: "Backup retention in days"
+    description: "Retention period in days for backups and recovery of the MySQL database"
+    required: true
+    visible: true
+  
+  window_start_time:
+    type: string
+    default: "01:00-00:00"
+    title: "Backup Window Start Time"
+    description: "Specify the time you want to start the backup"
+    required: true
+    visible: true
+  
+  description:
+    type: string
+    default: "MySQL Database Service"
+    title: "MySQL Database Service"
+    description: "MySQL Database Service"
+    required: true
+    visible: true
+
+  display_name:
+    type: string
+    default: "DBSystem001"
+    title: "Display name for the MySQL database system"
+    description: "Display name for the MySQL database system"
+    required: true
+    visible: true
+
+  fault_domain:
+    type: string
+    default: "FAULT-DOMAIN-1"
+    title: "Fault Domain"
+    description: "Fault domain where the MySQL database system is located"
+    required: true
+    visible: true
+  
+  hostname_label:
+    type: string
+    default: "hostnameLabel"
+    title: "Hostname Label"
+    description: "Hostname label for the MySQL database system"
+    required: true
+    visible: true
+
+  ip_address:
+    type: string
+    default: "10.0.1.10"
+    title: "IP Address"
+    description: "IP address assigned to the MySQL database system"
+    required: true
+    visible: true
+
+  window_start_time_1:
+    type: string
+    default: "sun 01:00"
+    title: "Window Start Time for Maintenance"
+    description: "Start time of the maintenance window for the MySQL database"
+    required: true
+    visible: true
+
+  port:
+    type: number
+    default: 3306
+    title: "Port"
+    description: "Port used for communication with the MySQL database"
+    required: true
+    visible: true
+
+  port_x:
+    type: number
+    default: 33306
+    title: "Alernative port"
+    description: "Alternative port used for communication with the MySQL database"
+    required: true
+    visible: true
+
+  state:
+    type: string
+    default: "ACTIVE"
+    title: "State of the MySQL database system"
+    description: "State of the MySQL database system"
+    required: true
+    visible: true  
+    

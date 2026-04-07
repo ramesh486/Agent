@@ -1,0 +1,1 @@
+# Web application firewall policies encompass the overall configuration of Web Application Firewall service, including access rules, rate limiting rules, and protection rules.

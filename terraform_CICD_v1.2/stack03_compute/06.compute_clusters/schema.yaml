@@ -1,0 +1,80 @@
+title: OCI Core Compute Cluster 
+description: OCI Core Compute Cluster 
+schemaVersion: 1.1.0
+version: "31052023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "common compartment"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${project_tag}
+      
+
+  - title: "compute cluster"
+    variables:
+      - ${availability_domain}
+      - ${compute_cluster_display_name}
+     
+
+variables: 
+### Common Compartment 
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+    
+  availability_domain:
+    type: string
+    required: true
+    visible: true
+    title: "Select Availability domain"   
+    default : "pMlX:US-ASHBURN-AD-1"
+
+  compute_cluster_display_name:
+    type: string
+    required: true
+    visible: true
+    title: "Enter Compute cluster display name"   
+    default : "compute_cluster"
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+ 
+  
+  

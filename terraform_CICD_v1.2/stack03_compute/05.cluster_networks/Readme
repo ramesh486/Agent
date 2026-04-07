@@ -1,0 +1,11 @@
+# Prerequisites:
+# Create an instance configuration for the instance pool that is managed by the cluster network. 
+# Use the following settings:
+# Image: Click Change image, and then click Oracle images. Select the Oracle Linux HPC cluster networking image.
+# Shape: Click Change shape. Select Bare metal machine. Then, select a shape that supports cluster networks.
+# Supported Shapes:
+1. 	BM.HPC2.36
+2. 	BM.GPU.A100-v2.8
+3. 	BM.GPU4.8
+4. 	BM.Optimized3.36
+# Typically, to be able to create the multiple HPC, GPU, or opti

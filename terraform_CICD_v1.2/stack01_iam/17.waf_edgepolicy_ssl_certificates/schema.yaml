@@ -1,0 +1,58 @@
+title: Create SSL Certificate
+description: SSL Certificate Terraform Input Variables
+schemaVersion: 1.1.0
+version: "05102022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+    
+  - title: "SSL Certificates Variables Configuration"
+    variables:
+      - ${certificate_display_name}
+      - ${certificate_certificate_data}
+      - ${certificate_private_key_data}
+      - ${certificate_is_trust_verification_disabled}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+  
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+

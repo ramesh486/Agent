@@ -1,0 +1,50 @@
+title: os management
+description: os management
+schemaVersion: 1.1.0
+version: "15062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+
+  - title: "Select Instance Variables"
+    variables:
+      - ${instance_display_name}
+      - ${shape}
+      - ${vnic_display_name}
+      - ${assign_public_ip}
+      - ${hostname_label}
+      - ${instance_image_ocid}
+      - ${source_type}
+      - ${ssh_public_key}
+      - ${create}
+
+
+  - title: "Select Instance Variables"
+    variables:  
+      - ${vcn_cidr_block}
+      - ${vcn_display_name}
+      - ${vcn_dns_label}
+      - ${igw_display_name}
+      - ${rt_display_name}
+      - ${route_rules_destination}
+      - ${route_rules_destination_type}
+      - ${subnet_cidr_block}
+      - ${subnet_display_name}
+      - ${subnet_dns_label}
+
+  - title: "Select managed instance group Variables"
+    variables:
+      - ${managed_instance_group_display_name}
+      - ${arch_type}
+      - ${software_source_display_name}
+      - ${checksum_type}
+      - ${description}

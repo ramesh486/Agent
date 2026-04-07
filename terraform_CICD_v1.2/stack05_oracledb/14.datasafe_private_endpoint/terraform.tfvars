@@ -1,0 +1,5 @@
+tenancy_ocid         = "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+region               = "us-ashburn-1"
+compartment_ocid     = "ocid1.compartment.oc1..aaaaaaaal2d2fu4rzryonr46ithqynjtgwvwzmw5vikxjmdrcewdxv2qwqka"
+subnet_ocid          = "ocid1.subnet.oc1.iad.aaaaaaaatpjlt5bafstvzgl3fv2dhlcoe6hgr7lnqykdobd5sjejoqu3xfxq"
+vcn_ocid             = "ocid1.vcn.oc1.iad.amaaaaaacw6e66aajmd2kimiruwgwmhtecm44icp7qmqq4wkpa7vo74cciia"

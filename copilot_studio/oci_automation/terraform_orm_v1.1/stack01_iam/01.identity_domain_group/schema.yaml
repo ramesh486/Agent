@@ -1,0 +1,70 @@
+title: Identity Domain Group Terraform Input Variables
+description:  Identity Domain Group Input Variables
+schemaVersion: 1.1.0
+version: "29052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Identity Domain Group Configuration"
+    variables:
+      - ${domain_group_display_name}
+      - ${iam_group_schema}
+      - ${identity_domain_idcs_endpoint}      
+
+
+  - title: "Target Region"
+    variables:
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+#####################################
+
+  # Integration Instance Configuration
+
+#####################################
+
+  domain_group_display_name:
+    type: string
+    required: true
+    title: Identity Domain Group Display Name
+    visible: true
+  
+  identity_domain_idcs_endpoint:
+    type: string
+    required: true
+    title: Identity Domain IDCS Endpoint
+    visible: true
+    description: Go to OCI console, Navigate to IAM Service, Select the identity domain, Collect the DOMAIN URL with Port
+
+  iam_group_schema:
+    type: string
+    required: true
+    title: Identity Group Schema
+    visible: true
+    default: "urn:ietf:params:scim:schemas:core:2.0:Group"
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+

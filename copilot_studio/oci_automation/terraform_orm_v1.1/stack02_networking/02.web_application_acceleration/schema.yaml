@@ -1,0 +1,88 @@
+title: Web Application Accelaration
+description: web application accelaration
+schemaVersion: 1.1.0
+version: "29062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+      - ${web_app_acceleration_policy_display_name}
+      - ${is_response_header_based_caching_enabled}
+      - ${gzip_compression_is_enabled}
+      - ${web_app_acceleration_display_name}
+      - ${backend_type}
+      - ${load_balancer_ocid}
+
+variables:
+
+####################################
+#  Common Compartment
+####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Security Compartment for centrally manage the encryption keys
+    description: Vault protects your data and the secret credentials that you use to securely access resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: This is Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: This is Region
+  
+  web_app_acceleration_policy_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "WAAPolicy1"
+    title: "Display name of WAA policy name"
+  
+  is_response_header_based_caching_enabled:
+    type: bool
+    required: true
+    visible: true
+    default: true
+    title: "Is response header based caching enabled"  
+    description: "Enable caching at the reverse proxy"
+  
+  gzip_compression_is_enabled:
+    type: bool
+    required: true
+    visible: true
+    default: true
+    title: "Is Gzip compression enabled"
+    description: "Enable GZIP compression of server responses before returning them to the client. Can only be selected if caching is enabled."
+  
+  web_app_acceleration_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "WAA1"
+    title: "Display name of Web App Acceleration"
+  
+  backend_type:
+    type: string
+    required: true
+    visible: true
+    default: "LOAD_BALANCER"
+    title: "Backend type"
+  
+  load_balancer_ocid:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "OCID of the load balancer"

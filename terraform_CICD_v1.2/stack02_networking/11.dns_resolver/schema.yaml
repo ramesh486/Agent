@@ -1,0 +1,144 @@
+title: DNS Resolver
+description: DNS Resolver Terraform Variables
+schemaVersion: 1.1.0
+version: "08052023"
+
+groupings:
+
+  - title: DNS Resolver Variables
+    variables:
+      - dns_resolver_display_name
+      - oci_dns_views
+
+  - title: DNS Forwarder Configuration
+    variables:
+
+      - dns_forwarder_resolver_endpoint_is_forwarding
+      - dns_forwarder_resolver_endpoint_is_listening
+      - dns_forwarder_resolver_endpoint_name
+      - dns_forwarder_subnet_display_name
+
+  - title: DNS Listener Configuration
+    variables:
+
+      - dns_listener_resolver_endpoint_is_forwarding
+      - dns_listener_resolver_endpoint_is_listening
+      - dns_listener_resolver_endpoint_name
+      - dns_listener_subnet_display_name
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - compartment_ocid
+      - tenancy_ocid
+      - region
+
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Target Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+
+#####################################
+
+# DNS Resolver Variables
+
+#####################################
+
+  dns_resolver_display_name:
+    type: string
+    description: Provide the display name of your VCN
+    visible: true
+    required: true
+    title: OCI DNS Resolver Display Name
+
+  oci_dns_views:
+    type: array
+    items:
+      type: string
+    description: Provide the list of VCN display names
+    visible: true
+    required: true
+    title: Provide List of OCI DNS Views 
+    default: []
+
+  dns_forwarder_resolver_endpoint_is_forwarding:
+    type: boolean
+    default: true
+    visible: false
+    required: true
+    title: DNS Forwarder resolver endpoint is forwarding ? 
+  
+  dns_forwarder_resolver_endpoint_is_listening:
+    type: boolean
+    default: true
+    visible: false
+    required: true
+    title: DNS Listener resolver endpoint is listening ? 
+
+  dns_forwarder_resolver_endpoint_name:
+    type: string
+    visible: true
+    required: true
+    title: DNS Forwarder Display Name
+
+
+  dns_forwarder_subnet_display_name:
+    type: string
+    visible: true
+    title: Subnet Display Name for Forwarder
+    required: true
+    default: ""
+
+  dns_listener_resolver_endpoint_is_forwarding:
+    type: boolean
+    default: true
+    visible: false
+    required: true
+    title: DNS Listener resolver endpoint is forwarding ? 
+  
+  dns_listener_resolver_endpoint_is_listening:
+    type: boolean
+    default: true
+    visible: false
+    required: true
+    title: DNS Listener resolver endpoint is listening ? 
+
+  dns_listener_resolver_endpoint_name:
+    type: string
+    visible: true
+    required: true
+    title: DNS Listener Display Name
+
+  dns_listener_subnet_display_name:
+    type: string
+    visible: true
+    title: Subnet Display Name for Listener
+    required: true
+    default: ""

@@ -1,0 +1,3 @@
+# Autoscaling let automatically adjust the number or the lifecycle state of compute instances in an instance pool. This helps provide consistent performance for your end users during periods of high demand, and helps reduce your costs during periods of low demand.
+# Schedule-based autoscaling: Autoscaling events take place at the specific times that you schedule.
+# Metric-based autoscaling: An autoscaling action is triggered when a performance metric meets or exceeds a threshold.

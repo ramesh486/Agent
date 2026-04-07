@@ -1,0 +1,11 @@
+Dedicated virtual machine hosts let user  run Oracle Cloud Infrastructure Compute virtual machine (VM) instances on dedicated servers that are a single tenant and not shared with other customers.
+#  Prerequisites:
+#  Shape:
+#  supported shape for dedicated vm host :
+#  DVH.Standard2.52
+#  DVH.Standard3.64
+#  DVH.Standard.E2.64
+#  DVH.Standard.E3.128
+#  DVH.Standard.E4.128
+#  DVH.DenseIO2.52
+#  DVH.Optimized3.36

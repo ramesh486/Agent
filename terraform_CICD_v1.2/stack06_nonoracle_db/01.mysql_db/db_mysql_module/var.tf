@@ -1,0 +1,27 @@
+variable "admin_password" {}
+variable "admin_username" {}
+variable "compartment_ocid" {}
+variable "shape_name" {}
+variable "data_storage_size_in_gb" {}
+variable "is_enabled" {}
+variable "retention_in_days" {}
+variable "window_start_time" {}
+variable "description" {}
+variable "display_name" {}
+variable "fault_domain" {}
+variable "hostname_label" {}
+variable "ip_address" {}
+variable "window_start_time_1" {}
+variable "port" {}
+variable "port_x" {}
+variable "state" {}
+variable "subnet_ocid" {}
+variable "availability_domain" {}
+variable "project_tag" { 
+  type = map
+  default = {
+    definedTags = {}
+    freeformTags = {}
+  }
+}
+

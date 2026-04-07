@@ -1,0 +1,1 @@
+# The WAF service allows to define and apply custom protection rules from open source firewall modules to WAF configurations, such as ModSecurity modules. This topic describes how to format, create, and implement custom protection rules in  WAF policies using the Console and WAAS API.

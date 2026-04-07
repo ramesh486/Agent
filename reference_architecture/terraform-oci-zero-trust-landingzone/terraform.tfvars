@@ -1,0 +1,16 @@
+activate_service_connector = false
+add_tt_vcn1 = true
+cis_level = "1"
+create_budget = false
+define_net = true
+enable_cloud_guard = false
+enable_security_zones = true
+enable_service_connector = false
+enable_zpr = false
+hub_deployment = 3
+network_admin_email_endpoints = ["vishalprasad8725@gmail.com"]
+region = "us-ashburn-1"
+security_admin_email_endpoints = ["vishalprasad8725@gmail.com"]
+service_label = "zeroLz"
+tt_vcn1_attach_to_drg = true
+vss_create = false

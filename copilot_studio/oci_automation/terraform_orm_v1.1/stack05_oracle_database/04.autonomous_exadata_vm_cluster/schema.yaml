@@ -1,0 +1,178 @@
+title: Autonomous Exadata VM Cluster Terraform Input Variables
+description:   Autonomous Exadata VM Cluster Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Autonomous Exadata VM Cluster Configuration"
+    variables:
+      - ${cloud_exadata_infrastructure_ocid}
+      - ${cloud_auto_vm_cluster_display_name}
+      - ${cloud_auto_vm_cluster_subnet_ocid}
+      - ${cloud_auto_vm_cluster_data_storage_size_in_tbs}
+      - ${cloud_auto_vm_cluster_cpu_core_count_per_node}
+      - ${cloud_auto_vm_cluster_is_mtls_enabled_vm_cluster}
+      - ${cloud_auto_vm_cluster_license_model}
+      - ${cloud_auto_vm_cluster_maintenance_window_days_of_week_name}
+      - ${cloud_auto_vm_cluster_maintenance_window_months_name}
+      - ${cloud_auto_vm_cluster_memory_per_oracle_compute_unit_in_gbs}
+      - ${cloud_auto_vm_cluster_total_container_databases}
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag} 
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#########################################
+
+# Autonomous Exadata VM Cluster Variables
+
+#########################################          
+
+  cloud_exadata_infrastructure_ocid:
+    type: string
+    required: true
+    title: Exadata Infrastructure OCID
+    visible: true
+    description: The OCID of the cloud Exadata infrastructure.
+    default: ""
+
+  cloud_auto_vm_cluster_display_name:
+    type: string
+    required: true
+    title: Exadata VM Cluster Name
+    visible: true
+    description: Name for the Exadata VM Cluster    
+    default: "TestAutonomousExadataVMCluster"
+
+  cloud_auto_vm_cluster_subnet_ocid:
+    type: string
+    required: true
+    title: Exadata VM Cluster Subnet OCID
+    visible: true
+    description: The OCID of the subnet the cloud Autonomous VM Cluster is associated with.
+    default: ""  
+
+  cloud_auto_vm_cluster_data_storage_size_in_tbs:
+    type: number
+    visible: true
+    title: Data Storage Size in tbs
+    description: The data disk group size to be allocated for Autonomous Databases, in TBs.
+    required: true
+    default: "2.0"    
+
+  cloud_auto_vm_cluster_cpu_core_count_per_node:
+    type: number
+    visible: true
+    title: Number of CPU Cores
+    description: The number of CPU cores to be enabled per VM cluster node.
+    required: true
+    default: 10 
+
+  cloud_auto_vm_cluster_is_mtls_enabled_vm_cluster:
+    type: boolean
+    visible: true
+    title: Is mtls Enabled VM Cluster
+    description:  Enable mutual TLS(mTLS) authentication for database at time of provisioning a VMCluster.
+    required: true
+    default: false
+
+  cloud_auto_vm_cluster_license_model:
+    type: string
+    visible:  true
+    title: Oracle License Model 
+    description: The Oracle license model that applies to the Oracle Autonomous Database
+    required: true
+    default: "LICENSE_INCLUDED"      
+
+  cloud_auto_vm_cluster_maintenance_window_days_of_week_name:
+    type: enum
+    visible: true
+    title: Day for Maintenance
+    description: Name of the day of the week for Maintenance.
+    required: true
+    default: "SATURDAY" 
+    enum:
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY       
+
+  cloud_auto_vm_cluster_maintenance_window_months_name:
+    type: enum
+    visible:  true
+    title: Month for Maintenance 
+    description: Name of the month for the Maintenance.
+    required: true 
+    default: "DECEMBER"
+    enum:
+      - JANUARY
+      - FEBRUARY
+      - MARCH
+      - APRIL
+      - MAY
+      - JUNE
+      - JULY
+      - AUGUST
+      - SEPTEMBER
+      - OCTOBER
+      - NOVEMBER
+      - DECEMBER       
+
+  cloud_auto_vm_cluster_memory_per_oracle_compute_unit_in_gbs:
+    type: number
+    visible: true
+    title: Memory in gbs
+    description:  The amount of memory (in GBs) to be enabled per OCPU or ECPU
+    required: true
+    default: 12
+
+  cloud_auto_vm_cluster_total_container_databases:
+    type: string
+    visible:  true
+    title: Number of Container Databases 
+    description: The total number of Autonomous Container Databases that can be created.
+    required: true 
+    default: "2"    

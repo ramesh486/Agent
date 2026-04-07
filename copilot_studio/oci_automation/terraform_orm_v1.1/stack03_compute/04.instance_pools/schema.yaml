@@ -1,0 +1,387 @@
+title: OCI Instance Pool
+description: Oci Instance Pool
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+
+  - title: "instance Variables"
+    variables: 
+      - ${subnet_ocid}
+      - ${vm_display_name}
+      - ${are_all_plugins_disabled}
+      - ${is_management_disabled} 
+      - ${is_monitoring_disabled}
+      - ${desired_state1}
+      - ${name1}
+      - ${desired_state2} 
+      - ${name2}
+      - ${desired_state3}
+      - ${name3}
+      - ${desired_state4} 
+      - ${name4}
+      - ${desired_state5}
+      - ${name5}
+      - ${desired_state6} 
+      - ${name6}
+      - ${desired_state7}
+      - ${name7}
+      - ${assign_public_ip}
+      - ${vnic_hostname}
+      - ${fault_domain}
+      - ${boot_volume_type}
+      - ${firmware}
+      - ${network_type}
+      - ${remote_data_volume_type}
+      - ${ssh_authorized_keys}
+      - ${instance_shape} 
+      - ${memory_in_gbs}
+      - ${ocpus}
+      - ${source_image_ocid}
+      - ${source_type}   
+
+  - title: "instance configuration Variables"
+    variables: 
+      - ${instance_configuration_display_name}
+      - ${instance_type}
+  - title: "instance pool Variables"
+    variables: 
+      - ${instance_pool_size}
+      - ${instance_pool_state}
+      - ${instance_pool_display_name}
+
+variables:
+
+####################################
+#  Common Compartment
+####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Security Compartment for centrally manage the encryption keys
+    description: Vault protects your data and the secret credentials that you use to securely access resources
+
+  tenancy_ocid:
+    visible: true
+    title: tenancy ocid
+    description: tenancy ocid
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+####################################
+#  Instance Variables
+####################################
+  subnet_ocid:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: subnet_ocid
+    description: Enter Subnet OCID
+
+  vm_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "test_instance"
+    title: "vm display name"
+    description: "vm display name"
+
+  are_all_plugins_disabled:
+    type: bool
+    required: true
+    visible: true
+    default: false
+    title: "Are all plugins disabled?" 
+    description: "Are all plugins disabled?"
+
+  is_management_disabled:
+    type: bool
+    required: true
+    visible: true
+    default: false
+    title: "Is management disabled?" 
+    description: "Is management disabled?" 
+
+
+  is_monitoring_disabled:
+    type: bool
+    required: true
+    visible: true
+    default: false
+    title: "Is monitoring disabled?" 
+    description: "Is monitoring disabled?" 
+
+  desired_state1:
+    type: string
+    required: true
+    visible: true
+    default: "DISABLED"
+    title: "Desired State1" 
+    description: "Desired State1"
+
+  name1:
+    type: string
+    required: true
+    visible: true
+    default: "Vulnerability Scanning"
+    title: "Name of Desired State1" 
+    description: "Name of Desired State1"
+
+  desired_state2:
+    type: string
+    required: true
+    visible: true
+    default: "ENABLED"
+    title: "Desired State2" 
+    description: "Desired State2"
+
+  name2:
+    type: string
+    required: true
+    visible: true
+    default: "OS Management Service Agent"
+    title: "Name of Desired State2" 
+    description: "Name of Desired State2"
+  
+  desired_state3:
+    type: string
+    required: true
+    visible: true
+    default: "DISABLED"
+    title: "Desired State3" 
+    description: "Desired State3"
+
+  name3:
+    type: string
+    required: true
+    visible: true
+    default: "Management Agent"
+    title: "Name of Desired State3" 
+    description: "Name of Desired State3"
+  
+  desired_state4:
+    type: string
+    required: true
+    visible: true
+    default: "ENABLED"
+    title: "Desired State4" 
+    description: "Desired State4"
+
+  name4:
+    type: string
+    required: true
+    visible: true
+    default: "Custom Logs Monitoring"
+    title: "Name of Desired State4" 
+    description: "Name of Desired State4"
+  
+  desired_state5:
+    type: string
+    required: true
+    visible: true
+    default: "ENABLED"
+    title: "Desired State5" 
+    description: "Desired State5"
+
+  name5:
+    type: string
+    required: true
+    visible: true
+    default: "Compute Instance Run Command"
+    title: "Name of Desired State5" 
+    description: "Name of Desired State5"
+  
+  desired_state6:
+    type: string
+    required: true
+    visible: true
+    default: "ENABLED"
+    title: "Desired State6" 
+    description: "Desired State6"
+
+  name6:
+    type: string
+    required: true
+    visible: true
+    default: "Compute Instance Monitoring"
+    title: "Name of Desired State6" 
+    description: "Name of Desired State6"
+  
+  desired_state7:
+    type: string
+    required: true
+    visible: true
+    default: "DISABLED"
+    title: "Desired State7" 
+    description: "Desired State7"
+
+  name7:
+    type: string
+    required: true
+    visible: true
+    default: "Block Volume Management"
+    title: "Name of Desired State7" 
+    description: "Name of Desired State7"
+
+
+
+  assign_public_ip:
+    type: bool
+    required: true
+    visible: true
+    default: "false"
+    title: "assign public ip"
+    description: "assign public ip"
+  
+  
+  vnic_hostname:
+    type: string
+    required: true
+    visible: true
+    default: "oicagent"
+    title: "vnic Hostname"
+    description: "vnic Hostname"
+
+  fault_domain:
+    type: string
+    required: true
+    visible: true
+    default: "FAULT-DOMAIN-1"
+    title: "fault domain"
+    description: "fault domain"
+  
+  boot_volume_type:
+    type: string
+    required: true
+    visible: true
+    default: "PARAVIRTUALIZED"
+    title: "boot volume type"
+    description: "boot volume type"
+  
+  firmware:
+    type: string
+    required: true
+    visible: true
+    default: "UEFI_64"
+    title: "firmware"
+    description: "firmware"
+  
+  network_type:
+    type: string
+    required: true
+    visible: true
+    default: "PARAVIRTUALIZED"
+    title: "network type"
+    description: "network type"
+  
+  remote_data_volume_type:
+    type: string
+    required: true
+    visible: true
+    default: "PARAVIRTUALIZED"
+    title: "remote data volume type"
+    description: "remote data volume type"
+
+  ### SSH Public Key ###  
+
+  ssh_authorized_keys:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "ssh authorized key"
+    description: "ssh authorized key"
+  
+  instance_shape:
+    type: string
+    required: true
+    visible: true
+    default: "VM.Standard.E3.Flex"
+    title: "instance shape"
+    description: "instance shape."
+
+  ocpus:
+    type: string
+    required: true
+    visible: true
+    default: "1"
+    title: "OCPU count for VM"
+    description: "OCPU count for VM"
+  
+  source_image_ocid:
+    type: string
+    required: true
+    visible: true
+    default: "ocid1.image.oc1.iad.aaaaaaaahomjycgg77iewnat3pysjvnp4ukpjtpyamacwetgdoptwst3n23a"
+    title: "source image ocid"
+    description: "source image ocid" 
+
+  source_type:
+    type: string
+    required: true
+    visible: true
+    default: "image"
+    title: "source image type"
+    description: "source image type" 
+
+  
+####################################
+#  instance configuration Variables
+####################################
+  instance_configuration_display_name:
+    type: string
+    required: false
+    visible: true
+    default: "TestInstanceConfiguration"
+    title: "instance configuration display name"
+    description: "instance configuration display name"
+  
+  instance_type:
+    type: string
+    required: true
+    visible: true
+    default: "compute"
+    title: "instance type"
+    description: "instance type"
+
+####################################
+#  instance pool Variables
+####################################
+  instance_pool_size:
+    type: number
+    required: true
+    visible: true
+    default: "2"
+    title: "instance pool size"
+    description: "instance pool size"
+  
+  instance_pool_state:
+    type: string
+    required: true
+    visible: true
+    default: "RUNNING"
+    title: "instance pool state"
+    description: "instance pool state"
+
+  instance_pool_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "TestInstancePool"
+    title: "instance pool display name"
+    description: "instance pool display name"
+

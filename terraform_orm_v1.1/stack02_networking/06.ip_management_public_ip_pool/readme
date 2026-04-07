@@ -1,0 +1,10 @@
+# A public IP pool is simply a set of IPv4 CIDR blocks allocated to a tenancy. 
+# These CIDR blocks can be all or part of a BYOIP CIDR block. Public IP CIDR blocks
+# assigned to a pool are only available for your tenancy. Public IP pools are 
+# available as a source for IP allocation when launching a NAT gateway, load balancer,
+# or compute instance. You can add more IP CIDR blocks to a public IP pool at any time.
+
+
+Prerequisites:
+
+- BYOIP addresses

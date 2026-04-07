@@ -1,0 +1,69 @@
+title:  Create log analytics entity
+description: Log analytics entity
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+
+  - title: "log_analytics_entity"
+    variables:
+      - ${log_analytics_entity_entity_type_name}
+      - ${log_analytics_entity_name}
+      - ${log_analytics_entity_hostname}
+
+variables:
+#####################################
+# Common Compartment
+#####################################  
+  
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+######################################
+# log_analytics_entity
+######################################
+
+  log_analytics_entity_entity_type_name:
+    type: string
+    default: "Host (Linux)"
+    title: "entity type name"
+    description: "type name"
+    required: true
+    visible: true
+
+  log_analytics_entity_name:
+    type: string
+    default: "Example_entity"
+    title: "log_analytics_entity_name"
+    description: "Entity name"
+    required: true
+    visible: true
+  
+  log_analytics_entity_hostname:
+    type: string
+    default: "aa.domainname.com"
+    title: "log_analytics_entity_hostname"
+    description: "Host name"
+    required: true
+    visible: true
+
+
+
+
+
+   

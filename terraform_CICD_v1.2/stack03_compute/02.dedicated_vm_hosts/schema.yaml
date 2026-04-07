@@ -1,0 +1,82 @@
+title: OCI Core Deticated VM 
+description: OCI Core Deticated VM 
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "common compartment"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${project_tag}
+  
+  - title: "dedicated vm host"
+    variables:
+      - ${dedicated_vm_host_shape}
+      - ${display_name}
+    
+
+variables:
+
+### Common Compartment 
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+    
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+ 
+
+#oci_deticated_vm_host
+
+  dedicated_vm_host_shape:
+    type: string
+    visible: true
+    required: true
+    title: dedicated vm host shape
+    default: "DVH.Standard2.52"
+    description: dedicated vm host shape
+  
+  display_name:
+    type: string
+    visible: true
+    required: true
+    title: display name
+    default: "TestDedicatedVmHost"
+    description: display name
+

@@ -1,0 +1,161 @@
+title: OCI Streaming Terraform Input Variables
+description:  OCI Streaming Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "OCI Streaming Variables"
+    variables:
+      - ${stream_pool_name}
+      - ${auto_create_topics_enable}
+      - ${stream_pool_log_retention_hours}
+      - ${stream_pool_num_of_partitions}
+      - ${stream_display_name}
+      - ${stream_retention_in_hours}
+      - ${stream_partitions}
+      - ${vcn_cidr_block}
+      - ${vcn_display_name}
+      - ${vcn_dns_label}
+      - ${subnet_cidr_block}
+
+
+  - title: "Common Variables"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+      - ${compartment_ocid}
+
+variables:
+
+#####################################
+
+# Common Variables
+
+#####################################
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    required: true
+    title: Select Compartment for Streaming
+    visible: true  
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#####################################
+
+  # OCI Streaming Configuration
+
+#####################################
+
+  stream_pool_name:
+    type: string
+    required: true
+    title: Stream Pool Display Name
+    visible: true
+    default: "test_stream_pool"
+
+  auto_create_topics_enable:
+    type: boolean
+    required: true
+    description: Enable auto creation of topic on the server.
+    visible: true
+    default: true
+
+  stream_pool_log_retention_hours:
+    visible: true
+    type: number
+    required: true
+    default: 24
+    title: Stream Pool Log Retention in Hours
+    description: Minimum is 24 Hours and Maximum is 168 Hours
+
+  stream_pool_num_of_partitions:
+    visible: true
+    type: number
+    required: true
+    default: 1
+    title: Stream Pool Number of Partitions
+    description: Minimum 1 is required
+
+  stream_display_name:
+    type: string
+    required: true
+    title: Name of stream
+    visible: true
+    default: "test_stream"
+    description: The name of the stream.
+
+  stream_retention_in_hours:
+    visible: true
+    type: number
+    required: true
+    default: 24
+    title: Stream Retention in hours ?
+    description: Retention in hours must be between 24 - 168. Default value is 24 hours
+
+  stream_partitions:
+    type: number
+    required: true
+    title: Number of Stream Partitions
+    visible: true
+    default: 1
+    description: Number of Stream Partitions
+
+# Network Configuration
+
+  vcn_cidr_block:
+    type: string
+    required: true
+    title: CIDR VCN
+    visible: true
+    default: "10.0.0.0/16"
+    description: CIDR block for the VCN
+
+  vcn_display_name:
+    type: string
+    required: true
+    title: Name of VCN
+    visible: true
+    default: "streamvcn"
+    description: Name for VCN
+
+  vcn_dns_label:
+    type: string
+    required: true
+    title: VCN DNS label
+    visible: true
+    default: "dnsvcn"
+    description: DNS label for for VCN
+
+  subnet_cidr_block:
+    type: string
+    required: true
+    title: CIDR Subnet
+    visible: true
+    default: "10.0.0.0/24"
+    description: CIDR for subnet        
+
+

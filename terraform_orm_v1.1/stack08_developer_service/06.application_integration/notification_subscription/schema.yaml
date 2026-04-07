@@ -1,0 +1,113 @@
+title: Notification and Subscription Terraform Input Variables
+description: Notification and Subscription Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+   
+
+ - title:  "Notification and Subscription Configuration"
+   variables:
+      - ${notification_topic_name}
+      - ${notification_topic_description} 
+      - ${subscription_name}
+      - ${subscription_endpoint}
+      - ${subscription_protocol}
+     
+
+ - title:  "Select Compartment"
+   variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region} 
+      - ${project_tag}
+      
+###############################################
+
+  # Notification & Subscription Configuration
+
+###############################################
+
+variables:
+
+  notification_topic_name:
+     type: string
+     required: true
+     visible: true
+     default: "topicname"
+     title: Notification topic name
+     description: Choose a name for notification topic
+   
+  notification_topic_description:
+     type: string
+     required: true
+     visible: true
+     default: "Notification_Topic"
+     title: Notification topic description
+     description: Choose notification topic description
+
+  subscription_name:
+     required: true
+     visible: true
+     default: "tenancy_subscription"
+     title: Subscription name
+     description: Choose subscription name
+
+  subscription_endpoint:
+     required: true
+     visible: true
+     default: ""
+     title: Subscription endpoint
+     description: Choose subscription endpoint
+
+  subscription_protocol:
+     type: enum
+     required: true
+     visible: true
+     default: "EMAIL"
+     title: Subscription protocol
+     description: Choose Subscription protocol
+     enum:
+          - "CUSTOM_HTTPS"
+          - "EMAIL"
+          - "HTTPS"
+          - "ORACLE_FUNCTIONS"
+          - "PAGERDUTY"
+          - "SLACK"
+          - "SMS"
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Compartment 
+    description: Choose Compartment where you want to create the solution resources
+  
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+  
+  region:
+    visible: true
+    title: Region
+    description: Choose the Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+ 

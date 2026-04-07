@@ -1,0 +1,175 @@
+title: DNS Resolver
+description: DNS Resolver Terraform Variables
+schemaVersion: 1.1.0
+version: "08052023"
+
+groupings:
+
+  - title: DNS Resolver Variables
+    variables:
+      - dns_resolver_ocid
+
+  - title: DNS Forwarder Configuration
+    variables:
+
+      - dns_forwarder_resolver_endpoint_is_forwarding
+      - dns_forwarder_resolver_endpoint_is_listening
+      - dns_forwarder_resolver_endpoint_name
+      - vcn_compartment_ocid
+      - vcn_ocid
+      - dns_forwarder_subnet_compartment_ocid
+      - dns_forwarder_subnet_ocid
+
+  - title: DNS Listener Configuration
+    variables:
+
+      - dns_listener_resolver_endpoint_is_forwarding
+      - dns_listener_resolver_endpoint_is_listening
+      - dns_listener_resolver_endpoint_name
+      - dns_listener_subnet_compartment_ocid
+      - dns_listener_subnet_ocid
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - compartment_ocid
+      - tenancy_ocid
+      - region
+
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Target Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+
+#####################################
+
+# DNS Resolver Variables
+
+#####################################
+
+  dns_resolver_ocid:
+    type: string
+    description: OCI DNS Resolver OCID
+    visible: true
+    required: true
+    title: OCI DNS Resolver OCID
+
+  dns_forwarder_resolver_endpoint_is_forwarding:
+    type: boolean
+    default: true
+    visible: false
+    required: true
+    title: DNS Forwarder resolver endpoint is forwarding ? 
+  
+  dns_forwarder_resolver_endpoint_is_listening:
+    type: boolean
+    default: true
+    visible: false
+    required: true
+    title: DNS Listener resolver endpoint is listening ? 
+
+  dns_forwarder_resolver_endpoint_name:
+    type: string
+    visible: true
+    required: true
+    title: DNS Forwarder Display Name
+
+
+  vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+    required: true
+
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: ${create_private_database}
+    title: Select the VCN
+    description: Choose the VCN
+    dependsOn: 
+      compartmentId: ${vcn_compartment_ocid}
+    required: true
+
+  dns_forwarder_subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Subnet Compartment
+    description: Choose the Compartment of Subnet
+    required: true
+
+  dns_forwarder_subnet_ocid:
+    type: oci:core:subnet:id
+    visible: true
+    title: Select the Subnet for Forwarder
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${dns_forwarder_subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+    required: true
+    default: ""
+
+  dns_listener_resolver_endpoint_is_forwarding:
+    type: boolean
+    default: true
+    visible: false
+    required: true
+    title: DNS Listener resolver endpoint is forwarding ? 
+  
+  dns_listener_resolver_endpoint_is_listening:
+    type: boolean
+    default: true
+    visible: false
+    required: true
+    title: DNS Listener resolver endpoint is listening ? 
+
+  dns_listener_resolver_endpoint_name:
+    type: string
+    visible: true
+    required: true
+    title: DNS Listener Display Name
+
+  dns_listener_subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Subnet Compartment
+    description: Choose the Compartment of Subnet
+    required: true
+
+  dns_listener_subnet_ocid:
+    type: oci:core:subnet:id
+    visible: true
+    title: Select the Subnet for Listener
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${dns_listener_subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+    required: true
+    default: ""

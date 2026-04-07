@@ -1,0 +1,48 @@
+title: Create Tag Namespace
+description: Tag Namespace Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "oci_identity_tag_namespace"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${tag_namespace_description}
+      - ${tag_namespace_name}
+      
+      
+variables:
+#####################################
+# OCI identity tag namespace
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "Choose the Compartment where to deploy the resources"
+
+  region:
+    visible: true
+    title: "Region"
+    description: "The region where the resources will be provisioned"
+
+  tag_namespace_description:
+    type: string
+    default: ""
+    title: "Tag Namespace Description"
+    description: "The description of the tag namespace"
+    required: true
+    visible: true
+
+  tag_namespace_name:
+    type: string
+    default: ""
+    title: "Tag Namespace Name"
+    description: "The name of the tag namespace"
+    required: true
+    visible: true

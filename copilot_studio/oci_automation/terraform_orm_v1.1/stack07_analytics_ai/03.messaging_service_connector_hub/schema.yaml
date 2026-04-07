@@ -1,0 +1,164 @@
+title: OCI Service Connector Hub Terraform Input Variables
+description:  OCI Service Connector Hub Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "OCI Service Connector"
+    variables:
+      - ${service_connector_compartment_ocid}
+      - ${service_connector_display_name}
+      - ${service_connector_description}
+      - ${service_connector_policy_display_name}
+      - ${service_connector_policy_description}
+
+  - title: "OCI Service Connector Source Configuration"
+    variables:
+      - ${source_kind}
+      - ${logging_source_compartment_ocid}
+      - ${log_group_id}
+
+  - title: "OCI Service Connector Target Configuration"
+    variables:
+      - ${target_kind}
+      - ${object_storage_bucket_name}
+      - ${object_name_prefix}
+
+  - title: "Common Variables"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+
+variables:
+
+#####################################
+
+# Common Variables
+
+#####################################
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false    
+
+
+################################################
+
+# OCI Service Connector Hub Configuration
+
+################################################
+
+  service_connector_compartment_ocid:
+    type: oci:identity:compartment:id
+    required: true
+    title: Select Compartment for Service Connector
+    visible: true
+
+  service_connector_display_name:
+    type: string
+    required: true
+    title: Service Connector Display Name
+    visible: true
+    default: "Service Connector"
+
+  service_connector_description:
+    type: string
+    required: true
+    title: Service Connector Description
+    visible: true
+    default: "This is Service connector"
+
+  service_connector_policy_display_name:
+    type: string
+    required: true
+    title: Provide Service Connector IAM Policy Display Name
+    description: Terraform creates a policy to push OCI audit logs to object storage
+    visible: true
+    default: "Service_connector_Policy"
+
+  service_connector_policy_description:
+    type: string
+    required: true
+    title: Provide Service Connector IAM Policy Description
+    visible: true
+    default: "This policy allows service connector to push logs Object Storage"
+
+##################################################
+
+# Service Connector Source Variables
+
+##################################################
+
+  source_kind:
+    type: string
+    required: true
+    title: Source Type
+    visible: true
+    default: "logging"
+    description: "Source type"
+
+  logging_source_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select Source Compartment for Logging
+    description: Selecting this compartment, service connector collects OCI Audit logs for child compartments also
+    required: true
+
+  log_group_id:
+    type: string
+    visible: true
+    title: OCI Audit Logging Group
+    required: true
+    default: "_Audit"    
+
+#####################################
+
+# Service Connector Target Variables
+
+#####################################
+
+  target_kind:
+    type: string
+    required: true
+    title: Target type
+    visible: true
+    default: "objectStorage"
+    description: "Target type"
+
+  object_storage_bucket_name:
+    type: string
+    required: true
+    title: Bucket name
+    visible: true
+    default: "bucket"
+    description: "The name of the bucket"
+
+  object_name_prefix:
+    type: string
+    required: true
+    title: Object name prefix
+    visible: true
+    default: "prefix"
+    description: "The prefix of the objects"        
+

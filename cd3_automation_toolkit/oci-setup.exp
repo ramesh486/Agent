@@ -1,0 +1,31 @@
+#!/usr/bin/expect -f
+
+# Timeouts disabled
+log_user 1
+log_file /tmp/expect.log
+
+set timeout -1
+set props [lindex $argv 0]
+
+
+# Strip ANSI escape sequences if any  appear
+expect_before -re {\x1b\[[0-9;]*m} {}
+
+# Track menu selection state
+set menu_pass 0
+
+# Start the CD3 setup process
+spawn python3.9 setUpOCI.py $props
+
+expect {
+    # y/n for fetch compartment OCIDs
+    -re {Enter.*:\s*$} {
+        send "\r"
+        exp_continue
+    }    
+
+    eof {
+        puts "✅ Script completed"
+        exit 0
+    }
+}

@@ -1,0 +1,166 @@
+title: OCI NonProd HUB VCN Terraform Input Variables
+description:  OCI NonProd HUB VCN Variables
+schemaVersion: 1.1.0
+version: "21022023"
+
+#####################################
+
+# VCN Variables
+
+#####################################
+
+groupings:
+
+  - title: "OCI Network VCN Variables"
+    variables:
+      - ${nonprod_hub_vcn_display_name}
+      - ${nonprod_hub_vcn_dns_label}
+      - ${nonprod_hub_vcn_cidr_block}
+      - ${nonprod_vcn_cidr_block}
+      - ${prod_hub_vcn_cidr_block}
+      - ${prod_vcn_cidr_block}
+
+
+  - title: "OCI Network NLB Public Subnet Configuration"
+    variables:
+      - ${nonprod_nlb_pub_subnet_display_name}
+      - ${nonprod_nlb_pub_subnet_dns_label}
+      - ${nonprod_nlb_pub_subnet_cidr_block}
+      - ${nonprod_nlb_pub_subnet_prohibit_internet_ingress}
+      - ${nonprod_nlb_pub_subnet_prohibit_public_ip_on_vnic}
+      - ${nonprod_nlb_pub_subnet_project_tag}
+
+  
+
+  - title: "OCI Network Untrust Subnet Configuration"
+    variables:
+      - ${nonprod_untrust_subnet_display_name}
+      - ${nonprod_untrust_subnet_dns_label}
+      - ${nonprod_untrust_subnet_cidr_block}
+      - ${nonprod_untrust_subnet_prohibit_internet_ingress}
+      - ${nonprod_untrust_subnet_prohibit_public_ip_on_vnic}
+      - ${nonprod_untrust_project_tag}
+
+
+  - title: "OCI Network Management Subnet Configuration"
+    variables:
+      - ${nonprod_management_subnet_display_name}
+      - ${nonprod_management_subnet_dns_label}
+      - ${nonprod_management_subnet_cidr_block}
+      - ${nonprod_management_subnet_prohibit_internet_ingress}
+      - ${nonprod_management_subnet_prohibit_public_ip_on_vnic}
+      - ${nonprod_management_project_tag}
+  
+  - title: "OCI Network Trust Subnet Configuration"
+    variables:
+      - ${nonprod_trust_subnet_display_name}
+      - ${nonprod_trust_subnet_dns_label}
+      - ${nonprod_trust_subnet_cidr_block}
+      - ${nonprod_trust_subnet_prohibit_internet_ingress}
+      - ${nonprod_trust_subnet_prohibit_public_ip_on_vnic}
+      - ${nonprod_trust_project_tag}
+
+
+
+  - title: "OCI Network VCN Components"
+    variables:
+      - ${nonprod_hub_vcn_servicegateway_private_display_name}
+      - ${nonprod_hub_vcn_natgateway_display_name}
+      - ${nonprod_hub_vcn_natgateway_block_traffic}
+      - ${nonprod_hub_vcn_natgateway_public_ip_lifetime}
+
+
+  - title: "OCI Network VCN Route Table Configuration"
+    variables:
+      - ${nonprod_hub_vcn_routetable_private_untrust_display_name}
+      - ${nonprod_hub_vcn_routetable_private_management_display_name}
+      - ${nonprod_hub_vcn_routetable_private_trust_display_name}
+      - ${nonprod_hub_vcn_routetable_private_nlb_display_name}
+
+  - title: "OCI VCN Security List Configuration"
+    variables:
+      - ${nonprod_hub_vcn_seclist_private_display_name}
+      - ${nonprod_hub_vcn_seclist_private_is_stateless}
+
+  - title: "DRG Attachment Configuration"
+    variables:
+      - ${nonprod_drg_ocid}
+      - ${nonprod_hub_vcn_drg_attachment_display_name}
+  - title: "Select the target compartment to create the resources"
+    variables:
+      #- ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+      - ${network_compartment_name}
+      - ${network_compartment_id_in_subtree}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  network_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: "oci_network"
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  nonprod_nlb_pub_subnet_project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  nonprod_untrust_project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  nonprod_management_project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  nonprod_trust_project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

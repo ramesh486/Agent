@@ -1,0 +1,11 @@
+{
+    "tenancy_ocid"                          : "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla",
+    "region"                                : "us-ashburn-1" ,
+    "subnet_display_name"                   : "apptst_subnet" ,
+    "vcn_display_name"                      : "nonprod_vcn" ,
+    "db_compartment_name"                   : "oci_nonprod_db" ,
+    "network_compartment_name"              : "oci_network" ,
+    "security_mode"                         : "ENFORCING" ,
+    "security_master_user_name"             : "admin" ,
+    "security_master_user_password_hash"    : "AAAaaa123#bc"   
+}

@@ -1,0 +1,127 @@
+title: File Storage Terraform Input Variables
+description:   File Storage Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "File Storage Configuration"
+    variables:
+      - ${file_system_display_name}
+      - ${mount_target_display_name}
+      - ${export_path}
+      - ${export_set_name}
+      - ${subnet_display_name}
+
+  - title: "Select the target compartment to create the resources"
+    variables:      
+      - ${tenancy_ocid}
+      - ${region}
+      - ${app_compartment_id_in_subtree}
+      - ${app_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${network_compartment_name}      
+      - ${project_tag}
+
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  app_compartment_id_in_subtree:
+    type: bool
+    title: "App Compartment ID in Subtree"
+    default: "true"
+    description: "App Compartment ID in Subtree"
+  
+  app_compartment_name:
+    type: string
+    default: ""
+    title: "Target Compartment Name"
+    description: "Target Compartment Name"
+    visible: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Network Compartment ID in Subtree"
+    default: "true"
+    description: "Network Compartment ID in Subtree"
+  
+  network_compartment_name:
+    type: string
+    default: ""
+    title: "Network Compartment Name"
+    description: "Network Compartment Name"
+    visible: true
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#####################################
+
+# File Storage Variables
+
+#####################################          
+
+  file_system_display_name:
+    type: string
+    required: true
+    title: File Storage Display Name
+    visible: true
+    description: Name for File system
+    default: "file_system"
+
+  mount_target_display_name:
+    type: string
+    required: true
+    title: Mount Target Display Name
+    visible: true
+    description: Name for Mount target    
+    default: "mount_target"
+
+  export_path:
+    type: string
+    required: true
+    title: Path to access file system
+    visible: true
+    description: Path used to access the associated file system.
+    default: "/file_storage_file_system"  
+
+  export_set_name:
+    type: string
+    required: true
+    title: Export Set Name
+    visible: true
+    description: Name for Export Set    
+    default: "export_set"
+
+  subnet_display_name:
+    type: string
+    required: true
+    title: Subnet Name
+    visible: true
+    description: Name for Subnet    
+    default: ""    

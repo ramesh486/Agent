@@ -1,0 +1,123 @@
+title: Java Management 
+description: Java Management Fleet
+schemaVersion: 1.1.0
+version: "25012022"
+
+######################################
+#  Variable Groupings
+# #####################################
+
+groupings:
+ 
+  - title: "common compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+
+  - title: "Java Management fleet configurations"
+    variables:
+      - ${fleet_display_name}
+      - ${fleet_display_name_contains}
+      - ${fleet_description}
+      - ${fleet_is_advanced_features_enabled}
+      - ${fleet_freeform_tags}
+      - ${fleet_defined_tags}
+      - ${fleet_state}
+      - ${fleet_log_group_ocid}
+      - ${fleet_inventory_log_ocid}
+
+#####################################
+# Common Compartment
+#####################################
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+##########################################
+# Java Management fleet configurations
+##########################################
+
+fleet_display_name:
+    type: string
+    default: "Example Fleet"
+    title: "fleet_display_name"
+    description: "fleet name"
+    required: true
+    visible: true
+
+fleet_display_name_contains:
+    type: string
+    default: "Example Fleet"
+    title: "fleet_display_name_contains"
+    description: "fleet display name contains"
+    required: true
+    visible: true
+
+fleet_description:
+    type: string
+    default: "Example Fleet created by Terraform"
+    title: "fleet_description"
+    description: "fleet"
+    required: true
+    visible: true
+
+fleet_is_advanced_features_enabled:
+    type: bool
+    default: false
+    title: "fleet_is_advanced_features_enabled"
+    description: "disable"
+    required: true
+    visible: true
+
+fleet_freeform_tags:
+    type: map(string)
+    bar-key: value
+    title: "fleet_display_name_contains"
+    description: "freeform tags"
+    required: true
+    visible: true
+
+fleet_defined_tags:
+    type: map(string)
+    example-tag-namespace-all.example-tag: value
+    title: "fleet_defined_tags"
+    description: "defined tags"
+    required: true
+    visible: true
+
+fleet_state:
+    type: string
+    default: "ACTIVE"
+    title: "fleet_state"
+    description: "fleet_state"
+    required: true
+    visible: true
+
+fleet_log_group_ocid:
+    type: string
+    default: ocid1.loggroup.oc1.ap-mumbai-1.amaaaaaahjrah2iahokhz47fnzmfpmp46txlqvlgm3duvepuhfxy56sfqgtq
+    title: "fleet_log_group_ocid"
+    description: "group ocid"
+    required: true
+    visible: true
+
+fleet_inventory_log_ocid:
+    type: string
+    default: ocid1.log.oc1.ap-mumbai-1.amaaaaaahjrah2iagmbgqng774mekrolt3e7jxfdxjekghwgzu2opowpjsdq
+    title: "fleet_inventory_log_ocid"
+    description: "fleet inventory ocid"
+    required: true
+    visible: true
+
+
+      

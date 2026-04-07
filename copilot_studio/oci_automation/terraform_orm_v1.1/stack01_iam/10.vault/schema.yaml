@@ -1,0 +1,57 @@
+title: KMS Vault Key Management System
+description: Stores and manages master encryption keys and secrets for secure access to resources.
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "OCI Vault Key Management System"
+    variables:
+      - ${compartment_ocid}
+      - ${vault_display_name}
+      - ${vault_type}
+      - ${region}
+
+variables:
+
+####################################
+#  Compartment
+####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Security Compartment for centrally manage the encryption keys
+    description: Vault protects your data and the secret credentials that you use to securely access resources
+
+  tenancy_ocid:
+    visible: true
+    title: tenancy ocid
+    description: tenancy ocid
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+    
+  vault_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "OCI-LZ-KMS-VAULT"
+    title: "The display name of KMS Vault."
+    description: "It does not have to be unique, and it is changeable."
+
+  vault_type:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "Type of the Vault Key"
+    description: "Whether or not the vault is a virtual private vault. It has different options and pricing"
+  
+  

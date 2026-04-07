@@ -1,0 +1,168 @@
+title: OCI Streaming Terraform Input Variables
+description:  OCI Streaming Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+   - title: "Common Variables"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${monitor_compartment_name}
+      - ${network_compartment_name}
+      - ${monitor_compartment_id_in_subtree}
+      - ${network_compartment_id_in_subtree}
+      - ${subnet_display_name}
+
+  - title: "OCI Streaming Variables"
+    variables:
+      - ${stream_pool_name}
+      - ${auto_create_topics_enable}
+      - ${stream_pool_log_retention_hours}
+      - ${stream_pool_num_of_partitions}
+      - ${stream_display_name}
+      - ${stream_retention_in_hours}
+      - ${stream_partitions}
+      - ${project_tag}
+  
+variables:
+
+#####################################
+# Common Variables
+#####################################
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  monitor_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  monitor_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  
+  subnet_display_name:
+    type: string
+    title: "Subnet Display Name"
+    default: ""
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+
+ 
+#####################################
+
+  # OCI Streaming Pool
+
+#####################################
+
+  stream_pool_name:
+    type: string
+    required: true
+    title: Stream Pool Display Name
+    visible: true
+    default: "test_stream_pool"
+
+  auto_create_topics_enable:
+    type: boolean
+    required: true
+    description: Enable auto creation of topic on the server.
+    visible: true
+    default: true
+
+  stream_pool_log_retention_hours:
+    visible: true
+    type: number
+    required: true
+    default: 24
+    title: Stream Pool Log Retention in Hours
+    description: Minimum is 24 Hours and Maximum is 168 Hours
+
+  stream_pool_num_of_partitions:
+    visible: true
+    type: number
+    required: true
+    default: 1
+    title: Stream Pool Number of Partitions
+    description: Minimum 1 is required
+
+#####################################
+### OCI Streaming
+#####################################
+
+
+  stream_display_name:
+    type: string
+    required: true
+    title: Name of stream
+    visible: true
+    default: "test_stream"
+    description: The name of the stream.
+
+  stream_retention_in_hours:
+    visible: true
+    type: number
+    required: true
+    default: 24
+    title: Stream Retention in hours ?
+    description: Retention in hours must be between 24 - 168. Default value is 24 hours
+
+  stream_partitions:
+    type: number
+    required: true
+    title: Number of Stream Partitions
+    visible: true
+    default: 1
+    description: Number of Stream Partitions
+  
+  
+
+
+
+

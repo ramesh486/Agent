@@ -1,0 +1,106 @@
+title: DNS TSIG Key Terraform
+description: DNS TSIG Key Terraform Input Variables
+schemaVersion: 1.1.0
+version: "18052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}
+    
+  - title: "Bucket Configuration"
+    variables:
+      - ${tsig_key_name}
+      - ${tsig_key_algorithm}
+      - ${tsig_key_secret}
+  
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+ 
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+  
+  
+
+#####################################
+
+  # Bucket Configuration
+
+#####################################
+
+  tsig_key_name:
+    type: string
+    required: true
+    visible: true
+    title: "TSIG Key Display Name"
+   
+  tsig_key_algorithm:
+    type: enum
+    required: false
+    visible: true
+    default: "hmac-sha256"
+    title: "TSIG Key Alogorithm"
+    description: "The public key's algorithm used to encrypt or decrypt data."
+    enum:
+        - "hmac-md5"
+        - "hmac-sha1"
+        - "hmac-sha224"
+        - "hmac-sha256"
+        - "hmac-sha384"
+        - "hmac-sha512"
+
+  tsig_key_secret:
+    type: password
+    required: true
+    visible: true
+    title: "TSIG Key Secret in Base64 Encoded format"
+    description: "The base64 string encoding the binary shared secret that corresponds to the key (max: 255 characters)."
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

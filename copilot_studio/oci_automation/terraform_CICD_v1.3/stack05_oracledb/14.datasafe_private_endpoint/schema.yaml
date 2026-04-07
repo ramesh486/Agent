@@ -1,0 +1,123 @@
+title: Datasafe Private Endpoint Terraform Input Variables
+description: Datasafe Private Endpoint Terraform Input Variables
+schemaVersion: 1.1.0
+version: "04052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Datasafe Private Endpoint Configuration"
+    variables:
+      - ${data_safe_private_endpoint_display_name}
+      - ${data_safe_private_endpoint_description}
+      - ${vcn_compartment_ocid}
+      - ${vcn_ocid}
+      - ${subnet_compartment_ocid}
+      - ${subnet_ocid}
+      - ${nsg_ocids}
+
+  - title: "Select the Target Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+
+
+#################################################
+# DataSafe Private Endpoint Variables
+#################################################
+
+  data_safe_private_endpoint_display_name:
+    type: string
+    required: true
+    visible: true
+    title: "Datasafe Private Endpoint Display Name"
+    description: "Provide Datasafe Private Endpoint Display Name"
+   
+  data_safe_private_endpoint_description:
+    type: string
+    required: false
+    visible: true
+    title: "Datasafe Private Endpoint Description"
+    description: "Provide Datasafe Private Endpoint Description"
+
+#####################################
+# Network Configuration
+#####################################
+
+  vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+    required: true
+
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: true
+    title: Select the VCN
+    description: Choose the VCN
+    dependsOn: 
+      compartmentId: ${vcn_compartment_ocid}
+    required: true
+  
+  subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Subnet Compartment
+    description: Choose the Compartment of Subnet
+    required: true
+
+  subnet_ocid:
+    type: oci:core:subnet:id
+    visible: true
+    title: Select the Subnet 
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+    required: true
+
+  nsg_ocids:
+    type: oci:core:nsg:id
+    visible: true
+    title: Select the Network Security Group
+    description: Select the Network Security Group (Optional)
+    dependsOn:
+      compartmentId: ${vcn_compartment_ocid}
+      vcnId: ${vcn_ocid}
+    required: false
+  
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true

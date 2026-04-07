@@ -1,0 +1,109 @@
+title: media services
+description: media services
+schemaVersion: 1.1.0
+version: "28062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+      - ${display_name}
+      - ${ms_display_name}
+      - ${media_workflow_configuration_parameters}
+      - ${media_workflow_tasks_key}
+      - ${media_workflow_tasks_parameters}
+      - ${media_workflow_tasks_prerequisites}
+      - ${media_workflow_tasks_type}
+      - ${media_workflow_tasks_version}
+
+
+
+variables:
+
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: string
+    visible: true
+    title: Select the Compartment to deploy resources
+    default : ""
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Region
+    default: "us-ashburn-1"
+
+  display_name:
+    type: string
+    visible: true
+    required: true
+    title: display name
+    description: workflow display name
+    default: "test_workflow"
+
+  ms_display_name:
+    type: string
+    visible: true
+    required: true
+    title: media workflow configuration display name
+    description: media service workflow configuration display name
+    default: "test_mediaservice_config_workflow"
+  
+  media_workflow_configuration_parameters:
+    type: string
+    visible: true
+    required: true
+    title: media workflow configuration parameters
+    description: media workflow configuration parameters
+    default: "{\"storage\":{\"inputbucket\":\"myinputbucket\",\"outputbucket\":\"myoutputBucket\"}}"
+
+  media_workflow_tasks_key:
+    type: string
+    visible: true
+    required: true
+    title: media workflow tasks key
+    description: media workflow tasks key
+    default: "move"
+  
+  media_workflow_tasks_parameters:
+    type: string
+    visible: true
+    required: true
+    title: media workflow tasks parameters
+    description: media workflow tasks parameters
+    default: "{\"taskParameters\":[{\"bucketName\":\"inputBucket\",\"namespaceName\":\"namespaceName\",\"objectName\":\"$${/videos/inputObject}\",\"storageType\":\"objectStorage\",\"target\":\"video.mp4\"}]}"
+
+
+  media_workflow_tasks_type:
+    type: string
+    visible: true
+    required: true
+    title: media workflow tasks type
+    description: "media workflow tasks type"
+    default: "getFiles"
+
+  media_workflow_tasks_version:
+    type: number
+    visible: true
+    required: true
+    title: media workflow tasks version
+    description: media workflow tasks version
+    default: 1
+

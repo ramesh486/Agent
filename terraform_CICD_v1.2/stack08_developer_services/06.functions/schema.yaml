@@ -1,0 +1,95 @@
+title: Create Application in Functions
+description: Application Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${app_compartment_id_in_subtree}
+      - ${app_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${network_compartment_name}
+      - ${subnet_display_name}
+      - ${display_name}
+      - ${project_tag}
+
+variables:
+#####################################
+# Common Variables
+#####################################
+
+
+  region:
+    type: string
+    default: ""
+    title: Region Name
+    description: The region where the resources will be provisioned
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    type: string
+    default: ""
+    title: "Tenancy OCID"
+    description: "Tenancy OCID"
+    visible: true
+    required: true
+
+  app_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  app_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+  
+  network_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name of the Subnet"
+    description: "Compartment Name of the Subnet"
+    visible: true
+    required: true
+
+  
+  display_name:
+    type: string
+    default: "Example_application"
+    title: "Application name"
+    description: "Name of the application"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+
+     

@@ -1,0 +1,7 @@
+{
+    "tenancy_ocid"                       : "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla",
+    "compartment_ocid"                   : "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla",
+    "region"                             : "us-ashburn-1",
+    "topic_ocid"                         : "ocid1.onstopic.oc1.iad.aaaaaaaatc33nupsjvnhlbgi2pabtffx44c362l6bsvpzkvoucztsxihusmq"
+
+}

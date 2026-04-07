@@ -1,0 +1,69 @@
+title: OCI Core Custom Images
+description: OCI Core Custom Images 
+schemaVersion: 1.1.0
+version: "08062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment "
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_ocid}
+
+ 
+  - title: "Select custom image variables"
+    variables:
+      - ${instance_ocid}
+      - ${launch_mode}
+      - ${image_timeout_create}
+
+
+variables:
+
+### Common Compartment 
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+    
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  launch_mode:
+    type: string
+    visible: true
+    required: true
+    title: lauch mode
+    default: "NATIVE"
+    description: instance launch mode
+
+  
+  instance_ocid:
+    type: string
+    visible: true
+    required: true
+    title: instance ocid
+    default: ""
+    description: instance ocid
+
+  image_timeout_create:
+    type: string
+    visible: true
+    required: true
+    title: create timeout
+    default: "30m"
+    description: create timeout

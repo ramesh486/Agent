@@ -1,0 +1,11 @@
+# Creating Instance Pool in OCI 
+
+# If you want to associate the instance pool with a load balancer or network load balancer, you need a load balancer or network load balancer and backend set.
+
+# An instance configuration. An instance configuration is a template that defines the settings to use when creating instances.
+
+# Pre-requisites
+#    Appropriate IAM permissions to create and manage instance pools
+#    subnet ocid
+#    instance_configuration_ocid (a)
+

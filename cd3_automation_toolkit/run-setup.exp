@@ -1,0 +1,29 @@
+#!/usr/bin/env expect -f
+# run-setup.exp  — production-ready helper
+log_file -a debug.log 
+set timeout -1
+# set props "/home/ubuntu/oci_automation/cd3user/tenancies/ebizoncloudllc/ebizoncloudllc_setUpOCI.properties"
+
+set props [lindex $argv 0]
+
+# set props "/home/ubuntu/oci_automation/cd3user/tenancies/$org/${org}_setUpOCI.properties"
+
+spawn python3.9 setUpOCI.py $props
+
+# Rule-driven loop
+expect {
+
+-re {\([yY]\s*[/|]\s*[nN]\).*Default is [nN]:\s*$} { send "y\r"; exp_continue } ;
+# 0.  Export All …  ➜  send “0”
+-re {Enter your choice \(specify [^)]*\):\s*$} { send "0\r"; exp_continue } ;
+
+-re {Domain names to export.*default domain\s*:?\s*$} { send "all\r"; exp_continue } ; # new prompt → all
+
+# any “…(y/n)…”  ➜  send “y”
+
+# any other “Enter …:”  ➜  blank line
+-re {Enter.*:\s*$}                             { send "\r"; exp_continue } ;
+
+eof
+
+}

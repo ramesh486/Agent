@@ -1,0 +1,19 @@
+data "oci_identity_compartments" "monitor_compartment" {
+    compartment_id               = var.tenancy_ocid
+    compartment_id_in_subtree    = var.monitor_compartment_id_in_subtree
+    name                         = var.monitor_compartment_name
+}
+
+data "oci_identity_compartments" "network_compartment" {
+    compartment_id               = var.tenancy_ocid
+    compartment_id_in_subtree    = var.network_compartment_id_in_subtree
+    name                         = var.network_compartment_name
+}
+
+data "oci_core_subnets" "this" {
+    compartment_id               = local.network_compartment_ocid
+	filter {
+        name                     = "display_name"
+        values                   = ["${var.subnet_display_name}"]
+    }
+}

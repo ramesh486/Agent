@@ -1,0 +1,222 @@
+itle: OCI instance configuration 
+description: OCI instance configuration
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "common compartment"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_ocid}
+      
+
+  - title: "OCI Core Instance Configuration"
+    variables:
+
+      - ${instance_configuration_display_name}    
+      - ${instance_type}
+      - ${ipxe_script}
+      - ${instance_shape}
+      - ${display_name}
+      - ${is_pv_encryption_in_transit_enabled}
+      - ${preferred_maintenance_action}
+      - ${launch_mode}
+      - ${is_management_disabled}
+      - ${is_monitoring_disabled}
+      - ${network_type}
+      - ${are_legacy_imds_endpoints_disabled}
+      - ${ocpus}
+      - ${memory_in_gbs}
+      - ${assign_private_dns_record}
+      - ${assign_public_ip}
+      - ${vnic_display_name}
+      - ${skip_source_dest_check}  
+      - ${source_type}
+      - ${source_image_ocid}
+variables:
+### Common Compartment 
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+    
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+ 
+
+#oci_core_instance_configuration
+
+  instance_configuration_display_name:
+    type: string
+    visible: true
+    title: instance configuration display name
+    default: "TestInstanceConfiguration"
+    description: instance configuration display name
+
+  instance_type:
+    type: string
+    visible: true
+    title: instance type
+    default: "compute"
+    description: instance type
+    required: true
+
+  ipxe_script:
+    type: string
+    visible: true
+    title: ipxe script
+    default: "ipxeScript"
+    description: ipxe script
+    required: true
+
+  instance_shape:
+    type: string
+    visible: true
+    title: instance shape
+    default: "VM.Standard.E4.Flex"
+    description: instance shape
+    required: true
+
+  display_name:
+    type: string
+    visible: true
+    title: instance configuration display name
+    default: "TestInstanceConfigurationLaunchDetails"
+    description: instance configuration display name
+    required: true
+  
+  is_pv_encryption_in_transit_enabled:
+    type: bool
+    visible: true
+    title: is_pv_encryption_in_transit_enabled
+    default: false
+    description: is_pv_encryption_in_transit_enabled
+    required: true
+
+  preferred_maintenance_action:
+    type: string
+    visible: true
+    title: preferred maintenance action
+    default: "LIVE_MIGRATE"
+    description: preferred maintenance action
+    required: true
+
+  launch_mode:
+    type: string
+    visible: true
+    title: launch mode
+    default: "NATIVE"
+    description: launch mode
+    required: true
+  
+  is_management_disabled:
+    type: bool
+    visible: true
+    title: is management disabled
+    default: false
+    description: is management disabled
+    required: true
+
+  is_monitoring_disabled:
+    type: bool
+    visible: true
+    title: is monitoring disabled
+    default: false
+    description: is monitoring disabled
+    required: true
+
+  network_type:
+    type: string
+    visible: true
+    title: network type
+    default: "PARAVIRTUALIZED"
+    description: network type
+    required: true
+
+  are_legacy_imds_endpoints_disabled:
+    type: bool
+    visible: true
+    title: are legacy imds endpoints disabled
+    default: false
+    description: are legacy imds endpoints disabled
+    required: true
+
+  ocpus:
+    type: number
+    visible: true
+    title: ocpus count
+    default: "4"
+    description: ocpus count
+    required: true
+
+  memory_in_gbs:
+    type: number
+    visible: true
+    title: memory in gbs
+    default: "60"
+    description: memory in gbs
+    required: true
+
+  assign_private_dns_record:
+    type: bool
+    visible: true
+    title: assign private dns record
+    default: false
+    description: assign private dns record
+    required: true
+
+  assign_public_ip:
+    type: bool
+    visible: true
+    title: assign public ip
+    default: true
+    description: assign public ip
+    required: true
+
+  vnic_display_name:
+    type: string
+    visible: true
+    title: vnic display name
+    default: "TestInstanceConfigurationVNIC"
+    description: vnic display name
+    required: true
+  
+  skip_source_dest_check:
+    type: bool
+    visible: true
+    title: skip source dest check
+    default: false
+    description: skip source dest check
+    required: true
+
+  source_type:
+    type: string
+    visible: true
+    title: source type
+    default: "image"
+    description: source type
+    required: true
+
+  source_image_ocid:
+    type: string
+    visible: true
+    title: source image ocid
+    default: "ocid1.image.oc1.iad.aaaaaaaahomjycgg77iewnat3pysjvnp4ukpjtpyamacwetgdoptwst3n23a"
+    description: source image ocid

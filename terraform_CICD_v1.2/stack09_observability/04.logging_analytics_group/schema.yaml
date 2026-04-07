@@ -1,0 +1,99 @@
+title:  Create log analytics Group
+description: Log analytics Group
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_name_oci_monitor_compartment}
+      - ${compartment_id_in_subtree_oci_monitor_compartment}
+      # - ${app_compartment_id_in_subtree}
+      # - ${app_compartment_name}
+      - ${region}
+      - ${project_tag}
+
+  - title: "log_analytics_entity"
+    variables:
+      - ${log_analytics_log_group_display_name}
+      - ${log_analytics_log_group_description}
+     
+variables:
+#####################################
+# Common Compartment
+#####################################  
+  
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Region
+
+  monitor_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name"
+    description: "The name of the compartment containing the metric being evaluated by the alarm"
+    required: true
+    visible: true
+
+  monitor_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment id in subtree oci monitor compartment"
+    description: "Compartment ID in Subtree"
+    default: true
+    required: true
+    visible: true
+  
+  # app_compartment_name:
+  #   type: string
+  #   title: "Compartment Name"
+  #   default: "oci_app"
+  #   description: "Provide Compartment name"
+  #   visible: true
+  #   required: true
+
+  # app_compartment_id_in_subtree:
+  #   type: bool
+  #   title: "Compartment ID in Subtree"
+  #   default: true
+  #   description: "Compartment ID in Subtree"
+  #   visible: true
+  #   required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+######################################
+# log_analytics_entity
+######################################
+
+  log_analytics_log_group_display_name:
+    type: string
+    default: "Example_group"
+    title: "log_analytics_log_group_display_name"
+    description: "Log analytic group name"
+    required: true
+    visible: true
+
+  log_analytics_log_group_description:
+    type: string
+    default: "Log_analytics_group_name"
+    title: "log_analytics_log_group_description"
+    description: "Log analytic group"
+    required: true
+    visible: true
+ 
+
+
+
+
+   

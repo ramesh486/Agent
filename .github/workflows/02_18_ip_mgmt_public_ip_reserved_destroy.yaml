@@ -1,0 +1,49 @@
+
+# On successful pull request merge, `terraform destroy` will be executed.
+# Update PROVIDER_NAME, BRANCH_NAME, STACK_NAME, WORKING_DIRECTORY, REPO_URL, TF_VERSION
+
+name: 'Destroy ip_mgmt_public_ip_reserved'
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'dev2'
+    paths:
+      - '.github/workflows/02_18.ip_mgmt_public_ip_reserved_destroy.yaml'
+
+# ---------------------------------------------
+# Permissions
+# ---------------------------------------------
+
+permissions:
+  contents: write
+
+jobs:
+  
+  stack02_ip_mgmt_public_ip_reserved_destroy:
+    uses: ./.github/workflows/action_runner_destroy.yaml
+
+    # ---------------------------------------------
+    # Source Provider Details
+    # ---------------------------------------------
+
+    with:
+
+      PROVIDER_NAME: "oci_github"
+      BRANCH_NAME: "feature_stack02_networking_destroy"
+      STACK_NAME: "stack02_ip_mgmt_public_ip_reserved"
+      WORKING_DIRECTORY: "CICD/stack02_networking/18.ip_mgmt_public_ip_reserved"
+      REPO_URL: "https://github.com/ebizon-cloud/oci_automation.git"
+      TF_VERSION: "1.2.x"
+
+    # ---------------------------------------------
+    # Secrets
+    # ---------------------------------------------
+
+    secrets:
+      USER_OCID: ${{secrets.USER_OCID}}
+      FINGERPRINT: ${{secrets.FINGERPRINT}}
+      COMPARTMENT_OCID: ${{secrets.COMPARTMENT_OCID}}
+      REGION: ${{secrets.REGION}}
+      TENANCY_OCID: ${{secrets.TENANCY_OCID}}
+      PRIVATE_KEY_FILE: ${{secrets.PRIVATE_KEY_FILE}}

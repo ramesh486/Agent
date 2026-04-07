@@ -1,0 +1,83 @@
+title: database Management 
+description: database Management group
+schemaVersion: 1.1.0
+version: "25012022"
+
+######################################
+#  Variable Groupings
+# #####################################
+
+groupings:
+ 
+  - title: "common compartment"
+    variables:
+
+      - ${region}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${tenancy_ocid}
+      
+
+  - title: "database Management group configurations"
+    variables:
+      - ${managed_database_group_name}
+      - ${managed_database_group_description}
+      
+
+#####################################
+# Common Compartment
+#####################################
+
+variables:
+
+
+
+  compartment_name:
+    type: string
+    visible: true
+    default: ""
+    title: compartment_name
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  compartment_id_in_subtree:
+    type: boolean
+    visible: false
+    title: compartment_id_in_subtree
+    description: Choose the compartment id in subtree
+
+  region:
+    visible: true
+    title: Region
+    description: Region     
+
+  
+  
+
+##########################################
+# database Management group configurations
+##########################################
+
+managed_database_group_name:
+    type: string
+    default: "TestGroup"
+    title: "managed_database_group_name"
+    description: "management database group"
+    required: true
+    visible: true
+
+managed_database_group_description:
+    type: string
+    default: "managed_database_group"
+    title: "managed_database_group_description"
+    description: "management database"
+    required: true
+    visible: true
+
+
+
+      

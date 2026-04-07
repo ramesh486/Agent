@@ -1,0 +1,70 @@
+title: Create Custom protection rules
+description: Custom protection rules Terraform Input Variables
+schemaVersion: 1.1.0
+version: "05102022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+    
+  - title: "Custom protection rules Variables Configuration"
+    variables:
+      - ${custom_protection_rule_template}
+      - ${custom_protection_rule_description}
+      - ${custom_protection_rule_display_name}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  custom_protection_rule_template:
+    type: string
+    visible: true
+    title: "Custom Protection Rule Template"
+    description: "The template text of the custom protection rule."
+    default: "SecRule REQUEST_URI / \"phase:2,   t:none,   capture,   msg:'Custom (XSS) Attack. Matched Data: %%%{TX.0}   found within %%%{MATCHED_VAR_NAME}: %%%{MATCHED_VAR}',   id:{{id_1}},   ctl:ruleEngine={{mode}},   tag:'Custom',   severity:'2'\""
+
+  custom_protection_rule_description:
+    type: string
+    visible: true
+    title: "Custom Protection Rule Description"
+    description: "A description for the Custom Protection rule."
+    default: "Custom Protection Rule"
+
+  custom_protection_rule_display_name:
+    type: string
+    visible: true
+    title: "Custom Protection Rule Display Name"
+    description: "Display name for the custom protection rule." 
+    default: "custom_protection_rule"
+

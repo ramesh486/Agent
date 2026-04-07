@@ -1,0 +1,205 @@
+title: Create Database Tools
+description: Database Tools Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${project_tag}
+      - ${db_compartment_id_in_subtree}
+      - ${db_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${network_compartment_name}
+      - ${subnet_display_name}
+      
+     
+
+  - title: "Database Tools Connection"
+    variables:
+      - ${database_tools_connection_display_name}
+      - ${database_tools_connection_type}
+      - ${database_tools_connection_connection_string}
+      - ${database_tools_connection_key_stores_key_store_content_value_type}
+      - ${database_tools_connection_key_stores_key_store_password_value_type}
+      - ${database_tools_connection_key_stores_key_store_type}
+      - ${database_tools_connection_related_resource_entity_type}
+      - ${database_tools_connection_related_resource_identifier}
+      - ${database_tools_connection_user_password_value_type}
+      - ${user_name}
+      - ${secret_ocid}
+      - ${database_tools_private_endpoint_display_name}
+      
+      
+variables:
+#####################################
+# Common Variables
+#####################################
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    type: string
+    default: ""
+    title: Region Name
+    description: The region where the resources will be provisioned
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+
+  db_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  db_compartment_name:
+    type: string
+    default: "oci_app"
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+  
+  network_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    default: "network"
+    title: "Compartment Name of the Subnet"
+    description: "Compartment Name of the Subnet"
+    visible: true
+    required: true
+
+  subnet_display_name:
+    type: string
+    default: ""
+    title: "Subnet Name"
+    description: "The subnet in which the application is deployed"
+    visible: true
+
+  secret_ocid:
+    type: string
+    default: ""
+    title: "OCID of vault secrets"
+    description: "OCID of vault secrets"
+    visible: true
+    required: true
+
+  database_tools_connection_display_name:
+    type: string
+    default: "My Connection MySQL"
+    title: "Database Tools Connection Display Name"
+    description: "The display name for the database tools connection"
+    visible: true
+
+  database_tools_connection_type:
+    type: enum
+    visible: true
+    required: true
+    default: "MYSQL"
+    title: "Database Tools Connection Type"
+    description: "The type of database tools connection"
+    enum:
+      - "MYSQL"
+      - "ORACLE BASE DB"
+      - "ORACLE AUTONOMOUS DB"
+ 
+  database_tools_connection_connection_string:
+    type: string
+    default: "mysql://example.com:3306/db"
+    title: "Database Tools Connection Connection String"
+    description: "The connection string for the database tools connection"
+    visible: true
+
+  database_tools_connection_key_stores_key_store_content_value_type:
+    type: string
+    default: "SECRETID"
+    title: "Database Tools Connection Key Store Content Value Type"
+    description: "The value type for the key store content of the database tools connection"
+    visible: true
+
+  database_tools_connection_key_stores_key_store_password_value_type:
+    type: string
+    default: "SECRETID"
+    title: "Database Tools Connection Key Store Password Value Type"
+    description: "The value type for the key store content of the database tools connection"
+    visible: true
+
+  database_tools_connection_key_stores_key_store_type:
+    type: string
+    default: "CA_CERTIFICATE_PEM"
+    title: "Database Tools Connection Key Store Type"
+    description: "The type of key store for the database tools connection"
+    visible: true
+
+  database_tools_connection_related_resource_entity_type:
+    type: string
+    default: "MYSQLDBSYSTEM"
+    title: "Database Tools Connection Related Resource Entity Type"
+    description: "The entity type of the related resource for the database tools connection"
+    visible: true
+
+  database_tools_connection_related_resource_identifier:
+    type: string
+    default: ""
+    title: "Database Tools Connection Related Resource Identifier"
+    description: "The identifier of the related resource for the database tools connection"
+    visible: true
+
+  database_tools_connection_user_password_value_type:
+    type: string
+    default: "SECRETID"
+    title: "Database Tools Connection User Password Value Type"
+    description: "The value type for the user password of the database tools connection"
+    visible: true
+
+  user_name:
+    type: string
+    default: ""
+    title: "User Name"
+    description: "The name of the user"
+    visible: true
+
+  # secret_ocid:
+  #   type: string
+  #   default: ""
+  #   title: "Secret OCID"
+  #   description: "The OCID (Oracle Cloud Identifier) of the secret"
+  #   visible: true
+
+  database_tools_private_endpoint_display_name:
+    type: string
+    default: "Test_private_Endpoint"
+    title: "Database Tools Private Endpoint Display Name"
+    description: "Name of private endpoint"
+    visible: true
+
+ 
+    
+    

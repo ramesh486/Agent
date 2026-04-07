@@ -1,0 +1,280 @@
+title: Create Container Instance Gateway
+description: Container InstanceTerraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${app_compartment_id_in_subtree}
+      - ${app_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${network_compartment_name}
+      - ${project_tag}
+      - ${subnet_display_name}
+
+  - title: "Container Instance"
+    variables:
+      - ${availability_domain}
+      - ${container_restart_policy}
+      - ${image_url}
+      - ${arguments}
+      - ${command}
+      - ${container_instance_display_name}
+      - ${environment_variables}
+      - ${is_resource_principal_disabled}
+      - ${container_display_name}
+      - ${graceful_shutdown_timeout_in_seconds}
+      - ${shape}
+      - ${memory_in_gbs}
+      - ${ocpus}
+      - ${state}
+      - ${vnic_display_name}
+      - ${hostname_label}
+      - ${is_public_ip_assigned}
+      - ${nsg_ids}
+      - ${private_ip}
+      - ${skip_source_dest_check}
+      
+      
+     
+variables:
+#####################################
+# Common Variables
+#####################################
+
+ 
+  region:
+    type: string
+    default: ""
+    title: Region Name
+    description: The region where the resources will be provisioned
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    type: string
+    default: ""
+    title: "Tenancy OCID"
+    description: "Tenancy OCID"
+    visible: true
+    required: true
+
+  app_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  app_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+  
+  network_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name of the Subnet"
+    description: "Compartment Name of the Subnet"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+  subnet_display_name:
+    type: string
+    default: ""
+    title: "Subnet Name"
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  availability_domain:
+    title: Availability domain
+    description: Container instance availability domain.
+    default: PMlX:US-ASHBURN-AD-1
+    required: true
+    visible: true
+    type: string
+
+###################################
+## Container instance  Variables
+################################### 
+
+  container_restart_policy:
+    title: Container Restart Policy
+    description: The restart policy for the container.
+    default: "ALWAYS"
+    required: true
+    visible: true
+    type: string
+
+  image_url:
+    title: Image URL
+    description: The URL of the image to use for the container.
+    default: "iad.ocir.io/idennsb6k3kt/repo_nginx:latest"
+    required: true
+    visible: true
+    type: string
+
+
+  arguments:
+    title: Arguments
+    description: The arguments to pass to the container.
+    default: []
+    visible: true
+    type: list
+
+  command:
+    title: Command
+    description: The command to run inside the container.
+    default: []
+    required: true
+    visible: true
+    type: list
+
+  container_instance_display_name:
+    title: Container Display Name
+    description: The display name for the container.
+    default: "Demo_container"
+    required: true
+    visible: true
+    type: string
+
+  environment_variables:
+    title: Environment Variables
+    description: Environment variables to set inside the container.
+    multiline: true
+    required: true
+    visible: true
+    type: map(string)
+
+  is_resource_principal_disabled:
+    title: Is Resource Principal Disabled
+    description: Whether the resource principal is disabled.
+    default: false
+    required: true
+    visible: true
+    type: bool
+
+  container_display_name:
+    title: Name of container
+    description: Name of the container
+    default: "Test_container"
+    required: true
+    visible: true
+    type: string
+
+  graceful_shutdown_timeout_in_seconds:
+    title: Timeout in seconds
+    description: Gareceful shutdown timeout in seconds
+    default: 0
+    required: true
+    visible: true
+    type: number
+
+  shape:
+    title: Shape
+    description: ""
+    default: "CI.Standard.E4.Flex"
+    required: true
+    visible: true
+    type: string
+
+  memory_in_gbs:
+    title: Memory in GBs
+    description: The memory limit in GBs for the container.
+    default: 8
+    required: true
+    visible: true
+    type: number
+    
+  ocpus:
+    title: OCPUs
+    description: The number of OCPUs (Oracle Compute Units) for the container.
+    default: 1
+    required: true
+    visible: true
+    type: number
+
+  state:
+    title: State
+    description: State.
+    default: "ACTIVE"
+    required: true
+    visible: true
+    type: string
+
+  vnic_display_name:
+    title: VNIC Display Name
+    description: The display name for the VNIC (Virtual Network Interface Card).
+    default: "oke"
+    required: true
+    visible: true
+    type   : string
+
+  hostname_label:
+    title: Hostname Label
+    description: The hostname label for the VNIC.
+    default: "oke"
+    required: true
+    visible: true
+    type: string
+
+  is_public_ip_assigned:
+    title: Is Public IP Assigned
+    description: Whether a public IP address should be assigned to the VNIC.
+    default: true
+    required: true
+    visible: true
+    type: bool
+
+  nsg_ids:
+    title: NSG IDs
+    description: The IDs of the NSGs (Network Security Groups) to associate with the VNIC.
+    default: []
+    required: true
+    visible: true
+    type: list
+
+  private_ip:
+    title: Private IP
+    description: The private IP address for the VNIC.
+    default: "10.0.0.45"
+    required: true
+    visible: true
+    type: string
+
+  skip_source_dest_check:
+    title: Skip Source/Destination Check
+    description: Whether to skip source/destination IP check for the VNIC.
+    default: true
+    required: true
+    visible: true
+    type: bool
+
+  

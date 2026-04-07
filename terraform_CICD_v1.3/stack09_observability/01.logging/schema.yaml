@@ -1,0 +1,715 @@
+title: oci_Logging
+description: oci_Logging
+schemaVersion: 1.1.0
+version: "25012022"
+
+######################################
+
+#  Variable Groupings
+
+# #####################################
+
+groupings:
+ 
+
+  - title: "common compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      
+  - title: "identity variables"
+    variables:
+      - ${log_group_defined_tags_value1}
+      - ${log_group_freeform_tags}
+      - ${tag_namespace_description1}
+      - ${tag_namespace_name}
+
+########### log variables ###########
+
+  - title: "log_variables"
+    variables:
+      - ${log_configuration_source_category}
+      - ${log_configuration_source_parameters}
+      - ${log_configuration_source_resource}
+      - ${log_configuration_source_service}   
+      - ${log_configuration_source_source_type}
+      - ${defined_tags_value1}
+      - ${freeform_tags_value1}
+      - ${log_log_type}   
+      - ${log_source_resource}
+      - ${log_source_service}
+      - ${test_log_name}   
+
+##########  log_saved_search  ##########
+  
+  - title: "log_saved_search"
+    variables:
+      - ${log_saved_search_freeform_tags}
+      - ${log_defined_tags_value2}
+      - ${log_group_defined_tags_value}
+      - ${test_log_saved_search_name}
+
+############# log_agent_configuration ###########  
+
+  - title: "log_agent_configuration"
+    variables:
+      - ${unified_agent_config_defined_tags_value}
+      - ${unified_agent_config_description}
+      - ${unified_agent_config_display_name}
+      - ${unified_agent_config_freeform_tags}   
+      - ${unified_agent_config_group_association_group_list}
+      - ${unified_agent_config_service_config_config_type}
+      - ${unified_agent_config_is_compartment_id_in_subtree}
+      - ${unified_agent_config_is_enabled}  
+      - ${unified_agent_config_service_config_sources_channels}
+      - ${unified_agent_config_service_config_sources_name}
+      - ${unified_agent_config_service_config_sources_parser_delimiter}
+      - ${unified_agent_config_service_config_sources_parser_expression}   
+      - ${unified_agent_config_service_config_sources_parser_field_time_key}
+      - ${unified_agent_config_service_config_sources_parser_format}  
+      - ${unified_agent_config_service_config_sources_parser_format_firstline}
+      - ${unified_agent_config_service_config_sources_parser_grok_failure_key}
+      - ${unified_agent_config_service_config_sources_parser_grok_name_key}
+      - ${unified_agent_config_service_config_sources_parser_is_estimate_current_event}   
+      - ${unified_agent_config_service_config_sources_parser_is_keep_time_key}
+      - ${unified_agent_config_service_config_sources_parser_is_null_empty_string}
+      - ${unified_agent_config_service_config_sources_parser_is_support_colonless_ident}
+      - ${unified_agent_config_service_config_sources_parser_is_with_priority}   
+      - ${unified_agent_config_service_config_sources_parser_keys}
+      - ${unified_agent_config_service_config_sources_parser_message_format}
+      - ${unified_agent_config_service_config_sources_parser_message_key}
+      - ${unified_agent_config_service_config_sources_parser_multi_line_start_regexp}   
+      - ${unified_agent_config_service_config_sources_parser_null_value_pattern}
+      - ${unified_agent_config_service_config_sources_parser_parser_type}  
+      - ${unified_agent_config_service_config_sources_parser_patterns_field_time_format}
+      - ${unified_agent_config_service_config_sources_parser_patterns_field_time_key}
+      - ${unified_agent_config_service_config_sources_parser_patterns_field_time_zone}
+      - ${unified_agent_config_service_config_sources_parser_patterns_name}   
+      - ${unified_agent_config_service_config_sources_parser_patterns_pattern}
+      - ${unified_agent_config_service_config_sources_parser_rfc5424time_format}
+      - ${unified_agent_config_service_config_sources_parser_syslog_parser_type}
+      - ${unified_agent_config_service_config_sources_parser_time_format}   
+      - ${unified_agent_config_service_config_sources_parser_time_type}
+      - ${unified_agent_config_service_config_sources_parser_timeout_in_milliseconds}
+      - ${unified_agent_config_service_config_sources_parser_types}
+      - ${unified_agent_config_service_config_sources_paths}   
+      - ${unified_agent_config_service_config_sources_source_type}
+      - ${unified_agent_config_state}  
+      - ${log_group_defined_tags_value3}
+       
+ ##########  log_group  ##########
+  
+  - title: "log_group"
+    variables:
+      - ${tag_namespace_description}
+      - ${tag_namespace_name1}
+      - ${defined_tags_value2}
+      - ${freeform_tags_value2}   
+      - ${log_group_name}
+      
+ ##########  log_rule  ##########
+  
+  - title: "log_rule"
+    variables:
+      - ${defined_tags_value3}
+
+ 
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+variables:
+
+  monitoring_compartment_name:
+    type: string
+    visible: true
+    title: Compartment Name
+    description: Compartment Name of the Resource
+    default: ""
+
+  monitoring_compartment_id_in_subtree:
+    type: boolean
+    visible: true
+    title: Compartment ID in Subtree
+    description: Compartment ID in Subtree
+    default: true
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Region
+
+#####################################
+
+  # identity Configuration
+
+#####################################
+
+  log_group_defined_tags_value1:
+    type: string
+    required: true
+    visible: true
+    default: "value2"
+    title: "Log group defined tags value1"
+    description: "Choose a value for Log Group"
+
+  log_group_freeform_tags:
+    type: string
+    default: "Finance"
+    title: "Log group freeform tags"
+    description: "Log group freeform tags" 
+    required: true
+    visible: true    
+
+  tag_namespace_description1:
+    type: string
+    required: true
+    visible: true
+    default: "Just a test"
+    title: "Tag namespace description1"
+    description: "Description for tagnamespace"  
+
+  tag_namespace_name:
+    type: string
+    required: true
+    visible: true
+    default: "Log_tag-tag-namespace"
+    title: "Tag namespace name"
+    description: "Name for tagnamespace"     
+
+########### log variables ###########
+
+  log_configuration_source_category:
+    type: map
+    required: true
+    visible: true
+    write: "write"
+    read: "read"
+    title: "Log configuration source category"
+    description: "Log source category"
+    
+
+  log_configuration_source_parameters:
+    type: string
+    required: true
+    visible: true
+    default: "parameters"
+    title: "Log configuration source parameters"
+    description: "Source parameters"   
+
+  log_configuration_source_resource:
+    type: string
+    required: true
+    visible: true
+    default: "srishti-bucket"
+    title: "Log configuration source resource"
+    description: "Sorce resource"  
+
+  log_configuration_source_service:
+    type: string
+    required: true
+    visible: true
+    default: "objectstorage"
+    title: "Log configuration source service"
+    description: "Source service"  
+
+  log_configuration_source_source_type:
+    type: string
+    required: true
+    visible: true
+    default: "OCISERVICE"
+    title: "Log configuration source source type"
+    description: "Log source type" 
+
+  defined_tags_value1:
+    type: string
+    required: true
+    visible: true
+    default: "tf-value"
+    title: "Defined tags value1"
+    description: "Defined tags value" 
+
+  freeform_tags_value1:
+    type: string
+    required: true
+    visible: true
+    Department: "Finance log"
+    title: "Freeform_tags_value1"
+    description: "Freeform tags value" 
+
+  log_source_resource:
+    type: string
+    required: true
+    visible: true
+    default: "srishti-bucket"
+    title: "Log_source_resource"
+    description: "Resource log source" 
+
+  log_source_service:
+    type: string
+    required: true
+    visible: true
+    default: "objectstorage"
+    title: "Log_source_service"
+    description: "Logsource service" 
+
+  log_log_type:
+    type: map
+    required: true
+    visible: true
+    service: "SERVICE"
+    custom: "CUSTOM"
+    title: "Log_log_type"
+    description: "Type of the Log"
+
+  test_log_name:
+    type: string
+    required: true
+    visible: true
+    default: "test_Log"
+    title: "Test_log_name"
+    description: "Name of the Test Log" 
+
+########## log_saved_search ################
+
+  log_saved_search_freeform_tags:
+    type: string
+    required: true
+    visible: true
+    default: "Finance"
+    title: "Log_saved_search_freeform_tags"
+    description: "Freeform tags value"
+
+  log_defined_tags_value2:
+    type: string
+    required: true
+    visible: true
+    default: "log-value"
+    title: "Log_defined_tags_value2"
+    description: "Log defined tag value2"
+
+  log_group_defined_tags_value:
+    type: string
+    required: true
+    visible: true
+    default: "log-value-group"
+    title: "Log_group_defined_tags_value"
+    description: "Log defined tag value"
+
+  test_log_saved_search_name:
+    type: string
+    required: true
+    visible: true
+    default: "log_exampleLogSavedSearch1"
+    title: "Test_log_saved_search_name"
+    description: " Test log name"
+ 
+############# log_agent_configuration ###########
+
+  unified_agent_config_defined_tags_value:
+    type: string
+    required: true
+    visible: true
+    default: "value"
+    title: "Unified_agent_config_defined_tags_value"
+    description: "Defined tag value" 
+
+  unified_agent_config_description:
+    type: string
+    required: true
+    visible: true
+    default: "description2"
+    title: "Unified_agent_config_description"
+    description: "Unified agent config description" 
+
+  unified_agent_config_display_name:
+     type: string
+     required: true
+     visible: true
+     default: "log-agentConfigName"
+     title: "Unified_agent_config_display_name"
+     description: "Agent display name" 
+
+  unified_agent_config_freeform_tags:
+    type: string
+    required: true
+    visible: true
+    Department: "Finance log"
+    title: "Unified_agent_config_freeform_tags"
+    description: "Unified agent freeform tag" 
+
+  unified_agent_config_group_association_group_list:
+    type: list
+    required: false
+    visible: false
+    default: []
+    title: "Unified_agent_config_group_association_group_list"
+    description: "Unified config association list" 
+
+  unified_agent_config_is_compartment_id_in_subtree:
+    type: bool
+    required: true
+    visible: true
+    default: false
+    title: "Unified_agent_config_is_compartment_id_in_subtree"
+    description: "Compartment id for unified agent" 
+  
+  unified_agent_config_is_enabled:
+    type: bool
+    required: true
+    visible: true
+    default: true
+    title: "Unified_agent_configuration_is_enabled"
+    description: "Enable unified agent" 
+
+  unified_agent_config_service_config_config_type:
+    type: string
+    required: true
+    visible: true
+    default: "LOGGING"
+    title: "Unified_agent_config_service_config_config_type"
+    description: "Unified agent config type" 
+
+  unified_agent_config_service_config_sources_channels:
+    type: string
+    required: true
+    visible: true
+    default: "Security"
+    title: "Unified_agent_config_service_config_sources_channels"
+    description: "Unified agent source chanels" 
+
+  unified_agent_config_service_config_sources_name:
+    type: string
+    required: true
+    visible: true
+    default: "name"
+    title: "Unified_agent_config_service_config_sources_name"
+    description: "Unifies agent service source name" 
+
+  unified_agent_config_service_config_sources_parser_delimiter:
+    type: string
+    required: true
+    visible: true
+    default: "delimiter"
+    title: "Unified_agent_config_service_config_sources_parser_delimiter"
+    description: "Unified agent parser definition" 
+
+  unified_agent_config_service_config_sources_parser_expression:
+     type: string
+     required: true
+     visible: true
+     default: "expression"
+     title: "Unified_agent_config_service_config_sources_parser_expression"
+     description: "Unified agent parser expression" 
+
+  unified_agent_config_service_config_sources_parser_field_time_key:
+     type: string
+     required: true
+     visible: true
+     default: "fieldTimeKey"
+     title: "Unified_agent_config_service_config_sources_parser_field_time_key"
+     description: "Unified agent parser time key" 
+
+  unified_agent_config_service_config_sources_parser_format:
+    type: list
+    required: false
+    visible: false 
+    default: []
+    title: "Unified_agent_config_service_config_sources_parser_format"
+    description: "Unified agent parser format" 
+
+  unified_agent_config_service_config_sources_parser_format_firstline:
+    type: string
+    required: true
+    visible: true
+    default: "formatFirstline"
+    title: "Unified_agent_config_service_config_sources_parser_format_firstline"
+    description: "Unifies agent service parser first line" 
+
+  unified_agent_config_service_config_sources_parser_grok_failure_key:
+    type: string
+    required: true
+    visible: true
+    default: "grokFailureKey"
+    title: "Unified_agent_config_service_config_sources_parser_grok_failure_key"
+    description: "Unified agent service parsr failure key" 
+
+  unified_agent_config_service_config_sources_parser_grok_name_key:
+    type: string
+    required: true
+    visible: true
+    default: "grokNameKey"
+    title: "Unified_agent_config_service_config_sources_parser_grok_name_key"
+    description: "Unified agent parser name key" 
+
+  unified_agent_config_service_config_sources_parser_is_estimate_current_event:
+    type: bool
+    required: true
+    visible: true
+    default: false
+    title: "Unified_agent_config_service_config_sources_parser_is_estimate_current_event"
+    description: "Unified agent parser estimate current event" 
+
+  unified_agent_config_service_config_sources_parser_is_keep_time_key:
+    type: bool
+    required: true
+    visible: true
+    default: false
+    title: "Unified_agent_config_service_config_sources_parser_is_keep_time_key"
+    description: "Unified agent keep time key" 
+
+  unified_agent_config_service_config_sources_parser_is_null_empty_string:
+    type: bool
+    required: true
+    visible: true
+    default: false
+    title: "Unified_agent_config_service_config_sources_parser_is_null_empty_string"
+    description: "Unified agent config parser null empty string" 
+
+  unified_agent_config_service_config_sources_parser_is_support_colonless_ident:
+     type: bool
+     required: true
+     visible: true
+     default: false
+     title: "Unified_agent_config_service_config_sources_parser_is_support_colonless_ident"
+     description: "Agent config support indent parser" 
+
+  unified_agent_config_service_config_sources_parser_is_with_priority:
+    type: bool
+    required: true
+    visible: true
+    default: false
+    title: "Unified_agent_config_service_config_sources_parser_is_with_priority"
+    description: "Unified agent is with priority" 
+
+  unified_agent_config_service_config_sources_parser_keys:
+    type: list
+    required: false
+    visible: false 
+    default: []
+    title: "Unified_agent_config_service_config_sources_parser_keys"
+    description: "Unified agent parser keys" 
+
+  unified_agent_config_service_config_sources_parser_message_format:
+    type: string
+    required: true
+    visible: true
+    default: "RFC3164"
+    title: "Unified_agent_config_service_config_sources_parser_message_format"
+    description: "Unified agent parser message format" 
+
+  unified_agent_config_service_config_sources_parser_message_key:
+    type: string
+    required: true
+    visible: true
+    default: "messageKey"
+    title: "Unified_agent_config_service_config_sources_parser_message_key"
+    description: "Unified agent parser message key" 
+
+  unified_agent_config_service_config_sources_parser_multi_line_start_regexp:
+    type: string
+    required: true
+    visible: true
+    default: "multiLineStartRegexp"
+    title: "Unified_agent_config_service_config_sources_parser_multi_line_start_regexp"
+    description: "Unified agent multiline regexp" 
+
+  unified_agent_config_service_config_sources_parser_null_value_pattern:
+     type: string
+     required: true
+     visible: true
+     default: "nullValuePattern"
+     title: "Unified_agent_config_service_config_sources_parser_null_value_pattern"
+     description: "Unified agent null value pattern" 
+
+  unified_agent_config_service_config_sources_parser_parser_type:
+    type: string
+    required: true
+    visible: true
+    default: "AUDITD"
+    title: "Unified_agent_config_service_config_sources_parser_parser_type"
+    description: "Unified agent parser type" 
+
+  unified_agent_config_service_config_sources_parser_patterns_field_time_format:
+    type: string
+    required: true
+    visible: true
+    default: "fieldTimeFormat"
+    title: "Unified agent config service config sources parser patterns field timeformat"
+    description: "Unified agent time format" 
+
+  unified_agent_config_service_config_sources_parser_patterns_field_time_key:
+    type: string
+    required: true
+    visible: true
+    default: "fieldTimeKey"
+    title: "Unified agent config service config sources parser patterns field time key"
+    description: "Unified agent feils time key" 
+
+  unified_agent_config_service_config_sources_parser_patterns_field_time_zone:
+     type: string
+     required: true
+     visible: true
+     default: "fieldTimeZone"
+     title: "Unified agent config service config sources parser patterns field time zone"
+     description: "Agent Config Time Zone" 
+
+  unified_agent_config_service_config_sources_parser_patterns_name:
+    type: string
+    required: true
+    visible: true
+    default: "name"
+    title: "Unified agent config service config sources parser patterns name"
+    description: "Unified agent patterns name" 
+
+  unified_agent_config_service_config_sources_parser_patterns_pattern:
+    type: string
+    required: true
+    visible: true
+    default: "pattern"
+    title: "Unified agent config service config sources parser patterns pattern"
+    description: "Unified agent patterns pattern" 
+
+  unified_agent_config_service_config_sources_parser_rfc5424time_format:
+    type: string
+    required: true
+    visible: true
+    default: "rfc5424TimeFormat"
+    title: "Unified agent config service config sources parser rfc5424time format"
+    description: "Unified agent time format" 
+
+  unified_agent_config_service_config_sources_parser_syslog_parser_type:
+    type: string
+    required: true
+    visible: true
+    default: "STRING"
+    title: "Unified agent config service config sources parser syslog parser type"
+    description: "Unified agent parser type" 
+
+  unified_agent_config_service_config_sources_parser_time_format:
+     type: string
+     required: true
+     visible: true
+     default: "timeFormat"
+     title: "Unified_agentc onfig service config sources parser time format"
+     description: "Unified agent format" 
+
+  unified_agent_config_service_config_sources_parser_time_type:
+    type: string
+    required: true
+    visible: true
+    default: "FLOAT"
+    title: "Unified agent config service config sources parser time type"
+    description: "Unifies agent parser time type" 
+
+  unified_agent_config_service_config_sources_parser_timeout_in_milliseconds:
+    type: number
+    required: true
+    visible: true
+    default: 10
+    title: "Unified agent config service config sources parser timeout in milliseconds"
+    description: "Unified agent parser timeout" 
+  
+  unified_agent_config_service_config_sources_parser_types:
+    type: string
+    required: true
+    visible: true
+    default: "types"
+    title: "Unified agent config service config sources parser types"
+    description: "Unified agent parser type" 
+
+  unified_agent_config_service_config_sources_paths:
+    type: list
+    required: false
+    visible: false
+    default: []
+    title: "Unified agent config service config sources paths"
+    description: "Unified agent source path" 
+
+  unified_agent_config_service_config_sources_source_type:
+    type: string
+    required: true
+    visible: true
+    default: "LOG_TAIL"
+    title: "Unified agent config service config sources source type"
+    description: "Unified agent source type" 
+
+  unified_agent_config_state:
+    type: string
+    required: true
+    visible: true
+    default: "ACTIVE"
+    title: "Unified agent config state"
+    description: "Agent config state" 
+
+  log_group_defined_tags_value3:
+    type: string
+    required: true
+    visible: true
+    default: "value2"
+    title: "Log group defined tags value3"
+    description: " Agent defined tag value" 
+
+###################  log_group  ##########
+
+  tag_namespace_description:
+    type: string
+    required: true
+    visible: true
+    default: "Just a test"
+    title: "Tag namespace description"
+    description: "Namespace description" 
+
+  tag_namespace_name1:
+    type: string
+    required: true
+    visible: true
+    default: "log_tag_namespace2"
+    title: "Tag namespace name1"
+    description: "Tag name" 
+
+  defined_tags_value2:
+    type: string
+    required: true
+    visible: true
+    default: "log-value"
+    title: "Defined tags value2"
+    description: "Tag value" 
+
+  freeform_tags_value2:
+    type: map
+    required: true
+    visible: true
+    Department: "Finance log"
+    title: "Freeform tags value2"
+    description: "Log group tag value" 
+
+  log_group_name:
+    type: string
+    required: true
+    visible: true
+    default: "log_exampleLogGroup2"
+    title: "Log group name"
+    description: "Log group name" 
+
+# ########### log_rule ############
+
+  defined_tags_value3:
+    type: string
+    required: true
+    visible: true
+    default: "defined_tags_value"
+    title: "Defined tags value3"
+    description: "Defined tag value" 
+

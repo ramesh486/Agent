@@ -1,0 +1,65 @@
+title: Create Blockchain Platform
+description: Blockchain Platform Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "OCI_Blockchain_Platform_Configuration"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${blockchain_platform_compute_shape}
+      - ${blockchain_platform_display_name}
+      - ${blockchain_platform_idcs_access_token}
+      - ${blockchain_platform_platform_role}
+
+variables:
+#####################################
+# Blockchain Platform Configuration
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "Choose the Compartment where to deploy the resources"
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  blockchain_platform_compute_shape:
+    type: string
+    default: "STANDARD"
+    title: "Blockchain platform compute shape"
+    description: "Select the blockchain platform compute shape"
+    required: true
+    visible: true
+    
+  blockchain_platform_display_name:
+    type: string
+    default: "MyBlockchain"
+    title: "Blockchain platform display name"
+    description: "Assign the display name"
+    required: true
+    visible: true
+
+  blockchain_platform_idcs_access_token:
+    type: string
+    default: ""
+    title: "Blockchain platform idcs access token"
+    description: "Provide idcs access token"
+    required: true
+    visible: true
+
+  blockchain_platform_platform_role:
+    type: string
+    default: "FOUNDER"
+    title: "Blockchain platform role"
+    description: "Select blockchain platform platform role"
+    required: true
+    visible: true

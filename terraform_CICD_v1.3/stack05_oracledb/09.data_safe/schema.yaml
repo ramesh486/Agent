@@ -1,0 +1,341 @@
+title: Datasafe Terraform Input Variables
+description: Datasafe Terraform Input Variables
+schemaVersion: 1.1.0
+version: "04052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Datasafe Configuration"
+    variables:
+      - ${target_database_datasafe_display_name}
+      - ${target_database_datasafe_description}
+      - ${target_database_details_database_type}
+      - ${target_database_details_infrastructure_type}
+      - ${autonomous_database_ocid}
+      - ${database_db_system_ocid}
+      - ${instance_ocid}
+      - ${target_database_database_details_ip_addresses}
+      - ${target_database_database_details_listener_port}
+      - ${database_service_name}
+      - ${database_vm_cluster_ocid}
+
+  - title: "Data Safe Target Connection Details"
+    variables:
+      - ${target_database_connection_option_connection_type}
+      - ${datasafe_private_endpoint_ocid}
+      - ${data_safe_on_prem_connector_ocid}
+      - ${target_database_user_name}
+      - ${target_database_password}
+
+  - title: "Select the Target Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+
+
+#################################################
+# DataSafe Database Variables
+#################################################
+
+  target_database_datasafe_display_name:
+    type: string
+    required: true
+    visible: true
+    title: "Data Safe Display Name"
+    description: "Provide Datasafe Database Display Name"
+   
+  target_database_datasafe_description:
+    type: string
+    required: true
+    visible: true
+    title: "Data Safe Description"
+    description: "Provide Datasafe Database Description"
+
+  target_database_details_database_type:
+    type: enum
+    required: true
+    visible: true
+    title: "Datasafe Database Type"
+    description: "Provide Datasafe Database Type"
+    enum: 
+      - AUTONOMOUS_DATABASE
+      - DATABASE_CLOUD_SERVICE
+      - INSTALLED_DATABASE
+
+  target_database_details_infrastructure_type:
+    type: enum
+    required: true
+    visible:
+      and:
+        - not:
+            - eq:
+                - ${target_database_details_database_type}
+                - AUTONOMOUS_DATABASE
+    title: "Datasafe Database Infrastructure Type"
+    description: "Provide Datasafe Database Infrastructure Type"
+    enum:
+      - ORACLE_CLOUD
+      - CLOUD_AT_CUSTOMER
+      - ON_PREMISES
+      - NON_ORACLE_CLOUD
+
+
+  autonomous_database_ocid:
+    type: string
+    required: true
+    visible:
+      and:
+        - eq:
+            - ${target_database_details_database_type}
+            - AUTONOMOUS_DATABASE
+
+    title: "Target Autonomous Database OCID"
+    description: "Provide Target Autonomous Database OCID"
+    default: ""
+
+  database_db_system_ocid:
+    type: string
+    required: true
+    visible:
+      and:
+        - eq:
+            - ${target_database_details_database_type}
+            - DATABASE_CLOUD_SERVICE
+        - eq:
+            - ${target_database_details_infrastructure_type}
+            - ORACLE_CLOUD
+    title: "Target DBSystem Database OCID"
+    description: "Provide Target DBSystem Database OCID"
+    default: ""
+
+  instance_ocid:
+    type: string
+    required: true
+    visible:
+      and:
+        - eq:
+            - ${target_database_details_database_type}
+            - INSTALLED_DATABASE
+
+        - eq:
+            - ${target_database_details_infrastructure_type}
+            - ORACLE_CLOUD
+    title: "Compute Instance OCID where Oracle database is installed"
+    description: "Provide Compute Instance OCID where Oracle database is installed"
+    default: ""
+  
+  database_vm_cluster_ocid:
+    type: string
+    required: true
+    visible:
+      and:
+        - eq:
+            - ${target_database_details_database_type}
+            - DATABASE_CLOUD_SERVICE
+        - or:
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - CLOUD_AT_CUSTOMER
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ORACLE_CLOUD
+    title: "Database VM Cluster OCID"
+    description: "Provide Database VM Cluster OCID"
+    default: ""
+
+  target_database_database_details_ip_addresses:
+    type: string
+    required: true
+    visible:
+      and:
+        - eq:
+            - ${target_database_details_database_type}
+            - INSTALLED_DATABASE
+        - or:
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - NON_ORACLE_CLOUD
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ON_PREMISES 
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - CLOUD_AT_CUSTOMER  
+    title: "Target Database IP Address"
+    description: "For multiple IP addresses please enter comma separated values. Example: 10.232.12.2,10.222.12.2"
+    default: ""
+
+  target_database_database_details_listener_port:
+    type: number
+    required: true
+    visible:
+      and:
+        - not:
+            - eq:
+                - ${target_database_details_database_type}
+                - AUTONOMOUS_DATABASE
+        - or: 
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ORACLE_CLOUD
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ON_PREMISES
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - CLOUD_AT_CUSTOMER
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - NON_ORACLE_CLOUD
+    title: "Target Database Listener Port"
+    description: "Provide Target Database Listener Port"
+    default: 1521
+
+  database_service_name:
+    type: string
+    required: true
+    visible:
+      and:
+        - not:
+            - eq:
+                - ${target_database_details_database_type}
+                - AUTONOMOUS_DATABASE
+        - or: 
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ORACLE_CLOUD
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ON_PREMISES
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - CLOUD_AT_CUSTOMER
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - NON_ORACLE_CLOUD
+    title: "Database Service Name"
+    description: "Provide Database Service Name"
+    default: ""
+
+
+
+  target_database_connection_option_connection_type:
+    type: enum
+    required: false
+    visible: true
+    title: "Datasafe Connection Option Type"
+    description: "Provide Datasafe Connection Option Type"
+    default: PRIVATE_ENDPOINT
+    enum:
+      - ONPREM_CONNECTOR 
+      - PRIVATE_ENDPOINT
+
+  datasafe_private_endpoint_ocid:
+    type: string
+    required: false
+    visible:
+      and:
+        - eq:
+            - ${target_database_connection_option_connection_type}
+            - PRIVATE_ENDPOINT
+    title: "Datasafe Private Endpoint OCID"
+    description: "Provide Datasafe Private Endpoint OCID"
+
+  data_safe_on_prem_connector_ocid:
+    type: string
+    required: false
+    visible:
+      and:
+        - eq:
+            - ${target_database_connection_option_connection_type}
+            - ONPREM_CONNECTOR
+    title: "Datasafe On-Prem Connector OCID"
+    description: "Provide Datasafe On-Prem Connector OCID"
+  
+  target_database_user_name:
+    type: string
+    required: true
+    visible:
+      and:
+        - not:
+            - eq:
+                - ${target_database_details_database_type}
+                - AUTONOMOUS_DATABASE
+        - or: 
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ORACLE_CLOUD
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ON_PREMISES
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - CLOUD_AT_CUSTOMER
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - NON_ORACLE_CLOUD
+    title: "Database User Name"
+    description: "Data Safe connects to the target database via this user"
+    default: ""
+
+  target_database_password:
+    type: password
+    required: true
+    visible:
+      and:
+        - not:
+            - eq:
+                - ${target_database_details_database_type}
+                - AUTONOMOUS_DATABASE
+        - or: 
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ORACLE_CLOUD
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - ON_PREMISES
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - CLOUD_AT_CUSTOMER
+            - eq:
+                - ${target_database_details_infrastructure_type}
+                - NON_ORACLE_CLOUD
+    title: "Database User Password"
+    description: "Database User Password"
+    default: ""
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true

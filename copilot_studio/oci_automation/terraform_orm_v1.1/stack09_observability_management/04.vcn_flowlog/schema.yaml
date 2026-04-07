@@ -1,0 +1,185 @@
+title: oci_vcn_flow_Logs_Logging
+description: oci_vcn_flow_Logs_Logging
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+ 
+  - title: "Network Configuration"
+    variables:
+      - ${vcn_compartment_ocid}
+      - ${vcn_ocid}
+
+  - title: "prod_log_vcn_flow_Logs_Logging Configuration"
+    variables:
+      - ${log_group_display_name}
+      - ${log_group_description}
+      - ${log_type}
+      - ${logging_configuration_source_category}
+      - ${logging_configuration_source_service}
+      - ${logging_configuration_source_type}
+
+  - title: "hub_fw_log"
+    variables:
+      - ${hub_fw_log_logging_display_name}
+      - ${hub_fw_log_is_logging_enabled}
+      - ${hub_fw_log_retention_duration}
+      - ${hub_fw_log_subnet_compartment_ocid}
+      - ${hub_fw_log_subnet_ocid}
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+
+     
+
+#####################################
+# Common Compartment
+#####################################
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#####################################
+# Common log Group Configuration
+#####################################
+
+  log_group_display_name:
+     type: string
+     required: true
+     visible: true
+     default: "hub_vcn_Log_Group"
+     title: "Log Group name"
+     description: "Choose a name for Log Group"
+   
+  log_group_description:
+     type: string
+     required: true
+     visible: true
+     default: "Group for nonprod vcn Logs"
+     title: "Log_Group_description"
+     description: "Choose Log Group description"
+
+  log_type:
+     type: enum
+     required: true
+     visible: true
+     default: "SERVICE"
+     title: "log type"
+     description: "Choose log type"
+     enum:
+          - "CUSTOM"
+          - "SERVICE"
+
+  logging_configuration_source_category:
+     type: string
+     required: true
+     visible: true
+     default: "all"
+     title: "select source catagory for logging"
+     description: "Choose source category for Logging"
+
+  logging_configuration_source_service:
+     type: string
+     required: true
+     visible: true
+     default: "flowlogs"
+     title: "select source service for logging"
+     description: "Choose source service for Logging"
+
+  logging_configuration_source_type:
+     type: string
+     required: true
+     visible: true
+     default: "OCISERVICE"
+     title: "select source type for logging"
+     description: "Choose source type for Logging"
+
+
+##### hub_fw_log  #########
+
+  hub_fw_log_logging_display_name:
+     type: string
+     required: true
+     visible: true
+     default: "hub_fw_log"
+     title: "Logging display name"
+     description: "Choose Logging display name"
+
+  hub_fw_log_is_logging_enabled:
+    type: boolean
+    required: false
+    visible: true
+    title: Enable logging
+    description: Specify whether to enable logs, if unchecked no logs created
+          
+  hub_fw_log_retention_duration:
+     type: string
+     required: true
+     visible: true
+     default: "60"
+     title: "select Log retention duration"
+     description: "Choose Log retention duration from 30,60,90 untill 180 days"
+
+  hub_fw_log_subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Subnet Compartment
+    description: Choose the Subnet Compartment
+
+  hub_fw_log_subnet_ocid:
+    type: oci:core:subnet:id
+    visible:  true
+    title: Select the Subnet 
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${hub_fw_log_subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+
+
+#####  VCN Configuration #######
+
+  vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+    
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: true
+    title: Select the VCN
+    description: Choose the VCN
+    dependsOn: 
+      compartmentId: ${vcn_compartment_ocid}
+
+  

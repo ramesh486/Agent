@@ -1,0 +1,107 @@
+title: Datasafe Terraform Input Variables
+description: Datasafe Terraform Input Variables
+schemaVersion: 1.1.0
+version: "04052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Datasafe Configuration"
+    variables:
+      - ${target_database_datasafe_display_name}
+      - ${target_database_datasafe_description}
+      - ${target_database_details_database_type}
+      - ${target_database_details_infrastructure_type}
+      - ${autonomous_database_ocid}
+
+
+  - title: "Data Safe Target Connection Details"
+    visible: false
+    variables:
+      - ${target_database_connection_option_connection_type}
+      - ${datasafe_private_endpoint_ocid}
+
+  - title: "Select the Target Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+
+
+#################################################
+# DataSafe Variables
+#################################################
+
+  target_database_datasafe_display_name:
+    type: string
+    required: true
+    visible: true
+    title: "Data Safe Display Name"
+    description: "Provide Datasafe Database Display Name"
+   
+  target_database_datasafe_description:
+    type: string
+    required: true
+    visible: true
+    title: "Data Safe Description"
+    description: "Provide Datasafe Database Description"
+
+  target_database_details_database_type:
+    type: string
+    required: trues
+    visible: true
+    title: "Datasafe Database Type"
+    description: "Provide Datasafe Database Type"
+    default: AUTONOMOUS_DATABASE
+
+
+  target_database_details_infrastructure_type:
+    type: string
+    required: true
+    visible: true
+    title: "Datasafe Database Infrastructure Type"
+    description: "Provide Datasafe Database Infrastructure Type"
+    default: ORACLE_CLOUD
+
+
+  autonomous_database_ocid:
+    type: string
+    required: true
+    visible: true
+    title: "Target Autonomous Database OCID"
+    description: "Provide Target Autonomous Database OCID"
+    default: ""
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true

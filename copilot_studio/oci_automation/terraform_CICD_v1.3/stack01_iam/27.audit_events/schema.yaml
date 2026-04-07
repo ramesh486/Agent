@@ -1,0 +1,62 @@
+title: Create Audit event 
+description: Audit event Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_name}
+      
+
+  - title: "audit Configuration"
+    variables:
+      - ${configuration_retention_period_days}
+      - ${audit_event_end_time}
+      - ${audit_event_start_time}
+        
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+ 
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+      
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region      
+

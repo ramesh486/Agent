@@ -1,0 +1,84 @@
+title: Create private endpoint
+description: Private endpoint Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+ 
+ 
+  - title: "private endpoint Configuration"
+    variables:
+    - ${private_endpoint_display_name}
+    - ${private_endpoint_is_used_with_configuration_source_provider}
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${availability_domain}
+
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+ 
+  availability_domain:
+    type: oci:identity:availabilitydomain:name
+    visible: true
+    title: Select the availability domain to deploy resources
+    description: Choose the availability domain to deploy the resources
+    dependsOn: 
+      compartmentId: ${compartment_ocid}   
+      
+
+########### private end point #########################
+
+  private_endpoint_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "private_endpoint"
+    title: "Private endpoint name"
+    description: "Choose private endpoint name"
+  
+  private_endpoint_is_used_with_configuration_source_provider:
+    type: boolean
+    required: true
+    title: Auto-tune performance is enabled
+    visible: true
+    description: Whether the private endpoint is used with configuration source provider     
+    default: false
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

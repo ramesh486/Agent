@@ -1,0 +1,196 @@
+title: Create Certificate 
+description: Certificate Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "oci_certificates_management_certificate"
+    variables:
+      # - ${compartment_ocid}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${project_tag}
+      - ${certificate_certificate_config_config_type}
+      - ${certificate_certificate_config_subject_common_name}
+      - ${certificate_certificate_config_subject_alternative_names_type}
+      - ${certificate_certificate_config_subject_alternative_names_value}
+      - ${certificate_certificate_config_validity_time_of_validity_not_after}
+      - ${certificate_certificate_config_validity_time_of_validity_not_before}
+      - ${certificate_certificate_config_version_name}
+      - ${certificate_name}
+      - ${certificate_certificate_rules_advance_renewal_period}
+      - ${certificate_certificate_rules_renewal_interval}
+      - ${certificate_certificate_rules_rule_type}
+      - ${certificate_description}
+      - ${certificate_certificate_config_certificate_profile_type}
+      - ${issuer_certificate_authority_ocid}
+      - $}{certificate_state}
+      
+variables:
+#####################################
+# oci certificates management certificate 
+#####################################
+
+  # compartment_ocid:
+  #   type: oci:identity:compartment:id
+  #   visible: true
+  #   title: "Select the Compartment to deploy resources"
+  #   description: "Choose the Compartment where to deploy the resources"
+
+  region:
+    visible: true
+    title: "Region"
+    description: "The region where the resources will be provisioned"
+
+  tenancy_ocid:
+    visible: true
+    title: "Tenancy OCID"
+    description: "Tenancy OCID"
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach the Tags"
+    visible: true
+    required: false
+
+  certificate_authority_certificate_authority_config_config_type:
+    type: string
+    default: "ISSUED_BY_INTERNAL_CA"
+    title: "Certificate Configuration Type"
+    description: "The type of configuration for the certificate"
+    required: true
+    visible: true
+
+  certificate_certificate_config_subject_common_name:
+    type: string
+    default: "www.example.com"
+    title: "Common Name"
+    description: "The common name for the certificate subject"
+    required: true
+    visible: true
+
+  certificate_certificate_config_subject_alternative_names_type:
+    type: string
+    default: "DNS"
+    title: "Alternative Names Type"
+    description: "The type of alternative names for the certificate subject"
+    required: true
+    visible: true
+
+  certificate_certificate_config_subject_alternative_names_value:
+    type: string
+    default: "value"
+    title: "Alternative Names Value"
+    description: "The value of the alternative names for the certificate subject"
+    required: true
+    visible: true
+
+  certificate_certificate_config_validity_time_of_validity_not_after:
+    type: string
+    default: "2023-10-27T21:10:29.999Z"
+    title: "Time of validity (not after)"
+    description: "The time of validity for the certificate (not after)"
+    required: true
+    visible: true
+
+  certificate_certificate_config_validity_time_of_validity_not_before:
+    type: string
+    default: "2023-07-08T03:59:10Z"
+    title: "Time of validity (not before)"
+    description: "The time of validity for the certificate (not before)"
+    required: true
+    visible: true
+
+  certificate_certificate_config_version_name:
+    type: string
+    default: "myCertVersion"
+    title: "Certificate Version"
+    description: "The name of the certificate version"
+    required: true
+    visible: true
+
+  certificate_name:
+    type: string
+    default: "Certificate_Testing"
+    title: "Certificate Name"
+    description: "The name of the certificate"
+    required: true
+    visible: true
+
+  certificate_certificate_rules_advance_renewal_period:
+    type: string
+    default: "P60D"
+    title: "Advance Renewal Period"
+    description: "The advance renewal period for the certificate rules"
+    required: true
+    visible: true
+ 
+  certificate_certificate_rules_renewal_interval:
+    type: string
+    default: "P365D"
+    title: "Renewal Interval"
+    description: "The renewal interval for the certificate rules"
+    required: true
+    visible: true
+
+  certificate_certificate_rules_rule_type:
+    type: string
+    default: "CERTIFICATE_RENEWAL_RULE"
+    title: "Rule Type"
+    description: "The type of rule for the certificate"
+    required: true
+    visible: true
+
+  certificate_description:
+    type: string
+    default: "Description of certificate"
+    title: "Certificate Description"
+    description: "The description of the certificate"
+    required: true
+    visible: true
+
+  certificate_certificate_config_certificate_profile_type:
+    type: string
+    default: "TLS_SERVER_OR_CLIENT"
+    title: "Certificate Profile Type"
+    description: "The profile type for the certificate"
+    required: true
+    visible: true
+
+  issuer_certificate_authority_ocid:
+    type: string
+    default: ""
+    title: "Issuer Certificate Authority OCID"
+    description: "The OCID of the issuer certificate authority"
+    required: true
+    visible: true
+
+  certificate_state:
+    type: string
+    default: "ACTIVE"
+    title: "Certificate State"
+    description: "The state of the certificate"
+    required: true
+    visible: true

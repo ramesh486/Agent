@@ -1,0 +1,219 @@
+title: vulnerability scanning service
+description: Creates a new ContainerScanRecipe, a host scan receipe and host scan target
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+
+  
+  - title: "container scan recipe"
+    variables:
+      - ${container_scan_recipe_defined_tags_value}
+      - ${container_scan_recipe_display_name}
+      - ${container_scan_recipe_freeform_tags}
+      - ${container_scan_recipe_defined_tags}
+      - ${container_scan_recipe_image_count}
+      - ${container_scan_recipe_state}
+      - ${container_repo_name}
+      - ${vault_secret_ocid}
+      - ${scan_level}
+
+  - title: "host scan recipe"
+    variables:
+      - ${scan_level1}
+      - ${vendor}
+      - ${scan_level2}
+      - ${vendor_type}
+      - ${scan_level3}
+      - ${type}
+      - ${day_of_week}
+      - ${display_name}
+
+  - title: "host scan target"
+    variables:
+      - ${description}
+      - ${display_name1}
+      - ${host_scan_recipe_ocid}
+     
+     
+variables:
+#####################################
+# Common Compartment
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region 
+    description: Specifies the region name
+  
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+
+########### container scan recipe##########
+ 
+
+  container_scan_recipe_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "displayName"
+    title: "Container Scan Recipe Display Name"
+    description: "Specifies the display name of the container scan recipe"
+
+  container_scan_recipe_image_count:
+    type: number
+    required: true
+    visible: true
+    default: "4"
+    title: "Container Scan Recipe Image Count"
+    description: "The number of images associated with the container scan recipe"
+
+  container_scan_recipe_state:
+    type: string
+    required: true
+    visible: true
+    default: "Active"
+    title: "Container Scan Recipe State"
+    description: "Specifies the state of the container scan recipe"
+
+  container_repo_name:
+    type: string
+    required: true
+    visible: true
+    default: "cyc-security-repos-do-not-use"
+    title: "Container Repository Name"
+    description: "The name of the container repository"
+
+  vault_secret_ocid:
+    type: string
+    required: true
+    visible: true
+    default: "some-secret-ocid"
+    title: "Vault Secret OCID"
+    description: "The OCID of the vault secret"
+
+  scan_level:
+    type: string
+    required: true
+    visible: true
+    default: "NONE"
+    title: "Container Scan Recipe Scan Level"
+    description: "The level of scanning to be performed in Container Scan Recipe"
+
+###########host scan recipe ############
+  scan_level1:
+    type: string
+    required: true
+    visible: true
+    default: "NONE"
+    title: "Host Scan Recipe first Scan Level"
+    description: "The first level of scanning to be performed in Host Scan Recipe"
+
+  vendor:
+    type: string
+    required: true
+    visible: true
+    default: "OCI"
+    title: "Host Scan Recipe Vendor"
+    description: "Host Scan Recipe Vendor name"
+
+  scan_level2:
+    type: string
+    required: true
+    visible: true
+    default: "NONE"
+    title: "Host Scan Recipe second Scan Level"
+    description: "The second level of scanning to be performed in Host Scan Recipe"
+
+  vendor_type:
+    type: string
+    required: true
+    visible: true
+    default: "OCI"
+    title: "Vendor Type"
+    description: "The type of vendor"
+
+  scan_level3:
+    type: string
+    required: true
+    visible: true
+    default: "NONE"
+    title: "Host Scan Recipe Third Scan Level"
+    description: "The third level of scanning to be performed in Host Scan Recipe"
+
+  type:
+    type: string
+    required: true
+    visible: true
+    default: "DAILY"
+    title: "Host Scan Recipe type"
+    description: "Specifies the Scan Recipe type"
+
+  day_of_week:
+    type: string
+    required: true
+    visible: true
+    default: "SUNDAY"
+    title: "Host Scan Recipe Schedule"
+    description: "Schedule Scan for a particular day in a week"
+
+  display_name:
+    type: string
+    required: true
+    visible: true
+    default: "TestHostScanRecipe"
+    title: "Host Scan Recipe Display Name"
+    description: "The display name of the host scan recipe"
+
+  ##############host scan Target########
+  description:
+    type: string
+    required: true
+    visible: true
+    default: "Test target example"
+    title: "Scan Target Description"
+    description: "The description of the scan target"
+
+  display_name1:
+    type: string
+    required: true
+    visible: true
+    default: "TestHostScanTarget"
+    title: "Host Scan Target Display Name"
+    description: "The display name of the host scan target"
+
+  host_scan_recipe_ocid:
+    type: string
+    required: false
+    visible: true
+    default: "ocid1.vsshostscanrecipe.oc1.iad.aaaaaaaaxxesgxusfoppgqu2b2xftlekig3lklwprjn37re5i5znj5t2a6xq"
+    title: "Host Scan Recipe OCID"
+    description: "The OCID of the host scan recipe"
+  
+  
+
+  
+
+

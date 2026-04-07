@@ -1,0 +1,1 @@
+# This resource provides the Application resource in Oracle Cloud Infrastructure Functions service.

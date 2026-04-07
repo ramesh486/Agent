@@ -1,0 +1,29 @@
+#!/usr/bin/expect -f
+set timeout -1
+
+# Accept the script path as the first argument
+set pythonscript [lindex $argv 0]
+
+if {$pythonscript eq ""} {
+    puts "Usage: $argv0 <path-to-python-script>"
+    exit 2
+}
+
+# Start the Python script
+spawn python3.9 $pythonscript
+
+expect {
+    # Blank input for oci_devops_git_key=
+    -re {oci_devops_git_key=} {
+        send "\r"
+        exp_continue
+    }
+
+    # 'Do you want to proceed (y/n):'
+    -re {Do you want to proceed \(y/n\):} {
+        send "y\r"
+        exp_continue
+    }
+
+    eof
+}

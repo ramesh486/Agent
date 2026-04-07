@@ -1,0 +1,47 @@
+title: Create ADM Knowledge
+description: ADM Knowledge Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${knowledge_base_display_name}
+      
+
+variables:
+#####################################
+# Common Variables
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    type: string
+    default: ""
+    title: Select the Region
+    visible: true
+
+  tenancy_ocid:
+    type: string
+    default: ""
+    title: "Tenancy OCID"
+    visible: true
+
+  knowledge_base_display_name:
+    type: string
+    default: "Example_knowledge"
+    title: "Knowledge Base Display Name"
+    description: "Specifies the display name for the knowledge base."
+    visible: true

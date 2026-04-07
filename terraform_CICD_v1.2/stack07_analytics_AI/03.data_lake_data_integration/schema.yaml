@@ -1,0 +1,83 @@
+title:  Create Data Integration Workspace
+description: Data Integration Workspace
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}
+      - ${project_tag}
+
+
+  - title: "Data_integration_Workspace"
+    variables:
+      - ${description}
+      - ${display_name}
+      - ${is_private_network_enabled}
+     
+variables:
+#####################################
+# Common Compartment
+#####################################  
+  
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: "oci_monitoring"
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  region:
+    visible: true
+    title: Region name
+    description: Region name
+
+######################################
+# log_analytics_entity
+######################################
+
+  description:
+    type: string
+    default: "Data_integration_Workspace_Example"
+    title: "Data Integration Workspace description details"
+    required: true
+    visible: true
+
+  display_name:
+    type: string
+    default: "Workspace_Example"
+    title: "Workspace display name"
+    description: "Workspace display name"
+    required: true
+    visible: true
+
+  is_private_network_enabled:
+    type: bool
+    default: false
+    title: "Is Private Network Enabled?"
+    required: true
+    visible: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+ 

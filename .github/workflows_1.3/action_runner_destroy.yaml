@@ -1,0 +1,214 @@
+# This workflow installs the latest version of OCI CLI and configures the OCI CLI configuration file
+# with an API token for the Oracle Cloud (cloud.oracle.com).
+# this workflow will run `terraform destroy` job for specified stack name.
+
+on:
+
+  workflow_call:
+    inputs:
+      PROVIDER_NAME:
+        type: string
+      BRANCH_NAME:
+        type: string
+      STACK_NAME:
+        type: string
+      WORKING_DIRECTORY:
+        type: string
+      REPO_URL:
+        type: string
+      TF_VERSION:
+        type: string
+
+    secrets:
+      USER_OCID:
+        required: true
+      FINGERPRINT:
+        required: true
+      COMPARTMENT_OCID:
+        required: true
+      REGION:
+        required: true
+      TENANCY_OCID:
+        required: true
+      PRIVATE_KEY_FILE:
+        required: true
+env:
+
+  # ---------------------------------------------
+  # Source Provider Details
+  # ---------------------------------------------
+
+  PROVIDER_NAME: ${{ inputs.PROVIDER_NAME }}
+  REGION: ${{ inputs.REGION }}
+  BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
+  STACK_NAME: ${{ inputs.STACK_NAME }}
+  WORKING_DIRECTORY: ${{ inputs.WORKING_DIRECTORY }}
+  REPO_URL: ${{ inputs.REPO_URL }}
+  TF_VERSION: ${{ inputs.TF_VERSION }}
+ 
+
+permissions:
+  contents: write
+
+jobs:
+  STACK:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------------------------
+      #  Checkout source code
+      # ---------------------------------------------
+
+      - name: checkout
+        uses: actions/checkout@v3
+      
+
+      # ---------------------------------------------
+      #  Writing config files 
+      # ---------------------------------------------
+
+      - name: 'Writing config files'
+        run: |
+          mkdir ~/.oci
+          echo "[DEFAULT]" >> ~/.oci/config
+          echo "user=${{secrets.USER_OCID}}" >> ~/.oci/config
+          echo "fingerprint=${{secrets.FINGERPRINT}}" >> ~/.oci/config
+          echo "compartment_ocid=${{secrets.COMPARTMENT_OCID}}" >> ~/.oci/config
+          echo "region=${{secrets.REGION}}" >> ~/.oci/config
+          echo "tenancy=${{secrets.TENANCY_OCID}}" >> ~/.oci/config
+          echo "key_file=~/.oci/key.pem" >> ~/.oci/config
+          echo "${{secrets.PRIVATE_KEY_FILE}}" >> ~/.oci/key.pem
+
+
+      # ---------------------------------------------
+      #  Install OCI CLI 
+      # ---------------------------------------------
+
+
+      - name: 'Install OCI CLI'
+        run: |
+          curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+          chmod +x install.sh
+          ./install.sh --accept-all-defaults
+          #exec -l $SHELL
+          echo " Fixing file permissions and testing oci"
+          /home/runner/bin/oci setup repair-file-permissions --file ~/.oci/config
+          /home/runner/bin/oci setup repair-file-permissions --file ~/.oci/key.pem
+          echo "# ---------------------------------------------"
+          echo "#  Authenticating to OCI"
+          echo "# ---------------------------------------------"
+          /home/runner/bin/oci os ns get
+          if [ $? -ne 0 ]; then
+            echo "Authentication failed"
+            exit 1
+          else
+            echo "Authentication is successful"
+          fi
+
+      
+
+      # ---------------------------------------------
+      #  Check for provider 
+      # ---------------------------------------------
+
+      - name: 'Check for provider'
+        run: |
+          echo "SOURCE_PROVIDER_ID=$(/home/runner/bin/oci resource-manager configuration-source-provider list \
+            --compartment-id ${{ secrets.COMPARTMENT_OCID }} | jq '.data.items[] | select(."display-name"==env.PROVIDER_NAME).id' -r)" >> $GITHUB_ENV
+          if [ $? -ne 0 ]; then
+            echo "No SOURCE_PROVIDER found with the name $(env.PROVIDER_NAME)"
+            exit 1
+          fi
+          echo ${{env.SOURCE_PROVIDER_ID}}
+
+      # ---------------------------------------------
+      # Check for existing stack
+      # ---------------------------------------------
+
+      - name: 'Check for existing stack'
+        run: |
+          echo "STACK_ID=$(/home/runner/bin/oci resource-manager stack list --all --compartment-id ${{secrets.COMPARTMENT_OCID}} | jq '.data[] | select(."display-name"==env.STACK_NAME).id' -r)" >> $GITHUB_ENV
+
+
+      # ---------------------------------------------
+      # Update Stack
+      # ---------------------------------------------
+      - name: 'Update Stack'
+        if: ${{env.STACK_ID != ''}}
+        run: |
+          echo $STACK_ID
+          /home/runner/bin/oci resource-manager stack update-from-git-provider \
+            --config-source-configuration-source-provider-id $SOURCE_PROVIDER_ID \
+            --stack-id $STACK_ID \
+            --config-source-branch-name $BRANCH_NAME \
+            --config-source-repository-url $REPO_URL \
+            --config-source-working-directory $WORKING_DIRECTORY \
+            --wait-for-state ACTIVE \
+            --force
+
+      # ---------------------------------------------
+      #  Terraform Destroy for the stack
+      # ---------------------------------------------
+    
+
+      - name: 'Terraform Destroy for the stack'
+        run: |
+          echo "DESTROY_JOB_ID=$(/home/runner/bin/oci resource-manager job create-destroy-job \
+            --execution-plan-strategy "AUTO_APPROVED" \
+            --stack-id $STACK_ID \
+            | jq '.data.id' -r)" >> $GITHUB_ENV
+
+
+      # ---------------------------------------------
+      #  Wait for Terraform Destroy to complete
+      # ---------------------------------------------
+
+      - name: 'Wait for Terraform Destroy to complete'
+        run: |
+          while true
+          do
+            JOB_STATUS=$(/home/runner/bin/oci resource-manager job get --job-id ${{env.DESTROY_JOB_ID}}  | jq '.data' | grep lifecycle-state | awk '{print $2}' | tr -d '"' | tr -d ',')
+            if [ "$JOB_STATUS" == "SUCCEEDED" ]; then
+              echo "Terraform Destroy: $JOB_STATUS"
+              break
+            elif [ "$JOB_STATUS" == "FAILED" ] || [ "$JOB_STATUS" == "CANCELING" ] || [ "$JOB_STATUS" == "CANCELED" ]; then
+              echo "Terraform Destroy: $JOB_STATUS"
+              break
+              exit 1
+            else
+              echo "Terraform Destroy: $JOB_STATUS"
+              sleep 30
+            fi
+          done
+
+      # ----------------------------------------------------
+      #  Saving the terraform destroy output to GitHub
+      # ----------------------------------------------------
+
+      - name: 'Saving the terraform destroy output to GitHub'
+        run: |
+          /home/runner/bin/oci resource-manager job get-job-logs-content \
+          --job-id $DESTROY_JOB_ID --output table > ~/tf_destroy_output.log
+
+
+      # --------------------------------------------------
+      # Display the terraform destroy output on console
+      # --------------------------------------------------
+
+      - name: "Display the terraform destroy output on GitHub console"
+        run: |
+          JOB_STATUS=$(/home/runner/bin/oci resource-manager job get --job-id ${{env.DESTROY_JOB_ID}}  | jq '.data' | grep lifecycle-state | awk '{print $2}' | tr -d '"' | tr -d ',')
+          if [ "$JOB_STATUS" == "SUCCEEDED" ]; then
+            echo "Terraform destroy: $JOB_STATUS"
+            cat ~/tf_destroy_output.log
+            exit 0
+          elif [ "$JOB_STATUS" == "FAILED" ]; then
+            echo "Terraform destroy: $JOB_STATUS"
+            cat ~/tf_destroy_output.log
+            exit 1
+          elif [ "$JOB_STATUS" == "IN_PROGRESS" ] || [ "$JOB_STATUS" == "CANCELING" ] || [ "$JOB_STATUS" == "CANCELED" ]; then
+            echo "Terraform destroy: $JOB_STATUS"
+            cat ~/tf_destroy_output.log
+          else
+            echo "Your Job is cancelled"
+          fi

@@ -1,0 +1,15 @@
+compartment_ocid = "ocid1.compartment.oc1..aaaaaaaazitu4giy2ftord6nebak3vdg6qi3kywpvbah4kikqvln4fvskzua"
+region = "us-ashburn-1"
+connection_type = "GOLDENGATE"
+connection_technology_type = "GOLDENGATE"
+golden_gate_deployment_ocid = "ocid1.goldengatedeployment.oc1.us-sanjose-1.amaaaaaaoq56wdqane3xjwi2ylockljmmn2jevg2xsvjnfav3flnr5ydoywa"
+connection_string = ""
+database_ocid = ""
+connection_nsg_ocids = []
+connection_username = "oggadmin"
+connection_password = "WElcome_#123" 
+connection_session_mode = ""
+subnet_ocid = ""
+connection_wallet = ""
+# Only for Exadata Connection
+# connection_private_ip = "136.51.3.6"

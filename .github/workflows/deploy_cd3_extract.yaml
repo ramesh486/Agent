@@ -1,0 +1,28 @@
+name: 'Deploy cd3 extract'
+
+on:
+  repository_dispatch:
+    types: [deploy-cd3-extract]
+
+permissions:
+  contents: write  
+
+jobs:
+  ORM_STACK_cd3_extract:
+    uses: ./.github/workflows/cd3_export.yaml
+
+    with:
+      PROVIDER_NAME: "cd3_export"
+      BRANCH_NAME: "development"
+      STACK_NAME: "stack-cd3-export-${{ github.event.client_payload.stack_name }}"
+      WORKING_DIRECTORY: "${{ github.event.client_payload.working_directory }}"
+      REPO_URL: "https://github.com/kirankumar-badiger/oci_automation.git"
+      TF_VERSION: "${{ github.event.client_payload.tf_version }}"
+
+    secrets:
+      USER_OCID: ${{ secrets.USER_OCID }}
+      FINGERPRINT: ${{ secrets.FINGERPRINT }}
+      COMPARTMENT_OCID: ${{ secrets.COMPARTMENT_OCID }}
+      REGION: ${{ secrets.REGION }}
+      TENANCY_OCID: ${{ secrets.TENANCY_OCID }}
+      PRIVATE_KEY_FILE: ${{ secrets.PRIVATE_KEY_FILE }}

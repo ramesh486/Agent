@@ -1,0 +1,111 @@
+title: Devops Build Pipeline
+description: Devops Build Pipeline
+schemaVersion: 1.1.0
+version: "11072023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_name}
+      - ${compartment_id_in_subtree} 
+      - ${project_tag}
+      - ${parameter_name}
+      - ${default_value}
+      - ${description}
+      - ${display_name}
+      - ${project_name}
+      - ${notification_topic}
+      
+variables:
+
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_name:
+    type: string
+    visible: true
+    title: Compartment Name
+    description: Compartment Name of the Resource
+    default: ""
+
+  compartment_id_in_subtree:
+    type: boolean
+    visible: true
+    title: Compartment ID in Subtree
+    description: Compartment ID in Subtree
+    default: true
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+
+  tenancy_ocid:
+    title: "Tenancy OCID"
+    type: string
+    required: true 
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+  parameter_name:
+    type: string
+    visible: true
+    required: true
+    title: Pipeline Parameter Name
+    description: "Provide the name for the Build Pipeline"
+    default: "Build_pipeline_param"
+
+  default_value:
+    type: string
+    visible: true
+    required: true
+    title: Value of BuildPipeline
+    description: "The default value of the Buildpipeline"
+    default: "defaultValue"
+  
+  description:
+    type: string
+    visible: true
+    required: true
+    title: "Details of the BuildPipeline"
+    description: "Details of the build Pipeline"
+    default: "description"
+
+  display_name:
+    type: string
+    visible: true
+    required: true
+    title: BuildPipeline Display Name
+    description: "Build pipeline display name."
+    default: "test_buildpipeline"
+  
+  project_name:
+    type: string
+    visible: true
+    required: true
+    title: Project Name
+    description: "Provide the Project name"
+    default: "build_project"
+
+  notification_topic:
+    type: string
+    visible: true
+    required: true
+    title: Notification Topic Name
+    description: "Provide name for Notification Topic"
+    default: "test_topic"

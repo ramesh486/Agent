@@ -1,0 +1,248 @@
+title: Create data flow
+description: data flow Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+  
+      - ${region}
+      - ${tenancy_ocid}
+      - ${app_compartment_name}
+      - ${network_compartment_name}
+      - ${app_compartment_id_in_subtree}
+      - ${network_compartment_id_in_subtree}
+      - ${subnet_display_name} 
+      - ${project_tag}
+
+  - title: "Data flow application"
+    variables:
+      - ${arguments}
+      - ${application_display_name}
+      - ${application_driver_shape}
+      - ${application_executor_shape}
+      - ${file_uri}
+      - ${application_language}
+      - ${application_num_executors}
+      - ${application_spark_version}
+      - ${deploy_demo_application}
+      - ${Data_Flow_bucket_name}
+      - ${Data_Flow_bucket_namespace}
+      - ${Data_Flow_warehouse_bucket_name}
+      - ${Data_flow_warehouse_bucket_namespace}
+      - ${warehouse_bucket_uri}
+      - ${logs_bucket_uri}
+
+  - title: "dataflow_private_endpoint"
+    variables:
+      - ${dataflow_private_endpoint_display_name}
+      - ${private_endpoint_dns_zones}
+      - ${subnet_display_name}
+      
+
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  region:
+    visible: true
+    title: Region
+    description: The region where the resources will be deployed
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: The OCID of the tenancy
+
+  app_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  app_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+    
+  subnet_display_name:
+    type: string
+    title: "Subnet Display Name"
+    default: ""
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+#####################################
+# dataflow application
+#####################################
+
+  application_display_name:
+    type: string
+    default: "Example_apllication"
+    title: "Data Flow warehouse display name"
+    description: "The display name of the Data Flow application"
+    required: true
+    visible: true
+
+  application_driver_shape:
+    type: string
+    default: "VM.Standard2.1"
+    title: "Data Flow warehouse driver shape"
+    description: "The shape of the Data Flow application's driver node"
+    required: true
+    visible: true
+  
+  application_executor_shape:
+    type: string
+    default: "VM.Standard2.1"
+    title: "Data flow warehouse executor shape"
+    description: "The shape of the Data Flow application's executor nodes"
+    required: true
+    visible: true
+
+  file_uri:
+    type: string
+    default: "oci://dataflow-warehouse@idennsb6k3kt/datacleaningdatacleaning.py"
+    title: "Python File path in Bucket"
+    description: "The URI of the Python file uploaded in the bucket for the application"
+    required: true
+    visible: true
+
+  application_language:
+    type: string
+    default: "PYTHON"
+    title: "application language"
+    description: "The programming language used by the Data Flow application."
+    required: true
+    visible: true
+
+  application_num_executors:
+    type: number
+    default: 1
+    title: "application number executors"
+    description: "The number of executors used by the Data Flow application."
+    required: true
+    visible: true
+  
+  application_spark_version:
+    type: string
+    default: "3.0"
+    title: "application spark version"
+    description: "The version of Apache Spark used by the Data Flow application"
+    required: true
+    visible: true
+  
+  deploy_demo_application:
+    type: bool
+    default: true
+    title: "deploy demo application"
+    description: "Determines whether to deploy a demo application."
+    required: true
+    visible: true
+
+  Data_Flow_bucket_name:
+    type: string
+    default: "dataflow-logs"
+    title: "Data flow bucket name"
+    description: "The name of the Data flow object storage bucket"
+    required: true
+    visible: true
+
+  Data_Flow_bucket_namespace:
+    type: string
+    default: "dataflow-logs"
+    title: "dataflow object namespace"
+    description: "The namespace of the data flow object storage bucket."
+    required: true
+    visible: true
+  
+  Data_Flow_warehouse_bucket_name:
+    type: string
+    default: "dataflow-warehouse"
+    title: "Dataflow warehouse bucket name"
+    description: "The name of the Dataflow warehouse object storage bucket"
+    required: true
+    visible: true
+
+  Data_flow_warehouse_bucket_namespace:
+    type: string
+    default: "dataflow-logs"
+    title: "Dataflow warehouse namespace"
+    description: "The namespace of the Dataflow warehouse object storage bucket."
+    required: true
+    visible: true
+
+  warehouse_bucket_uri:
+    type: string
+    default: "oci://dataflow-warehouse@idennsb6k3kt/datacleaningdatacleaning.py"
+    title: "Data Flow warehouse bucket uri"
+    description: "The URI of the Data Flow warehouse bucket."
+    required: true
+    visible: true
+
+  logs_bucket_uri:
+    type: string
+    default: "oci://dataflow-warehouse@idennsb6k3kt/netflix_titlesnetflix_titles"
+    title: "logs bucket uri"
+    description: "The URI of the logs bucket."
+    required: true
+    visible: true
+  
+
+
+#####################################
+# dataflow_private_endpoint
+#####################################
+
+  dataflow_private_endpoint_display_name:
+    type: list(string)
+    default: "dataflow_endpoint"
+    title: "dataflow private endpoint display name"
+    description: "The display name of the private endpoint for Data Flow"
+    required: true
+    visible: true
+  
+  private_endpoint_dns_zones:
+    type: string
+    default: "dbdevsubnet.nonprodvcn.oraclevcn.com"
+    title: "private endpoint dns zones"
+    description: "The DNS zones associated with the private endpoint."
+    required: true
+    visible: true
+  
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+  

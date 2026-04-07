@@ -1,0 +1,127 @@
+title: VCN Flow Logs 
+description: VCN Flow Logs 
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment and Subnet"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${network_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${monitoring_compartment_name}
+      - ${monitoring_compartment_id_in_subtree}
+      - ${project_tag}
+
+  - title: "Spoke VCN Log Group Variables"
+    variables:
+
+      - ${spoke_log_group_display_name} 
+      - ${spoke_log_group_description}  
+
+  - title: "VCN Flow Logs for appdev subnet"
+    variables:
+      - ${appdev_subnet_private_logging_display_name}
+      - ${appdev_subnet_private_is_logging_enabled}
+      - ${appdev_subnet_private_log_type}
+      - ${appdev_subnet_private_log_retention_duration}
+      - ${appdev_subnet_private_logging_configuration_source_category}
+      - ${appdev_subnet_display_name}
+      - ${appdev_subnet_private_logging_configuration_source_service}
+      - ${appdev_subnet_private_logging_configuration_source_type}
+      
+  - title: "VCN Flow Logs for dbdev_subnet"
+    variables:
+      - ${dbdev_subnet_private_logging_display_name}
+      - ${dbdev_subnet_private_is_logging_enabled}
+      - ${dbdev_subnet_private_log_type}
+      - ${dbdev_subnet_private_log_retention_duration}
+      - ${dbdev_subnet_private_logging_configuration_source_category}
+      - ${dbdev_subnet_display_name}
+      - ${dbdev_subnet_private_logging_configuration_source_service}
+      - ${dbdev_subnet_private_logging_configuration_source_type}
+
+  - title: "VCN Flow Logs for apptst_subnet"
+    variables:
+      - ${apptst_subnet_private_logging_display_name}
+      - ${apptst_subnet_private_is_logging_enabled}
+      - ${apptst_subnet_private_log_type}
+      - ${apptst_subnet_private_log_retention_duration}
+      - ${apptst_subnet_private_logging_configuration_source_category}
+      - ${apptst_subnet_display_name}
+      - ${apptst_subnet_private_logging_configuration_source_service}
+      - ${apptst_subnet_private_logging_configuration_source_type}
+
+  - title: "VCN Flow Logs for dbtst_subnet"
+    variables:
+      - ${dbtst_subnet_private_logging_display_name}
+      - ${dbtst_subnet_private_is_logging_enabled}
+      - ${dbtst_subnet_private_log_type}
+      - ${dbtst_subnet_private_log_retention_duration}
+      - ${dbtst_subnet_private_logging_configuration_source_category}
+      - ${dbtst_subnet_display_name}
+      - ${dbtst_subnet_private_logging_configuration_source_service}
+      - ${dbtst_subnet_private_logging_configuration_source_type}
+
+variables:
+
+### Common Compartment 
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+ 
+  monitoring_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  monitoring_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+
+  

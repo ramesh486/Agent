@@ -1,0 +1,467 @@
+title:  Terraform Input Variables
+description:  Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select the Target Tenancy"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+      - ${project_tag}
+
+  - title: "AnnouncementReaders Policy"
+    variables:
+      - ${AnnouncementReaders_policy_name}
+      - ${AnnouncementReaders_policy_description}
+      - ${AnnouncementReaders_policy_statements}
+    
+  - title: "AppAdmins Policy"
+    variables:
+      - ${AppAdmins_policy_name}
+      - ${AppAdmins_policy_description}
+      - ${AppAdmins_policy_statements}
+
+  - title: "Auditors Policy"
+    variables:
+      - ${Auditors_policy_name}
+      - ${Auditors_policy_description}
+      - ${Auditors_policy_statements}
+
+  - title: "CredAdmins Policy"
+    variables:
+      - ${CredAdmins_policy_name}
+      - ${CredAdmins_policy_description}
+      - ${CredAdmins_policy_statements}
+
+  - title: "DatabaseAdmins Policy"
+    variables:
+      - ${DatabaseAdmins_policy_name}
+      - ${DatabaseAdmins_policy_description}
+      - ${DatabaseAdmins_policy_statements}
+
+  - title: "EmailFamilyAdminstrator Policy"
+    variables:
+      - ${EmailFamilyAdminstrator_policy_name}
+      - ${EmailFamilyAdminstrator_policy_description}
+      - ${EmailFamilyAdminstrator_policy_statements}
+
+  - title: "IAMAdmins Policy"
+    variables:
+      - ${IAMAdmins_policy_name}
+      - ${IAMAdmins_policy_description}
+      - ${IAMAdmins_policy_statements}
+
+  - title: "IntegrationAdmins Policy"
+    variables:
+      - ${IntegrationAdmins_policy_name}
+      - ${IntegrationAdmins_policy_description}
+      - ${IntegrationAdmins_policy_statements}
+
+  - title: "IntegrationDevelopers Policy"
+    variables:
+      - ${IntegrationDevelopers_policy_name}
+      - ${IntegrationDevelopers_policy_description}
+      - ${IntegrationDevelopers_policy_statements}
+
+  - title: "IntegrationViewers Policy"
+    variables:
+      - ${IntegrationViewers_policy_name}
+      - ${IntegrationViewers_policy_description}
+      - ${IntegrationViewers_policy_statements}
+
+  - title: "NetworkAdmins Policy"
+    variables:
+      - ${NetworkAdmins_policy_name}
+      - ${NetworkAdmins_policy_description}
+      - ${NetworkAdmins_policy_statements}
+
+  - title: "ObjectStorageAdmins Policy"
+    variables:
+      - ${ObjectStorageAdmins_policy_name}
+      - ${ObjectStorageAdmins_policy_description}
+      - ${ObjectStorageAdmins_policy_statements}
+
+  - title: "ObjectStorageReaders Policy"
+    variables:
+      - ${ObjectStorageReaders_policy_name}
+      - ${ObjectStorageReaders_policy_description}
+      - ${ObjectStorageReaders_policy_statements}
+
+  - title: "ObjectStorageWriters Policy"
+    variables:
+      - ${ObjectStorageWriters_policy_name}
+      - ${ObjectStorageWriters_policy_description}
+      - ${ObjectStorageWriters_policy_statements}
+
+  - title: "SecurityAdmins Policy"
+    variables:
+      - ${SecurityAdmins_policy_name}
+      - ${SecurityAdmins_policy_description}
+      - ${SecurityAdmins_policy_statements}
+
+  - title: "SysOpsTeams Policy"
+    variables:
+      - ${SysOpsTeams_policy_name}
+      - ${SysOpsTeams_policy_description}
+      - ${SysOpsTeams_policy_statements}
+
+  - title: "CostAdmins Policy"
+    variables:
+      - ${CostAdmins_policy_name}
+      - ${CostAdmins_policy_description}
+      - ${CostAdmins_policy_statements}
+
+
+
+
+#####################################
+
+# Common Compartment
+
+#####################################
+variables:
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  compartment_ocid:
+    visible: true
+    title: compartment ocid
+    description: compartment ocid
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false    
+
+#####################################
+
+  # Create IAM Policies
+
+#####################################
+
+### AnnouncementReaders ######
+
+  AnnouncementReaders_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "AnnouncementReaders"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  AnnouncementReaders_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for Console Announcements"
+    title: "Policy Description"
+    description: "Provide policy description."
+
+### AppAdmins ######
+    
+  AppAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "AppAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  AppAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for managing app development related services in compartment App"
+    title: "policy description"
+    description: "Provide policy description."
+
+### Auditors ######
+
+  Auditors_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "Auditors"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  Auditors_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for Auditing the tenancy"
+    title: "Policy Description"
+    description: "Provide policy description."
+
+### CredAdmins ######
+
+  CredAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "CredAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  CredAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for managing users credentials in the tenancy."
+    title: "policy description"
+    description: "Provide policy description."
+
+    ### DatabaseAdmins ######
+
+  DatabaseAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "DatabaseAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  DatabaseAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for managing databases in compartment Database"
+    title: "Policy Description"
+    description: "Provide policy description."
+
+    ### EmailFamilyAdminstrator ######
+
+  EmailFamilyAdminstrator_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "EmailFamilyAdministrator"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  EmailFamilyAdminstrator_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group provides access to send email from OCI tenancy"
+    title: "policy description"
+    description: "Provide policy description."
+
+    ### IAMAdmins ######
+
+  IAMAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "IAMAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  IAMAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for managing IAM resources in the tenancy"
+    title: "Policy Description"
+    description: "Provide policy description."
+
+    ### IntegrationAdmins ######
+
+  IntegrationAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "IntegrationAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  IntegrationAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for Oracle Integration Cloud Services in the tenancy"
+    title: "policy description"
+    description: "Provide policy description."
+
+    ### IntegrationDevelopers ######
+
+  IntegrationDevelopers_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "IntegrationDevelopers"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  IntegrationDevelopers_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group of Developers able to access Oracle integration cloud specific instances with Service Developer Privileges"
+    title: "Policy Description"
+    description: "Provide policy description."
+
+    ### IntegrationViewers ######
+
+  IntegrationViewers_policy_name:
+    type: string
+    required: true
+    visible: true
+    default : "IntegrationViewers"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  IntegrationViewers_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group provides read only access to Oracle integration cloud service instances"
+    title: "policy description"
+    description: "Provide policy description."
+
+### NetworkAdmins ######
+
+  NetworkAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "NetworkAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  NetworkAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for managing networking in compartment network."
+    title: "Policy Description"
+    description: "Provide policy description."
+
+### ObjectStorageAdmins ######
+
+  ObjectStorageAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default : "ObjectStorageAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  ObjectStorageAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for managing Object Storage as an Administrators"
+    title: "policy description"
+    description: "Provide policy description."
+
+### ObjectStorageReaders ######
+
+  ObjectStorageReaders_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "ObjectStorageReaders"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  ObjectStorageReaders_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "ObjectStorageReaders"
+    title: "Policy Description"
+    description: "Provide policy description."
+
+### ObjectStorageWriters ######
+
+  ObjectStorageWriters_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "ObjectStorageWriters"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  ObjectStorageWriters_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "ObjectStorageWriters"
+    title: "policy description"
+    description: "Provide policy description."
+
+### SecurityAdmins ######
+
+  SecurityAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "SecurityAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  SecurityAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for managing security services in compartment security"
+    title: "Policy Description"
+    description: "Provide policy description."
+
+### SysOpsTeams ######
+
+  SysOpsTeams_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "SysOpsTeam"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  SysOpsTeams_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for managing SysOpsTeam in tenency"
+    title: "policy description"
+    description: "Provide policy description."
+
+### CostAdmins ######
+
+  CostAdmins_policy_name:
+    type: string
+    required: true
+    visible: true
+    default: "CostAdmins"
+    title: "Policy Name"
+    description: "Provide Policy Name"
+   
+  CostAdmins_policy_description:
+    type: string
+    required: true
+    visible: true
+    default: "Group responsible for Cost Management Reports in the Tenancy"
+    title: "Policy Description"
+    description: "Provide policy description."
+
+ 

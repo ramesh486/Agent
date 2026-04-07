@@ -1,0 +1,72 @@
+title: Capacity Reservation
+description: Capacity Reservation
+schemaVersion: 1.1.0
+version: "06062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+  
+  - title: "capacity reservation variables"
+    variables:
+     - ${instance_count}
+     - ${capacity_reservation_display_name}
+     - ${instance_shape}
+    
+variables:
+
+####################################
+#  Common Compartment
+####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Security Compartment for centrally manage the encryption keys
+    description: Vault protects your data and the secret credentials that you use to securely access resources
+
+  tenancy_ocid:
+    visible: true
+    title: tenancy ocid
+    description: tenancy ocid
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+
+
+  instance_count:
+    type: number
+    required: true
+    visible: true
+    default: 1
+    title: "number of instances to launch."
+    description: "number of instances to launch."
+  
+  capacity_reservation_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "capacity_reservation"
+    title: "capacity reservation display name"
+    description: "capacity reservation display name"
+
+  instance_shape:
+    type: string
+    required: true
+    visible: true
+    default: "VM.Standard2.1"
+    title: "instance shape"
+    description: "instance shape"
+
+  

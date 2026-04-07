@@ -1,0 +1,282 @@
+title:  Network Load Balancer Terraform Input Variables
+description: Network Load Balancer Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings: 
+
+  - title: "Common Variables"
+    variables:
+      - ${tenancy_ocid}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${region}
+      - ${project_tag}
+
+  - title: "Network Load Balancer configuration"
+    variables:
+      - ${nlb_display_name}
+      - ${is_private}
+      - ${nlb_ip_version}
+      - ${subnet_display_name}
+  
+  - title: "Network Load Balancer Listener"
+    variables:
+      - ${listener_name}
+      - ${listener_port}
+      - ${listener_protocol}
+  
+  - title: "Network Load Balancer Backend Server"
+    variables:
+      - ${backend_name}
+      - ${backend_weight}
+      - ${backend_port}
+      - ${private_ip_address}
+
+  - title: "Network Load Balancer Backend Set"
+    variables:
+      - ${backendset_name}
+      - ${backendset_protocol}
+      - ${backendset_port}
+      - ${backendset_policy}
+      - ${backendset_interval_in_millis}
+      - ${backendset_timeout_in_millis}
+      - ${backendset_retries}
+      - ${backendset_request_data}
+      - ${backendset_response_data}
+      - ${return_code}
+      - ${url_path}
+
+#####################################
+# Common Compartment
+#####################################
+
+variables:
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: "true"
+    description: "Compartment ID in Subtree"
+    visible: true
+
+  compartment_name:
+    type: string
+    title: "Target Compartment Name"
+    default: "network"
+    description: "Target Compartment Name"
+    visible: true
+  
+  region:
+    visible: false
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach Tags
+    visible: true
+    required: false
+
+#####################################
+# Network Load Balancer configuration
+#####################################
+  
+  nlb_display_name:
+    type: string
+    title: "Name for Network load balancer"
+    default: "np_external_public_nlb"
+    description: "Name for Network load balancer"
+    visible: true
+    required: true
+  
+  is_private:
+    type: string
+    title: "Select false for Public_LB, and true for Private_LB" 
+    default: "false" 
+    description: "Select false for Public_LB, and true for Private_LB"
+    visible: true
+    required: true
+  
+  nlb_ip_version:
+    type: string
+    title: "IP version associated with the NLB"
+    default: "IPV4"
+    description: "IP version associated with the NLB"
+    visible: true
+    required: true
+  
+  subnet_display_name:
+    type: string
+    title: "The subnet in which the network load balancer will be created"
+    default: "np_nlb_pub_subnet"
+    description: "The subnet in which the network load balancer will be created"
+    visible: true
+    required: true
+  
+##################################
+# Network Load Balancer Listener 
+##################################
+
+  listener_name:
+    type: string
+    title: "Name for the listener"  
+    default: "np_ext_pub_nlb_listener"
+    description: "Name for the listener"  
+    visible: true
+    required: true
+  
+  listener_port:
+    type: string
+    title: ""Communication port for the listener"
+    default: "443"
+    description: "Communication port for the listener"
+    visible: true
+    required: true
+      
+  listener_protocol:
+    type: string
+    title: "Protocol on which the listener accepts connection requests"
+    default: "TCP_AND_UDP"
+    description: "Protocol on which the listener accepts connection requests"
+    visible: true
+    required: true
+
+#######################################
+# Network Load Balancer Backend Server 
+#######################################
+  
+  backend_name:
+    type: string
+    title: "Name for the backend"
+    default: "nonprod_paloalto1"
+    description: "Name for the backend"
+    visible: true
+    required: true
+
+  backend_weight:
+    type: number
+    title: "Network load balancing backend weight assigned to the server"
+    default: "1"
+    description: "Network load balancing backend weight assigned to the server"
+    visible: true
+    required: true
+
+  backend_port:
+    type: number
+    title: "Network load balancing backend port"
+    default: "443"
+    description: "Network load balancing backend port"
+    visible: true
+    required: true
+  
+  private_ip_address:
+    type: number
+    title: "Destination IP Address"
+    default: "10.97.1.120"
+    description: "Destination IP Address"
+    visible: false
+    required: true
+
+###############################################
+# Network Load Balancer Backend Set Variables
+###############################################
+
+  backendset_name:
+    type: string
+    title: "Enter backend set name"
+    default: "np_ext_pub_nlb_backendset"
+    description: "Enter backend set name"
+    visible: true
+    required: true
+  
+  backendset_protocol:
+    type: string
+    title: "Enter backend set name"
+    default: "HTTPS"
+    description: "Enter backend set name"
+    visible: true
+    required: true
+
+  backendset_port:
+    type: number
+    title: "Enter backend set port"
+    default: "443"
+    description: "Enter backend set port"
+    visible: true
+    required: true
+  
+  backendset_policy:
+    type: enum
+    title: "Network load balancer policy for the backend set"
+    default: "FIVE_TUPLE"
+    description: "Network load balancer policy for the backend set"
+    visible: true
+    required: true
+    enum:
+      - "TWO_TUPLE"
+      - "THREE_TUPLE"
+      - "FIVE_TUPLE"
+  
+  backendset_interval_in_millis:
+    type: number
+    title: "Interval between health checks, in milliseconds"
+    default: "10000"
+    description: "Interval between health checks, in milliseconds"
+    visible: true
+    required: true
+  
+  backendset_timeout_in_millis:
+    type: number
+    title: "Maximum time, in milliseconds, to wait for a reply to a health check"
+    default: "3000"
+    description: "Maximum time, in milliseconds, to wait for a reply to a health check"
+    visible: true
+    required: true
+  
+  backendset_retries:
+    type: number
+    title: "Number of retries; he number of retries to attempt before a backend server is considered unhealthy"
+    default: "3"
+    description: "Number of retries; he number of retries to attempt before a backend server is considered unhealthy"
+    visible: true
+    required: true
+  
+  backendset_request_data:
+    type: string
+    title: "Base64 encoded pattern to be sent as UDP or TCP health check probe"
+    default: ""
+    description: "Base64 encoded pattern to be sent as UDP or TCP health check probe"
+    visible: false
+    required: false
+  
+  backendset_response_data:
+    type: string
+    title: "Base64 encoded pattern to be validated as UDP or TCP health check probe response." 
+    visible: false
+    required: false
+    default: ""
+    description: "Base64 encoded pattern to be validated as UDP or TCP health check probe response."
+    
+  return_code:
+    type: number
+    title: "Status Code"
+    default: "200"
+    description: "Status Code"
+    visible: false
+
+  url_path:
+    type: string
+    title: "URL path"
+    visible: true
+    default: "/"
+    description: "URL path"

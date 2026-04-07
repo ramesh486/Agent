@@ -1,0 +1,72 @@
+title: Opa Instance
+description: Opa Instance
+schemaVersion: 1.1.0
+version: "19062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${region}
+      - ${compartment_ocid}
+      - ${idcs_access_token}
+      - ${consumption_model}
+      - ${display_name}
+      - ${metering_type}
+      - ${shape_name}
+
+variables:
+
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: string
+    visible: true
+    title: Select the Compartment to deploy resources
+    default : ""
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: false
+    required: true
+    title: Region
+    description: Region
+    default: "us-ashburn-1"
+
+  idcs_access_token:
+    type: password
+    required: true
+    title: Identity Personal Access Token
+    visible: true
+    description: Provide token that you have generated in OCI console
+
+  consumption_model:
+    title: Consumption model
+    type: string
+    required: true
+    visible: true
+    default: "UCM"
+    description: Enter consumption model
+
+  display_name:
+    title: Display name
+    type: string
+    required: true
+    visible: true
+    default: "test_opa_instance"
+    description: Enter display name
+
+  metering_type:
+    title: Metering_type
+    type: string
+    required: true
+    visible: true
+    default: "EXECUTION_PACK"
+    description: Enter metering type
+  

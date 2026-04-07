@@ -1,0 +1,8 @@
+# Capacity reservations enable reserve instances in advance so that the capacity is available for workloads when need it. Capacity reservations provide the following benefits:
+# Assurance that customer have the capacity necessary to manage their workload. Reserved capacity is available for customers tenancy to consume at any time.
+# No size or time commitments. Create a reservation with as little or as much capacity as customers need, and delete the reservation at any time to stop paying for it.
+# Prerequisites:
+# Select the shape to use for instances created against this capacity configuration. If you select a flexible shape, enter values for Cores and Memory (GB).
+# Select the shape associated with this capacity configuration. Each shape and fault domain combination must be unique within the capacity reservation.
+
+	Instance shape

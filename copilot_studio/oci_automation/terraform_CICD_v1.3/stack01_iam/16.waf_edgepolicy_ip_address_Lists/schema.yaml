@@ -1,0 +1,68 @@
+title: Create IP Address Lists
+description: IP Address Lists Terraform Input Variables
+schemaVersion: 1.1.0
+version: "05102022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+    
+  - title: "IP Address Lists Variables Configuration"
+    variables:
+      - ${address_list_addresses}
+      - ${address_list_display_name}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+
+

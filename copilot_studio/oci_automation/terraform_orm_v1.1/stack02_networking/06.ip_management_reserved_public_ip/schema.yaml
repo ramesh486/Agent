@@ -1,0 +1,57 @@
+title: Reserved Public IP pool
+description: Reserved Public IP pool
+schemaVersion: 1.1.0
+version: "05072023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+      - ${display_name}
+      - ${lifetime}
+
+variables:
+
+####################################
+#  Common Compartment
+####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Security Compartment for centrally manage the encryption keys
+    description: Vault protects your data and the secret credentials that you use to securely access resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Enter the Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter the Region
+  
+  display_name:
+    type: string
+    required: true
+    visible: true
+    default: "pub_ip_add_1"
+    title: "Reserved Public IP address Display Name"
+    description: "Reserved Public IP address Display Name"
+
+  lifetime:
+    type: string
+    required: true
+    visible: true
+    default: "RESERVED"
+    title: "Life Time"
+    description: "Life time of the reserved Public IP."
+  

@@ -1,0 +1,266 @@
+title:  Cloud Exadata Terraform Input Variables
+description:  Cloud Exadata Terraform Input Variables
+schemaVersion: 1.1.0
+version: "03032022"
+
+#####################################
+
+# Variable groupings
+
+#####################################
+
+groupings:
+
+    - title: "Select Target Compartment"
+      variables:
+        - ${project_tag}
+        - ${compartment_name}
+        - ${compartment_id_in_subtree}
+        - ${tenancy_ocid}
+        - ${region}
+
+    - title: "Cloud Exadata Infrastructure Configuration"
+      variables:
+        - ${cloud_exadata_infrastructure_display_name}
+        - ${cloud_exadata_infrastructure_shape}
+        - ${cloud_exadata_infrastructure_compute_count}
+        - ${cloud_exadata_infrastructure_customer_contacts_email}
+
+    - title: "Cloud Exadata Infrastructure Maintenance Window Configuration"
+      variables:
+        - ${cloud_exadata_infrastructure_maintenance_window_preference}
+        - ${cloud_exadata_infrastructure_maintenance_window_is_custom_action_timeout_enabled}
+        - ${cloud_exadata_infrastructure_maintenance_window_custom_action_timeout_in_mins}
+        - ${cloud_exadata_infrastructure_maintenance_window_days_of_week_name}
+        - ${cloud_exadata_infrastructure_maintenance_window_hours_of_day}
+        - ${cloud_exadata_infrastructure_maintenance_window_lead_time_in_weeks}
+        - ${cloud_exadata_infrastructure_maintenance_window_months_name}
+        - ${cloud_exadata_infrastructure_maintenance_window_patching_mode}
+        - ${cloud_exadata_infrastructure_maintenance_window_is_monthly_patching_enabled}
+
+variables:
+
+#####################################
+
+# Common Variables
+
+#####################################
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    title: Tenancy OCID
+    description: Enter the Tenancy OCID
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Enter the Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach the Tags"
+    visible: true
+    required: false
+
+#####################################
+
+# Cloud Exadata Configuration
+
+#####################################
+
+  cloud_exadata_infrastructure_display_name:
+    type: string
+    title: Exadata Infrastructure Display Name
+    required: true
+
+  cloud_exadata_infrastructure_shape:
+    type: enum
+    title: Select Exadata Infrastructure Shape
+    required: true
+    default: "Exadata.Base.48"
+    enum:
+      - "Exadata X9M-2"
+      - "Exadata X8M-2"
+      - "Exadata.Base.48"
+      - "Exadata.Quarter3.100"
+      - "Exadata.Half3.200"
+      - "Exadata.Full3.400"
+      - "Exadata.Quarter2.92"
+      - "Exadata.Half2.184"
+      - "Exadata.Full2.368"
+      - "Exadata.Quarter1.84"
+      - "Exadata.Half1.168"
+      - "Exadata.Full1.336"
+
+  cloud_exadata_infrastructure_compute_count:
+    type: number
+    title: Exadata Infrastructure Compute Count
+    required: true
+    default: "2"
+  
+  cloud_exadata_infrastructure_customer_contacts_email:
+    type: string
+    title: Exadata Infrastructure Customer Contacts Email ID
+    required: true
+
+  cloud_exadata_infrastructure_maintenance_window_preference:
+    type: enum
+    title: Select Exadata Infrastructure Maintenance Window Preference
+    required: false
+    default: NO_PREFERENCE
+    enum: 
+      - NO_PREFERENCE
+      - CUSTOM_PREFERENCE
+
+  cloud_exadata_infrastructure_maintenance_window_is_custom_action_timeout_enabled:
+    title: Enable Custom Timeout for Exadata Infrastructure Maintenance Window
+    type: boolean
+    required: false
+    default: false
+    visible: 
+      and:
+        - eq:
+          - ${cloud_exadata_infrastructure_maintenance_window_preference}
+          - CUSTOM_PREFERENCE
+
+
+  cloud_exadata_infrastructure_maintenance_window_custom_action_timeout_in_mins:
+    type: number
+    title: Provide Custom Timeout for Maintenance Window
+    description: "Determines the amount of time the system will wait before the start of each database server patching operation. Custom action timeout is in minutes and valid value is between 15 to 120"
+    required: ${cloud_exadata_infrastructure_maintenance_window_is_custom_action_timeout_enabled}
+    default: 15
+    minimum: 15
+    maximum: 120
+    multipleOf: 1
+    visible:
+      and:
+        - ${cloud_exadata_infrastructure_maintenance_window_is_custom_action_timeout_enabled}
+        - eq:
+          - ${cloud_exadata_infrastructure_maintenance_window_preference}
+          - CUSTOM_PREFERENCE
+
+  cloud_exadata_infrastructure_maintenance_window_days_of_week_name:
+    title: Select Day for Maintenance Activity
+    type: enum
+    required: false
+    default: SATURDAY
+    visible: 
+      and:
+        - eq:
+          - ${cloud_exadata_infrastructure_maintenance_window_preference}
+          - CUSTOM_PREFERENCE
+    enum:
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY
+
+  cloud_exadata_infrastructure_maintenance_window_hours_of_day:
+    title: Select Window Hours of Day
+    type: enum
+    required: false
+    default: "0"
+    description: "0 - represents time slot 0:00 - 3:59 UTC, 4 - represents time slot 4:00 - 7:59 UTC, 8 - represents time slot 8:00 - 11:59 UTC, 12 - represents time slot 12:00 - 15:59 UTC, 16 - represents time slot 16:00 - 19:59 UTC, 20 - represents time slot 20:00 - 23:59 UTC"
+    visible: 
+      and:
+        - eq:
+          - ${cloud_exadata_infrastructure_maintenance_window_preference}
+          - CUSTOM_PREFERENCE
+    enum:
+      - "0"
+      - "4"
+      - "8"
+      - "12"
+      - "16"
+      - "20"
+
+  cloud_exadata_infrastructure_maintenance_window_is_monthly_patching_enabled:
+    type: boolean
+    title: Enable Monthly Patching for Exadata Infrastructure ?
+    default: false
+    required: false
+    description: "If true, enables the monthly patching option."
+    visible: 
+      and:
+        - eq:
+          - ${cloud_exadata_infrastructure_maintenance_window_preference}
+          - CUSTOM_PREFERENCE
+
+  cloud_exadata_infrastructure_maintenance_window_lead_time_in_weeks:
+    title: Select Maintenance Window Lead Time in Weeks
+    description: "Lead time window allows user to set a lead time to prepare for a down time. The lead time is in weeks and valid value is between 1 to 4"
+    type: enum
+    required: false
+    default: "4"
+    visible: 
+      and:
+        - eq:
+          - ${cloud_exadata_infrastructure_maintenance_window_preference}
+          - CUSTOM_PREFERENCE
+    enum:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+
+  cloud_exadata_infrastructure_maintenance_window_months_name:
+    title: Select Month for Maintenancy Activity
+    type: enum
+    required: true
+    default: DECEMBER
+    visible: 
+      and:
+        - eq:
+          - ${cloud_exadata_infrastructure_maintenance_window_preference}
+          - CUSTOM_PREFERENCE
+    enum:
+      - JANUARY
+      - FEBRUARY
+      - MARCH
+      - APRIL
+      - MAY
+      - JUNE
+      - JULY
+      - AUGUST
+      - SEPTEMBER
+      - OCTOBER
+      - NOVEMBER
+      - DECEMBER
+
+  cloud_exadata_infrastructure_maintenance_window_patching_mode:
+    title: Select Maintenance Window Patching Mode
+    type: enum
+    required: false
+    description: "Non-rolling infrastructure patching involves system down time. See Oracle-Managed Infrastructure Maintenance Updates for more information"
+    default: ROLLING
+    visible: 
+      and:
+        - eq:
+          - ${cloud_exadata_infrastructure_maintenance_window_preference}
+          - CUSTOM_PREFERENCE
+    enum:
+      - ROLLING
+      - NONROLLING

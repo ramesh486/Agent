@@ -1,0 +1,178 @@
+title: Notification and Subscription Terraform Input Variables
+description: Notification and Subscription Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+   
+
+ - title:  "Notification and Subscription Configuration"
+   variables:
+      - ${notification_topic_name}
+      - ${notification_topic_description} 
+      - ${notification_topic_state}
+      - ${subscription_name}
+      - ${subscription_endpoint}
+      - ${subscription_protocol}
+      - ${announcement_subscription_description}
+      - ${announcement_subscription_display_name}
+      - ${announcement_subscription_filter_groups_filters_type}
+      - ${announcement_subscription_filter_groups_filters_value}
+      - ${announcement_subscription_id}
+      - ${announcement_subscription_state}
+     
+
+ - title:  "Select Compartment"
+   variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region} 
+      
+###############################################
+
+  # Announcement & Subscription Configuration
+
+###############################################
+
+variables:
+
+  notification_topic_name:
+     type: string
+     required: true
+     visible: true
+     default: "oci_announcementtopic"
+     title: "notification topic name"
+     description: "Choose a name for notification topic"
+   
+  notification_topic_description:
+     type: string
+     required: true
+     visible: true
+     default: "Announcement Notification Topic"
+     title: "notification topic description"
+     description: "Choose notification topic description"
+
+  notification_topic_state:
+     type: enum
+     required: false
+     visible: true
+     default: "ACTIVE"
+     title: "Announcement Notification Topic state"
+     description: "Choose State for Notification topic"
+     enum:
+          - "ACTIVE"
+          - "CREATING"
+          - "DELETING"
+
+  subscription_name:
+     required: true
+     visible: true
+     default: "oci_subscription"
+     title: "subscription name"
+     description: "Choose subscription name"
+
+  subscription_endpoint:
+     required: true
+     visible: true
+     default: ""
+     title: "subscription endpoint"
+     description: "Choose email id"
+
+  subscription_protocol:
+     type: enum
+     required: true
+     visible: true
+     default: "EMAIL"
+     title: "subscription protocol"
+     description: "Choose Subscription protocol"
+     enum:
+          - "CUSTOM_HTTPS"
+          - "EMAIL"
+          - "ORACLE_FUNCTIONS"
+          - "PAGERDUTY"
+          - "SLACK"
+          - "SMS"
+
+  announcement_subscription_display_name:
+     required: false
+     visible: true
+     default: "oci_announcement_subscription"
+     title: "announcement_subscription name"
+     description: "Choose announcement subscription name"
+  
+  announcement_subscription_description:
+     required: false
+     visible: true
+     default: "announcement subscription services"
+     title: "announcement_subscription_description"
+     description: "Choose description for announcement subscription"  
+
+  announcement_subscription_filter_groups_filters_type:
+     type: enum
+     required: true
+     visible: true
+     default: "PLATFORM_TYPE"
+     title: "announcement_subscription_filter_groups_filters_type"
+     description: "Choose announcement subscription filter groups filters type"
+     enum:
+          - "COMPARTMENT_ID"
+          - "PLATFORM_TYPE"
+          - "REGION"
+          - "SERVICE"
+          - "RESOURCE_ID"
+          - "ANNOUNCEMENT_TYPE"
+
+  announcement_subscription_filter_groups_filters_value:
+     required: true
+     visible: true
+     default: "IAAS"
+     title: "announcement_subscription_filter_groups_filters_value"
+     description: "Choose announcement subscription filter groups filters value as per the filter type"
+   
+  announcement_subscription_state:
+     type: enum
+     required: false
+     visible: true
+     default: "ACTIVE"
+     title: "Announcement subscription state"
+     description: "Choose Announcement subscription state"
+     enum:
+          - "ACTIVE"
+          - "CREATING"
+          - "DELETING"
+
+  announcement_subscription_id:
+     required: false
+     visible: true
+     default: "id"
+     title: "announcement_subscription_id"
+     description: "announcement_subscription_id"
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Compartment 
+    description: Choose Compartment where you want to create the solution resources
+  
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+  
+  region:
+    visible: true
+    title: Region
+    description: Choose the Region
+ 

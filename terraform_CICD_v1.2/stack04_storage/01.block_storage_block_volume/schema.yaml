@@ -1,0 +1,109 @@
+title: Block Volume Terraform Input Variables
+description:   Block Volume Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Block Volume Configuration"
+    variables:
+      - ${volume_display_name}
+      - ${volume_is_auto_tune_enabled}
+      - ${volume_size_in_gbs}
+      - ${volume_vpus_per_gb}      
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag} 
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_name:
+    type: string
+    default: ""
+    title: "Target Compartment Name"
+    description: "Target Compartment Name"
+    visible: true
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: "true"
+    description: "Compartment ID in Subtree"
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#####################################
+
+# Block Volume Variables
+
+#####################################          
+
+  volume_display_name:
+    type: string
+    required: true
+    title: Block Storage Display Name
+    visible: true
+    description: Name for Block Storage
+    default: "block_storage_test"
+
+  volume_is_auto_tune_enabled:
+    type: boolean
+    required: true
+    title: Auto-tune performance is enabled
+    visible: true
+    description: whether the auto-tune performance is enabled for this volume     
+    default: false
+
+  volume_size_in_gbs:
+    type: number
+    required: true
+    title: Size of the Block volume
+    visible: true
+    description: The size of the volume in GBs
+    default: 1024
+
+  volume_vpus_per_gb:
+    type: enum
+    required: true
+    title: VPUs applied to this volume
+    visible: true
+    description: Number of VPU sapplied to this volume per GB
+    default: "10" 
+    enum:
+          - "0"
+          - "10"
+          - "20"
+          - "30"     
+
+

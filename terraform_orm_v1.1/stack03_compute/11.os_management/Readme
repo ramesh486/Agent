@@ -1,0 +1,10 @@
+OS Management in OCI (Oracle Cloud Infrastructure) refers to the management and administration of operating systems running on compute instances within the Oracle Cloud Infrastructure platform. 
+OCI provides various features and tools to facilitate OS management and configuration.
+
+#  Pre request
+# 1.The OSMS Should enabled in the tenancy
+# 2.SSH Key 
+
+
+
+

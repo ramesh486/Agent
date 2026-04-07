@@ -1,0 +1,139 @@
+title: Integration Instance Terraform Input Variables
+description:  Integration Instance Input Variables
+schemaVersion: 1.1.0
+version: "19072022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Integration Instance Configuration"
+    variables:
+      - ${display_name}
+      - ${idcs_at}      
+      - ${integration_instance_type}
+      - ${is_byol}
+      - ${is_file_server_enabled}
+      - ${is_visual_builder_enabled}
+      - ${message_packs}
+      - ${consumption_model}
+      - ${project_tag}
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    type: string
+    visible: false
+    title: Tenancy OCID
+    description: Provide tenancy OCID
+
+  region:
+    type: string
+    visible: true
+    title: Region
+    description: Provide region
+
+#####################################
+
+  # Integration Instance Configuration
+
+#####################################
+
+  display_name:
+    type: string
+    required: true
+    title: Integration Instance Display Name
+    visible: true
+    default: "integration_instance"
+  
+  idcs_at:
+    type: password
+    required: true
+    title: Identity Personal Access Token
+    visible: true
+    description: Provide token that you have generated in OCI console
+
+  integration_instance_type:
+    visible: true
+    type: enum
+    required: true
+    title: Integration instance type
+    default: "ENTERPRISE"
+    enum:
+      - "ENTERPRISE"
+      - "STANDARD"
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+
+  is_byol:
+    visible: true
+    type: boolean
+    required: true
+    default: false
+    title: Use Existing BYOL ?
+    description: If it is unchecked, integration instance will be subscribed to new Oracle Integration license
+
+  is_file_server_enabled:
+    visible: true
+    type: boolean
+    required: true
+    default: true
+    title: Enable File Server ?
+    description: If it is checked, file server will be enabled
+
+  is_visual_builder_enabled:
+    visible: true
+    type: boolean
+    required: true
+    default: true
+    title: Enable Visual Builder ?
+    description: If it is checked, file server will be enabled
+
+  message_packs:
+    visible: true
+    type: number
+    required: true
+    default: 1
+    title: Number of Message Packs?
+    description: Message packs will be billed per hour
+
+
+  consumption_model:
+    type: enum
+    title: Choose Consumption Model
+    default: "UCM"
+    required: true
+    description: UCM for Metered(Universal Credits)
+    enum:
+      - "OIC4SAAS"
+      - "UCM"
+      - "GOV"
+
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

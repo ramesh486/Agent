@@ -1,0 +1,10 @@
+
+    compartment_ocid               = "ocid1.compartment.oc1..aaaaaaaab7njjrxpt3p3ajot2o5js64bdlwvhjbvqy2ko27xkwjoggcueaiq"
+    tenancy_ocid                   = "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+    region                         = "us-ashburn-1"
+    drg_ocid                       = "ocid1.drgattachment.oc1.iad.aaaaaaaazotdwbligveisdyimr3rbprve34nw34mx2xj5fis544e5bor73ha"
+    fastconnect_provider           = "Megaport" 
+    compartment_name               = "oci_network" 
+    virtual_circuit_display_name   = "Automation_fz_Azure" 
+    provider_service_key_name      = "1aada02d-9f09-4be3-8c85-a7677575bd7b" 
+  

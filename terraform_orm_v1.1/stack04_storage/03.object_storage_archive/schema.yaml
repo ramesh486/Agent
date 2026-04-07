@@ -1,0 +1,107 @@
+title: Object Storage Terraform Input Variables
+description: Object Storage Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Object Storage Configuration"
+    variables:
+      - ${bucket_name}
+      - ${bucket_storage_tier}
+      - ${bucket_access_type}
+      - ${bucket_versioning}
+      - ${auto_tiering}
+      - ${object_event_enabled}
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}      
+
+variables:
+
+#####################################
+# Common Variables
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#####################################
+# Object Storage Variables
+#####################################
+
+  bucket_name:
+    type: string
+    required: true
+    title: Object Storage Display Name
+    visible: true
+    default: "bucket_test"
+
+  bucket_storage_tier:
+    type: enum
+    required: true
+    title: Type of storage tier
+    visible: true
+    description: The type of storage tier of this bucket.
+    default: "Standard"
+    enum:
+          - "Standard"
+          - "Archive"          
+       
+  bucket_access_type:
+    type: string
+    required: true
+    description: "The type of public access enabled on this bucket. "
+    visible: true
+    default: "NoPublicAccess"
+
+  bucket_versioning:
+    type: string
+    required: true
+    description: Set the versioning status on the bucket.
+    visible: true
+    default: "Disabled"
+
+  auto_tiering:
+    type: string
+    required: true
+    description: Set the auto tiering status on the bucket.
+    visible: true
+    default: "InfrequentAccess"
+
+  object_event_enabled:
+    type: boolean
+    required: true
+    description: Whether or not events are emitted for object state changes in this bucket.
+    visible: true
+    default: false        

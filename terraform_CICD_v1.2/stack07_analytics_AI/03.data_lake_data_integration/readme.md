@@ -1,0 +1,1 @@
+# Data Integration is a fully managed, serverless, cloud-native service that extracts, loads, transforms, cleanses, and reshapes data from a variety of data sources into target Oracle Cloud Infrastructure services.

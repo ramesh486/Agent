@@ -1,0 +1,87 @@
+title: OCI DNS Private View Terraform Input Variables
+description: OCI DNS Private View Terraform Input Variables
+schemaVersion: 1.1.0
+version: "15052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "OCI DNS Private View Variables"
+    variables:
+      - ${dns_view_display_name}
+      - ${scope}
+
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+######################################
+
+# Core OKE variables
+
+######################################
+
+  dns_view_display_name:
+    type: string
+    title: OCI DNS View Display Name
+    description: Provide custom display name for OCI DNS View
+    visible: true
+    required: true
+    default: "dns_view"
+
+  scope:
+    type: string
+    title: OCI DNS View Scope
+    description: OCI DNS View Scope, this value is immutable
+    visible: false
+    required: true
+    default: "PRIVATE"

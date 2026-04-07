@@ -1,0 +1,1 @@
+#   To create a compute cluster, user need to create an empty RDMA network group and then use the compute cluster’s OCID with the Launch Instance operation to create instances in the compute cluster.

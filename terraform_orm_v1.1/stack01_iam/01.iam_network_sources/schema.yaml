@@ -1,0 +1,65 @@
+title: OCI Network source Terraform Input Variables
+description:  OCI Network source Variables
+schemaVersion: 1.1.0
+version: "21022023"
+
+# Network source Variables
+
+groupings:
+
+  - title: "OCI Network source Variables"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${network_source_description}
+      - ${network_source_name}
+      - ${project_tag}
+      
+      
+
+variables:
+
+# Common Compartment
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+    default: "us-ashburn-1"
+
+# Network source variables 
+
+  network_source_description:
+    type: string
+    visible: true
+    title: network source description
+    description: network source description
+    default: "corporate ip ranges to be used for ip based authorization"
+    required: true
+
+  network_source_name:
+    type: string
+    visible: true
+    title: network source name
+    description: network source name
+    default: "corpnet"
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+
+  
+
+
+  

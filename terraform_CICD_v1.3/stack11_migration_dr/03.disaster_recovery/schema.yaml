@@ -1,0 +1,106 @@
+title: Create DR Protection Groups
+description: DR Protection Groups Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "oci_disaster_recovery_dr_protection_group"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${project_tag}
+      - ${dr_protection_group_display_name}
+      - ${dr_protection_group_log_location_bucket}
+      - ${dr_protection_group_log_location_namespace}
+      - ${dr_protection_group_association_role}
+      - ${dr_protection_group_members_member_type}
+      - ${member_ocid}
+      
+variables:
+
+#####################################
+# Common variables
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "The OCID of the compartment"
+
+  region:
+    visible: true
+    title: "Region"
+    description: "The region where the resources will be provisioned"
+
+  tenancy_ocid:
+    visible: true
+    title: "Tenancy OCID"
+    description: "Tenancy OCID"
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach the Tags"
+    visible: true
+    required: false
+
+#####################################
+# OCI Disaster Recovery DR Protection Group
+#####################################
+
+  dr_protection_group_display_name:
+    type: string
+    default: "DR_Test"
+    title: "DR Protection Group Display Name"
+    description: "The display name for the DR protection group"
+    required: true
+    visible: true
+
+  dr_protection_group_log_location_bucket:
+    type: string
+    default: "Mybucket"
+    title: "DR Protection Group Log Location Bucket"
+    description: "The name of the Object Storage bucket where logs related to the DR protection group will be stored"
+    required: true
+    visible: true
+
+  dr_protection_group_log_location_namespace:
+    type: string
+    default: "axuezfqioxiw"
+    title: "DR Protection Group Log Location Namespace"
+    description: "The Object Storage namespace where the bucket specified is located"
+    required: true
+    visible: true
+
+  dr_protection_group_association_role:
+    type: string
+    default: "STANDBY"
+    title: "DR Protection Group Association Role"
+    description: "The role of the DR protection group in the DR association"
+    required: true
+    visible: true
+  
+  dr_protection_group_members_member_type:
+    type: string
+    default: "VOLUME_GROUP"
+    title: "DR Protection Group Member Type"
+    description: "The type of the member in the DR protection group"
+    required: true
+    visible: true
+
+  member_ocid:
+    type: string
+    default: ""
+    title: "Member OCID"
+    description: "The OCID of the member in the DR protection group"
+    required: true
+    visible: true
+  
+
+  

@@ -1,0 +1,105 @@
+title: OCI Container Repository Terraform Input Variables
+description:  OCI Container Repository Variables
+schemaVersion: 1.1.0
+version: "03072023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "OCI Container Repository Configuration"
+    variables:
+      - ${container_repository_display_name}
+      - ${container_repository_description}
+      - ${container_repository_is_public}
+      - ${container_repository_readme_format}
+      - ${container_repository_readme_content}
+
+
+
+  - title: "Select the target compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+
+#########################################
+
+# OCI Container Repository Configuration
+
+#########################################
+
+  container_repository_display_name:
+    type: string
+    required: true
+    title: Container repository display name
+    visible: true
+  
+  container_repository_description:
+    type: string
+    required: false
+    title: Container repository description
+    visible: true
+
+  container_repository_is_public:
+    type: boolean
+    required: false
+    default: false
+    title: Enable public access to container repository ?
+    description: Enables unauthenticated access
+    visible: true
+
+
+  container_repository_readme_content:
+    type: text
+    required: false
+    multiline: true
+    title: Container repository readme content
+    visible: true
+
+  container_repository_readme_format:
+    type: enum
+    required: false
+    title: Container repository readme format
+    visible: true
+    default: TEXT_MARKDOWN
+    enum:
+      - TEXT_MARKDOWN
+      - TEXT_PLAIN
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+

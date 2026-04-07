@@ -1,0 +1,143 @@
+title: DNS Steering Policy
+description: DNS Steering Policy Terraform Variables
+schemaVersion: 1.1.0
+version: "24052023"
+
+variableGroups:
+
+  - title: DNS Steering Policy
+    variables:
+      - ${dns_steering_policy_display_name}
+      - ${attach_health_check_ocid}
+      - ${health_check_ocid}
+      - ${dns_steering_policy_type}
+      - ${ttl}
+      - ${attach_dns_zone}
+      - ${dns_zone_ocid}
+      - ${dns_sub_domain_name}
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${network_compartment_id_in_subtree}
+      - ${network_compartment_name}
+      - ${tenancy_ocid}
+      - ${region}
+
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+
+#####################################
+
+# FastConnect Variables
+
+#####################################
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: "true"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    title: "Target Compartment Name"
+    default: ""
+    description: "Target Compartment Name"
+    visible: true
+    required: true
+    
+
+  dns_steering_policy_display_name:
+    type: string
+    description: Provide name for DNS Steering Policy
+    visible: true
+    required: true
+    title: DNS Steering Policy Display Name
+
+  attach_health_check_ocid:
+    type: boolean
+    description: If checked provide health check ocid
+    default: true
+    visible: true
+    required: true
+    title: Attach Health Check ?
+  
+  health_check_ocid:
+    type: string
+    description: Provide Health Check name
+    visible: ${attach_health_check_ocid}
+    required: true
+    title: Health Check Name
+    default: ""
+
+  dns_steering_policy_type:
+    type: enum
+    description: Provide DNS Steering Policy Type
+    visible: true
+    required: true
+    title: DNS Steering Policy Type
+    enum:
+      - LOAD_BALANCE
+    default: "LOAD_BALANCE"
+
+  ttl:
+    type: number
+    description: The time to live for responses from the steering policy
+    visible: true
+    required: true
+    title: Time to Live in seconds
+    default: 30
+
+  attach_dns_zone:
+    type: boolean
+    description: If this policy has no attached domains. It will not steer any traffic until attached to a domain.
+    default: true
+    visible: true
+    required: true
+    title: Attach DNS Zone ? 
+
+  dns_zone_ocid:
+    type: string
+    description: DNS Zone Name
+    visible: ${attach_dns_zone}
+    required: true
+    title: Provide DNS ocid
+    default: ""
+
+  dns_sub_domain_name:
+    type: string
+    description: Provided sub domain will be attached to your DNS Zone
+    visible: ${attach_dns_zone}
+    required: false
+    title: Provide DNS Sub Domain Name
+    default: ""
+  

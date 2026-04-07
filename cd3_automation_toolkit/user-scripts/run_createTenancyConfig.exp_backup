@@ -1,0 +1,21 @@
+#!/usr/bin/expect -f
+set timeout -1
+
+# Start the Python script
+spawn python3.9 /home/ubuntu/actions-runner/_work/oci_automation/oci_automation/cd3_automation_toolkit/user-scripts/createTenancyConfig.py
+
+expect {
+    # Blank input for oci_devops_git_key=
+    -re {oci_devops_git_key=} {
+        send "\r"
+        exp_continue
+    }
+
+    # 'Do you want to proceed (y/n):'
+    -re {Do you want to proceed \(y/n\):} {
+        send "y\r"
+        exp_continue
+    }
+
+    eof
+}

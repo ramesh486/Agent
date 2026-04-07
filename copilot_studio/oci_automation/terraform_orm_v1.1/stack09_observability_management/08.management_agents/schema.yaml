@@ -1,0 +1,78 @@
+title: Management Agent
+description: Management Agent key
+schemaVersion: 1.1.0
+version: "25012022"
+
+######################################
+#  Variable Groupings
+# #####################################
+
+groupings:
+ 
+  - title: "common compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+
+  - title: "management agent key configurations"
+    variables:
+      - ${management_agent_install_key_display_name}
+      - ${management_agent_install_key_allowed_key_install_count}
+      - ${management_agent_install_key_time_expires}
+      - ${management_agent_install_key_is_unlimited}
+
+#####################################
+# Common Compartment
+#####################################
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+#######################################
+# management agent key configurations
+#######################################
+
+management_agent_install_key_display_name:
+    type: string
+    default: "Test_agent"
+    title: "management_agent_install_key_display_name"
+    description: "managemant agent key name"
+    required: true
+    visible: true
+
+management_agent_install_key_allowed_key_install_count:
+    type: number
+    default: 10
+    title: "management_agent_install_key_allowed_key_install_count"
+    description: "managemant agent key count"
+    required: true
+    visible: true
+
+management_agent_install_key_time_expires:
+    type: string
+    default: "2023-06-08T17:27:44.398Z"
+    title: "management_agent_install_key_time_expires"
+    description: "managemant agent key time"
+    required: true
+    visible: true
+
+management_agent_install_key_is_unlimited:
+    type: bool
+    default: true
+    title: "management_agent_install_key_time_expires"
+    description: "managemant agent key time"
+    required: true
+    visible: true   
+
+
+      

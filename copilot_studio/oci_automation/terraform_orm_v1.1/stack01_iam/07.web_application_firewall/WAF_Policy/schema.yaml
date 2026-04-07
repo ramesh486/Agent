@@ -1,0 +1,98 @@
+title: Create WAF Policy
+description: WAF Policy Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+    
+  - title: "WAF Policy Configuration"
+    variables:
+      - ${web_app_firewall_policy_display_name}
+      - ${web_app_firewall_policy_actions_name1}
+      - ${web_app_firewall_policy_actions_type1}
+      - ${web_app_firewall_policy_actions_name2}
+      - ${web_app_firewall_policy_actions_type2}
+      - ${web_app_firewall_policy_actions_name3}
+      - ${web_app_firewall_policy_actions_type3}
+      - ${web_app_firewall_policy_actions_code}
+      - ${web_app_firewall_policy_actions_headers_name}
+      - ${web_app_firewall_policy_actions_headers_value}
+      - ${web_app_firewall_policy_actions_body_text}
+      - ${web_app_firewall_policy_actions_body_type}
+
+  - title: "Access Control Configuration"
+    variables:
+      - ${web_app_firewall_policy_request_access_control_default_action_name}
+      - ${web_app_firewall_policy_request_access_control_rules_action_name}
+      - ${web_app_firewall_policy_request_access_control_rules_name}
+      - ${web_app_firewall_policy_request_access_control_rules_type}
+      - ${web_app_firewall_policy_request_access_control_rules_condition}
+      - ${web_app_firewall_policy_request_access_control_rules_condition_language}
+
+  - title: "Protection Configuration"
+    variables:
+      - ${web_app_firewall_policy_request_protection_body_inspection_size_limit_in_bytes}
+      - ${web_app_firewall_policy_request_protection_rules_action_name}
+      - ${web_app_firewall_policy_request_protection_rules_condition_language}
+      - ${web_app_firewall_policy_request_protection_rules_is_body_inspection_enabled}
+      - ${web_app_firewall_policy_request_protection_rules_name}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key1}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version1}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key2}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version2}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key3}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version3}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key4}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version4}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key5}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version5}
+      - ${web_app_firewall_policy_request_protection_rules_type}
+
+  - title: "Rate Limiting Configuration"
+    variables:
+      - ${web_app_firewall_policy_request_rate_limiting_rules_action_name}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_configurations_period_in_seconds}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_configurations_requests_limit}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_configurations_action_duration_in_seconds}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_name}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_type}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_condition}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_condition_language}
+  
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+ 

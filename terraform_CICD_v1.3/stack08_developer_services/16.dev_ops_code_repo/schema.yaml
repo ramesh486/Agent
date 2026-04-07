@@ -1,0 +1,120 @@
+title: Devops Code Repository
+description: Devops Code Repository
+schemaVersion: 1.1.0
+version: "11072023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_name}
+      - ${compartment_id_in_subtree} 
+      - ${project_tag}
+      - ${repo_name}
+      - ${default_branch}
+      - ${description}
+      - ${repository_type}
+      - ${project_name}
+      - ${notification_topic}
+      
+variables:
+
+#####################################
+# Common Variable
+#####################################
+
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+
+  tenancy_ocid:
+    title: "Tenancy OCID"
+    type: string
+    required: true 
+    visible: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#####################################
+# Ops code repo Variable
+#####################################
+
+  repo_name:
+    type: string
+    visible: true
+    required: true
+    title: Repository Name
+    description: Provide the name for the Repository
+    default: "repositoryName"
+
+  default_branch:
+    type: string
+    visible: true
+    required: true
+    title: Branch of Repository
+    description: "The default branch of the repository"
+    default: "defaultBranch"
+  
+  description:
+    type: string
+    visible: true
+    required: true
+    title: "Details of the repository"
+    description: "Details of the repository"
+    default: "description"
+
+  repository_type:
+    type: string
+    visible: true
+    required: true
+    title: Repository Type
+    description: "Type of repository"
+    default: "HOSTED"
+  
+  project_name:
+    type: string
+    visible: true
+    required: true
+    title: Project Name
+    description: "Provide the Project name "
+    default: "project"
+
+
+  notification_topic:
+    type: string
+    visible: true
+    required: true
+    title: Notification Topic Name
+    description: "Provide name for Notification Topic"
+    default: "test_topic_repo"

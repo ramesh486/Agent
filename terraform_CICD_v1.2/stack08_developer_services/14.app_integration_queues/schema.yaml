@@ -1,0 +1,140 @@
+title: Queue
+description: Queue
+schemaVersion: 1.1.0
+version: "19062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Common Compartment"
+    variables:
+      - ${tenancy_ocid}    
+      - ${region}
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}  
+      - ${project_tag}
+
+  - title: "Queue Variables"
+    variables:
+      - ${tag_namespace_description}
+      - ${tag_namespace_name}
+      - ${queue_display_name}
+      - ${queue_retention_in_seconds}
+      - ${queue_timeout_in_seconds}
+      - ${queue_visibility_in_seconds}
+      - ${tag_description}
+      - ${tag_name}
+    
+
+variables:
+
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+
+  tenancy_ocid:
+    title: "Tenancy OCID"
+    type: string
+    required: true 
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false    
+
+#####################################
+# Queue Variables
+#####################################
+
+  tag_namespace_description:
+    title: Tag namespace description
+    type: string
+    required: true
+    visible: true
+    default: "Just a test"
+    description: Enter Tag namespace description
+
+  tag_namespace_name:
+    title: Tag namespace name
+    type: string
+    required: true
+    visible: true
+    default: "testexamples-tag-namespace"
+    description: Enter tag namespace name
+
+  queue_display_name:
+    title: Queue display name
+    type: string
+    required: true
+    visible: true
+    default: "test_queue01"
+    description: Enter queue display name
+
+  queue_retention_in_seconds:
+    title: Queue retention in seconds
+    type: number
+    required: true
+    visible: true
+    default: 10
+    description: Queue retention in seconds
+
+  queue_timeout_in_seconds:
+    title: Queue timeout in seconds
+    type: number
+    required: true
+    visible: true
+    default: 10
+    description: Enter queue timeout in seconds
+
+  queue_visibility_in_seconds:
+    title: Queue visibility in seconds
+    type: number
+    required: true
+    visible: true
+    default: 10
+    description: Enter queue visibility in seconds
+
+  tag_description:
+    title: Tag description
+    type: string
+    required: true
+    visible: true
+    default: "tf example tag"
+    description: Enter tag description
+
+  tag_name:
+    title: Tag name
+    type: string
+    required: true
+    visible: true
+    default: "tf-example-tag"
+    description: Enter tag name
+    

@@ -1,0 +1,138 @@
+title: Create Data catalog, metastore and private endpoint
+description: Data catalog Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      # - ${compartment_ocid}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${app_compartment_name}
+      - ${network_compartment_name}
+      - ${app_compartment_id_in_subtree}
+      - ${network_compartment_id_in_subtree}
+      - ${subnet_display_name}
+      - ${project_tag}
+
+
+#####################################
+# catalog_private_endpoint
+#####################################
+ 
+  - title: "catalog_private_endpoint"
+    variables:
+      - ${catalog_private_endpoint_display_name}
+      - ${catalog_private_endpoint_dns_zones}
+      # - ${subnet_id}
+
+
+     
+########################################
+#  data_catalog
+########################################
+
+  - title: "data_catalog"
+    variables:
+      - ${catalog_display_name}
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+    
+  app_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: "oci_monitoring"
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  app_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: "oci_network"
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+    
+  subnet_display_name:
+    type: string
+    title: "Subnet Display Name"
+    default: ""
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+#####################################
+# catalog_private_endpoint
+#####################################
+
+  catalog_private_endpoint_display_name:
+    type: string
+    default: "Example_endpoint"
+    title: "Catalog Private Endpoint Name"
+    description: "The display name for the catalog private endpoint"
+    required: true
+    visible: true
+  
+  catalog_private_endpoint_dns_zones:
+    type: list(string)
+    default: "nptrustsn.nonprodhubvcn.oraclevcn.com"
+    title: "Catalog Private Endpoint DNS Zones"
+    description: "The list of DNS zones for the catalog private endpoint"
+    required: true
+    visible: true
+
+
+
+
+###################################################
+# data catalog
+###################################################
+
+  catalog_display_name:
+    type: string
+    default: "Example_catalog"
+    title: "Data Catalog Display Name"
+    description: "The display name for the data catalog"
+    required: true
+    visible: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

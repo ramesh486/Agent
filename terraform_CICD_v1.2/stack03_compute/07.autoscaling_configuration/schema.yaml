@@ -1,0 +1,259 @@
+title: OCI Core autoscaling configurations
+description: OCI Core autoscaling configurations 
+schemaVersion: 1.1.0
+version: "02062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment and Subnet"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${app_compartment_id_in_subtree}
+      - ${app_compartment_name}
+      - ${project_tag}
+      - ${instance_pools_display_name}
+      
+  - title: "Select Auto Scaling Configuration"
+    variables:    
+
+      - ${cool_down_in_seconds}
+      - ${auto_scaling_configuration_display_name}
+      - ${capacity_initial}
+      - ${capacity_max}
+      - ${capacity_min}
+      - ${policy_display_name}
+      - ${policy_type}
+      - ${action_type}
+      - ${action_value}
+      - ${display_name}
+      - ${metric_type}
+      - ${threshold_operator}
+      - ${threshold_value}
+      - ${action_type1}
+      - ${action_value1}
+      - ${display_name1}
+      - ${metric_type1}
+      - ${threshold_operator1}
+      - ${threshold_value1}
+      - ${instance_pool_ocid}
+      - ${auto_scaling_resources_type}
+ 
+
+variables:
+
+### Common Compartment 
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: ""
+    
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  app_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  app_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+
+# # ----------------------------------------
+#  Auto Scaling Configuration
+# ----------------------------------------
+  cool_down_in_seconds:
+    type: number
+    required: true
+    visible: true
+    default: "300"
+    title: "cool down in seconds"
+    description: "cool down in seconds"
+  
+  auto_scaling_configuration_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "TestAutoScalingConfiguration"
+    title: "auto scaling configuration display name"
+    description: "Auto scaling configuration display name"
+
+  capacity_initial:
+    type: number
+    required: true
+    visible: true
+    default: 2
+    title: "Initial Capacity"
+    description: "Provide  initial capacity "
+
+  capacity_max:
+    type: number
+    required: true
+    visible: true
+    default: 4
+    title: "Maximum Capacity"
+    description: "Provide max capacity"
+
+  capacity_min:
+    type: number
+    required: true
+    visible: true
+    default: 2
+    title: "Minimum Capacity"
+    description: "Provide min capacity"
+  
+  policy_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "TestPolicy"
+    title: "policy display name"
+    description: "policy display name"
+  
+  policy_type:
+    type: string
+    required: true
+    visible: true
+    default: "threshold"
+    title: "policy type"
+    description: "policy type"
+
+  
+  action_type:
+    type: string
+    required: true
+    visible: true
+    default: "CHANGE_COUNT_BY"
+    title: "Action Type"
+    description: "Provide action type"
+  
+  action_value: 
+    type: number
+    required: true
+    visible: true
+    default: 1
+    title: "policy type"
+    description: "Provide action value"
+
+  action_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "TestScaleOutRule"
+    title: "Action display name"
+    description: "Provide action display name"
+  
+  metric_type:
+    type: string
+    required: true
+    visible: true
+    default: "CPU_UTILIZATION"
+    title: "metric type"
+    description: "Provide metric type"
+
+  
+  threshold_operator:
+    type: string
+    required: true
+    visible: true
+    default: "GT"
+    title: "Threshold Operator"
+    description: "Threshold operator"
+  
+  threshold_value:
+    type: number
+    required: true
+    visible: true
+    default: 90
+    title: "Threshold Value"
+    description: "Threshold value"
+
+  
+  action_type1:
+    type: string
+    required: true
+    visible: true
+    default: "CHANGE_COUNT_BY"
+    title: "Action Type1"
+    description: "Action type"
+
+  action_value1:
+    type: string
+    required: true
+    visible: true
+    default: -1
+    title: "Action value"
+    description: "Action value"
+
+  
+  rules_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "testScaleInRule"
+    title: "Display Name"
+    description: "Rules display name"
+  
+  metric_type1:
+    type: string
+    required: true
+    visible: true
+    default: "CPU_UTILIZATION"
+    title: "Metric Type"
+    description: "Metric type"
+  
+  threshold_operator1:
+    type: string
+    required: true
+    visible: true
+    default: "LT"
+    title: "Threshold Operator"
+    description: "Threshold_operator1"
+
+  threshold_value1:
+    type: number
+    required: true
+    visible: true
+    default: 1
+    title: "Threshold Value"
+    description: "Threshold_value1"
+
+  instance_pools_display_name:
+    type: string
+    visible:  true
+    title: Instance pool Name
+    description: Name of the Instance pool   
+    default: ""
+  
+  auto_scaling_resources_type:
+    type: string
+    required: true
+    visible: true
+    default: "instancePool"
+    title: "Resource Type"
+    description: "Auto scaling resources type"
+
+

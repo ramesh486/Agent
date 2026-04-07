@@ -1,0 +1,14 @@
+variable "compartment_ocid" {}
+variable "scan_level" {}  
+variable "container_scan_recipe_display_name" {}
+variable "container_scan_recipe_image_count" {}
+variable "container_scan_recipe_state" {}
+variable "project_tag" {
+	type = map
+	default = {
+		definedTags = {}
+		freeformTags = {}
+	}
+}
+#variable "container_repo_name" {}
+#variable "vault_secret_ocid"  {}

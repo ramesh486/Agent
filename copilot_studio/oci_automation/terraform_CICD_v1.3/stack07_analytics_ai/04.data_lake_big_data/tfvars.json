@@ -1,0 +1,11 @@
+{
+    "tenancy_ocid"                : "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla",
+    "region"                      : "us-ashburn-1",
+    "cluster_public_key"          : "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDq+TwRqt7Zey2zfPxckWZqCsVRGUpKnkxeUcxqHswH1sU6j7tdXG8jFfLiO+P9EWOqstEIBTSxQIIiiM7S3lMXR77CKPRwoH18ynkXy+BRo7YNgNGG2X58ChQiq886/gSlyhKpglNK2W5L1ro05baoJe8GlHZ2FafT4ofgeCO98Qfs46i5J1Ph5ZYm3VEbD2zCv/tUZ/fZ24p4pxpZddA8alGAOhRthTjjA6kI3HRCcJtY/xotDxJ92Ks19ZcGbwKaGGE6U8Jv0LLB1L7n1A3eltg2j1/a/L3G1UhXWH30JtMdpd7BN/Zt+vSqbtybca/8u9sJ2gHp3uLm/ambFlT reemayg99@28b6daebbae2",
+    "cluster_admin_password"      : "S5pdAxQA==",
+    "app_compartment_name"        : "nonprod_app" ,
+    "network_compartment_name"    : "network",
+    "master_subnet_display_name"  : "prod_trust_subnet" ,
+    "util_subnet_display_name"    :"prod_untrust_subnet",
+    "worker_subnet_display_name"  :"prod_mgmt_subnet"
+}

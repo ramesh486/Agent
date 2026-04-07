@@ -1,0 +1,78 @@
+title: Reserved Public IP pool
+description: Reserved Public IP pool
+schemaVersion: 1.1.0
+version: "05072023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}
+      - ${display_name}
+      - ${lifetime}
+
+variables:
+
+####################################
+#  Common Compartment
+####################################
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    title: Tenancy OCID
+    description: Enter the Tenancy OCID
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Enter the Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach the Tags"
+    visible: true
+    required: true
+  
+  display_name:
+    type: string
+    required: true
+    visible: true
+    default: "pub_ip_add_1"
+    title: "Reserved Public IP address Display Name"
+    description: "Reserved Public IP address Display Name"
+
+  lifetime:
+    type: string
+    required: true
+    visible: true
+    default: "RESERVED"
+    title: "Life Time"
+    description: "Life time of the reserved Public IP."
+  

@@ -1,0 +1,123 @@
+title: Create Content Management instance
+description: Content Management instance Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${tenancy_name}
+      - ${project_tag}
+
+  - title: "oce instance configuration"
+    variables:
+      - ${oce_instance_admin_email}
+      - ${oce_instance_idcs_access_token}
+      - ${oce_instance_name}
+      - ${oce_instance_object_storage_namespace}
+      - ${oce_instance_instance_access_type}
+      - ${oce_instance_instance_license_type}
+   
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_name:
+    type: string
+    visible: true
+    title: Compartment Name
+    description: Compartment Name of the Resource
+    default: ""
+
+  compartment_id_in_subtree:
+    type: boolean
+    visible: true
+    title: Compartment ID in Subtree
+    description: Compartment ID in Subtree
+    default: true
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: The region where the resources will be provisioned
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    default: ""
+    title: "Tenancy OCID"
+    description: The OCID of the tenancy
+
+  tenancy_name:
+    type: string
+    visible: true
+    default: "ebizoncloudllc"
+    title: "Tenancy name" 
+    description: The name of the tenancy
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false    
+
+########### big data service ###########
+
+  oce_instance_admin_email:
+    type: string
+    default: "example@gmail.com"
+    title: "Instance admin email"
+    description: "The email address of the OCE instance administrator"
+    required: true
+    visible: true
+
+  oce_instance_idcs_access_token:
+    type: string
+    default: ""
+    title: "Instance idcs access token"
+    description: "The IDCS access token for the OCE instance"
+    required: true
+    visible: true
+
+  oce_instance_name:
+    type: string
+    default: "Example_oce_instance"
+    title: "Instance name"
+    description: "The name of the OCE instance"
+    required: true
+    visible: true
+  
+  oce_instance_object_storage_namespace:
+    type: string
+    default: ""
+    title: "Instance object storage namespace"
+    description: "The object storage namespace for the OCE instance"
+    required: true
+    visible: true
+
+  oce_instance_instance_access_type:
+    type: string
+    default: "PUBLIC"
+    title: "Instance access type"
+    description: "The access type for the OCE instance"
+    required: true
+    visible: true
+  
+  oce_instance_instance_license_type:
+    type: string
+    default: "STARTER"
+    title: "License type"
+    description: "The license type for the OCE instance"
+    required: true
+    visible: true

@@ -1,0 +1,79 @@
+variable "tenancy_ocid" {}
+
+variable "region" {}
+
+variable "compartment_ocid" {}
+
+variable subnet_ocid {}
+
+variable "vm_display_name" {}
+
+variable "are_all_plugins_disabled" {}
+
+variable "is_management_disabled" {}
+
+variable "is_monitoring_disabled" {}
+
+variable "desired_state1" {}
+
+variable "name1" {}
+
+variable "desired_state2" {}
+
+variable "name2" {}
+
+variable "desired_state3" {}
+
+variable "name3" {}
+
+variable "desired_state4" {}
+
+variable "name4" {}
+
+variable "desired_state5" {}
+
+variable "name5" {}
+
+variable "desired_state6" {}
+
+variable "name6" {}
+
+variable "desired_state7" {}
+
+variable "name7" {}
+
+variable "assign_public_ip" {}
+
+variable "vnic_hostname" {}
+
+variable "fault_domain" {}
+
+variable "boot_volume_type" {}
+
+variable "firmware" {}
+
+variable "network_type" {}
+
+variable "remote_data_volume_type" {}
+
+variable "ssh_authorized_keys" {}
+
+variable "instance_shape" {}
+
+variable "memory_in_gbs" {}
+
+variable "ocpus" {}
+
+variable "source_image_ocid" {}
+
+variable "source_type" {}
+
+variable "instance_configuration_display_name" {}
+
+variable "instance_type" {}
+
+variable "instance_pool_size" {}
+
+variable "instance_pool_state" {}
+
+variable "instance_pool_display_name" {}

@@ -1,0 +1,1 @@
+ ADM provides a graphical representation of the dependencies, allowing you to visualize the relationships between resources. This can help you understand the flow of data and interactions between different components of your application.

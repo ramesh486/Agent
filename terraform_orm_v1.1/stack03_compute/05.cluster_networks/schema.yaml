@@ -1,0 +1,88 @@
+title: OCI Core cluster network 
+description: OCI Core cluster network 
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "common compartment"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_ocid}
+      
+
+  - title: "OCI Core cluster network"
+    variables:
+      - ${instance_compartment_ocid}
+      - ${cluster_network_instance_pools_size}
+      - ${cluster_network_instance_pools_display_name}
+      - ${subnet_ocid}
+    
+      
+
+variables:
+### Common Compartment 
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+    
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+ 
+ #"oci_core_cluster_network"
+  instance_compartment_ocid:
+    type: oci:identity:compartment:id
+    required: true
+    visible: true
+    default: ""
+    title: "select the instance configuration compartment"
+    description: "select the instance configuration compartment"
+
+  instance_configuration_ocid:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "select the instance configuration ocid"
+    description: "select the instance configuration ocid"
+
+  cluster_network_instance_pools_size:
+    type: number
+    visible: true
+    title: cluster network instance pools size
+    default: "1"
+    description: cluster network instance pools size
+    required: true
+
+  cluster_network_instance_pools_display_name:
+    type: string
+    visible: true
+    title: cluster network instance pools display name
+    default: "cluster network instance pool"
+    description: cluster network instance pools display_name
+    required: true
+
+  subnet_ocid:
+    type: string
+    visible: true
+    title: subnet ocid
+    default: ""
+    description: subnet ocid
+    required: true

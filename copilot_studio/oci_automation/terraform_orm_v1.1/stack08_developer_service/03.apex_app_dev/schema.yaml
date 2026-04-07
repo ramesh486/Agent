@@ -1,0 +1,173 @@
+title: Apex service
+description: Apex service
+schemaVersion: 1.1.0
+version: "19062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Autonomous database variables"
+    variables:
+      - ${region}
+      - ${admin_password}
+      - ${compartment_ocid}
+      - ${autonomous_maintenance_schedule_type}
+      - ${character_set}
+      - ${cpu_core_count}
+      - ${project_tag}
+      - ${email}
+      - ${data_storage_size_in_tbs}
+      - ${db_name}
+      - ${db_version}
+      - ${db_workload}
+      - ${display_name}
+      - ${is_auto_scaling_enabled}
+      - ${is_auto_scaling_for_storage_enabled}
+      - ${is_dedicated}
+      - ${is_preview_version_with_service_terms_accepted}
+      - ${license_model}
+      - ${ncharacter_set}
+
+variables:
+
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: string
+    visible: true
+    title: Select the Compartment to deploy resources
+    default : ""
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    type: string
+    visible: false
+    required: true
+    title: Region
+    description: Region
+    default: "us-ashburn-1"
+
+  admin_password:
+    type: string
+    visible: true
+    title: Provide the password
+    default : ""
+    description: Provide the password
+
+  autonomous_maintenance_schedule_type:
+    type: string
+    visible: true
+    title: Provide autonomous maintenance schedule type
+    default : "REGULAR"
+    description: Provide autonomous maintenance schedule type
+
+  character_set:
+    type: string
+    visible: true
+    title: Provide character set for the autonomous database
+    default : "AL32UTF8"
+    description: Provide character set for the autonomous database
+
+  cpu_core_count:
+    type: number
+    visible: true
+    title: Provide cpu core count
+    default : 1
+    description: Provide cpu core count
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  email:
+    type: string
+    visible: true
+    title: Provide email
+    default : ""
+    description: Provide email
+
+  data_storage_size_in_tbs:
+    type: number
+    visible: true
+    title: Provide data storage size in tbs
+    default : 1
+    description: Provide data storage size in tbs
+
+  db_name:
+    type: string
+    visible: true
+    title: Provide DB name
+    default : "LY89LWLS4ZSTOV9Z"
+    description: Provide DB name
+ 
+  db_version:
+    type: string
+    visible: true
+    title: Provide db version
+    default : "19c"
+    description: Provide db version
+
+  db_workload:
+    type: string
+    visible: true
+    title: Provide the Autonomous Database workload type
+    default : "APEX"
+    description: Provide the Autonomous Database workload type
+
+  display_name:
+    type: string
+    visible: true
+    title: Provide display name
+    default : "LY89LWLS4ZSTOV9Z"
+    description: Provide display name
+  
+  is_auto_scaling_enabled:
+    type: bool
+    visible: true
+    title: Select is auto scaling enabled
+    default : true
+    description: Select is auto scaling enabled
+
+  is_auto_scaling_for_storage_enabled:
+    type: bool
+    visible: true
+    title: Select is auto scaling for storage enabled
+    default : false
+    description: Select is auto scaling for storage enabled
+  
+  is_dedicated:
+    type: bool
+    visible: true
+    title: Select is dedicated
+    default : false
+    description: Select is dedicated
+
+  is_preview_version_with_service_terms_accepted:
+    type: bool
+    visible: true
+    title: Select is preview version with service terms accepted
+    default : false
+    description: Select is preview version with service terms accepted
+
+  license_model:
+    type: string
+    visible: true
+    title: Select license model
+    default : "LICENSE_INCLUDED"
+    description: Select license model
+
+  ncharacter_set:
+    type: string
+    visible: true
+    title: The character set for the Autonomous Database
+    default : "AL16UTF16"
+    description: The character set for the Autonomous Database
+    

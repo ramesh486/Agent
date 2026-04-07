@@ -1,0 +1,328 @@
+title: Database Migration
+description: Database Migration Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "oci_database_migration_migration"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+      - ${compartment_ocid}
+      - ${source_database_connection_ocid}
+      - ${target_database_connection_ocid}
+      - ${migration_type}
+      - ${migration_data_transfer_medium_details_database_link_details_wallet_bucket_bucket}
+      - ${migration_data_transfer_medium_details_database_link_details_wallet_bucket_namespace}
+      - ${migration_data_transfer_medium_details_object_storage_details_bucket}
+      - ${migration_data_transfer_medium_details_object_storage_details_namespace}
+      - ${migration_datapump_settings_export_directory_object_name}
+      - ${migration_datapump_settings_import_directory_object_name}
+      - ${migration_datapump_settings_metadata_remaps_new_value}
+      - ${migration_datapump_settings_metadata_remaps_old_value}
+      - ${migration_datapump_settings_metadata_remaps_type}
+      - ${migration_dump_transfer_details_source_kind}
+      - ${migration_dump_transfer_details_target_kind}
+      - ${migration_exclude_objects_object}
+      - ${migration_exclude_objects_owner}
+      - ${migration_golden_gate_details_hub_rest_admin_credentials_password}
+      - ${migration_golden_gate_details_hub_rest_admin_credentials_username}
+      - ${migration_golden_gate_details_hub_source_db_admin_credentials_password}
+      - ${migration_golden_gate_details_hub_source_db_admin_credentials_username}
+      - ${source_microservices_deployment_name}
+      - ${migration_golden_gate_details_hub_target_db_admin_credentials_password}
+      - ${migration_golden_gate_details_hub_target_db_admin_credentials_username}
+      - ${target_microservices_deployment_name}
+      - ${migration_golden_gate_details_hub_url}
+      - ${migration_golden_gate_details_hub_source_container_db_admin_credentials_password}
+      - ${migration_golden_gate_details_hub_source_container_db_admin_credentials_username}
+      - ${migration_include_objects_object}
+      - ${migration_include_objects_owner}
+      - ${test_key_ocid}
+      - ${test_vault_ocid}
+      
+      
+variables:
+#####################################
+# OCI Database Migration
+#####################################
+
+  compartment_ocid:
+    type: string
+    title: "Compartment OCID"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Enter the Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter the Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach the Tags"
+    visible: true
+    required: true
+
+  source_database_connection_ocid:
+    type: string
+    default: ""
+    title: "Source Database Connection OCID"
+    description: "The OCID of the source database connection"
+    required: true
+    visible: true
+
+  target_database_connection_ocid:
+    type: string
+    default: ""
+    title: "Target Database Connection OCID"
+    description: "The OCID of the target database connection"
+    required: true
+    visible: true
+
+  migration_type:
+    type: string
+    default: "ONLINE"
+    title: "Migration Type"
+    description: "The type of migration"
+    required: true
+    visible: true
+
+  migration_data_transfer_medium_details_database_link_details_wallet_bucket_bucket:
+    type: string
+    default: "Mybucket"
+    title: "Database Link Details Wallet Bucket"
+    description: "The bucket name for the wallet in the database link details of the migration data transfer medium"
+    required: true
+    visible: true
+
+  migration_data_transfer_medium_details_database_link_details_wallet_bucket_namespace:
+    type: string
+    default: "axzsdvf"
+    title: "Database Link Details Wallet Bucket Namespace"
+    description: "The namespace for the wallet bucket in the database link details of the migration data transfer medium"
+    required: true
+    visible: true
+
+  migration_data_transfer_medium_details_object_storage_details_bucket:
+    type: string
+    default: "Mybucket"
+    title: "Object Storage Details Bucket"
+    description: "The bucket name in the migration data transfer medium's object storage details"
+    required: true
+    visible: true
+
+  migration_data_transfer_medium_details_object_storage_details_namespace:
+    type: string
+    default: "axzsdvf"
+    title: "Object Storage Details Namespace"
+    description: "The namespace in the migration data transfer medium's object storage details"
+    required: true
+    visible: true
+
+  migration_datapump_settings_export_directory_object_name:
+    type: string
+    default: "test_export_dir"
+    title: "Export Directory Object Name"
+    description: "The name of the export directory object in the migration datapump settings"
+    required: true
+    visible: true
+
+  migration_datapump_settings_import_directory_object_name:
+    type: string
+    default: "test_import_dir"
+    title: "Import Directory Object Name"
+    description: "The name of the import directory object in the migration datapump settings"
+    required: true
+    visible: true
+
+  migration_datapump_settings_metadata_remaps_new_value:
+    type: string
+    default: "DATA"
+    title: "Metadata Remaps New Value"
+    description: "The new value for metadata remapping in the migration datapump settings"
+    required: true
+    visible: true
+
+  migration_datapump_settings_metadata_remaps_old_value:
+    type: string
+    default: "USERS"
+    title: "Metadata Remaps Old Value"
+    description: "The old value for metadata remapping in the migration datapump settings"
+    required: true
+    visible: true
+
+  migration_datapump_settings_metadata_remaps_type:
+    type: string
+    default: "TABLESPACE"
+    title: "Metadata Remaps Type"
+    description: "The type of metadata remapping in the migration datapump settings"
+    required: true
+    visible: true
+
+  migration_dump_transfer_details_source_kind:
+    type: string
+    default: "CURL"
+    title: "Source Dump Transfer Kind"
+    description: "The kind of transfer for the source dump in the migration dump transfer details"
+    required: true
+    visible: true
+
+  migration_dump_transfer_details_target_kind:
+    type: string
+    default: "CURL"
+    title: "Target Dump Transfer Kind"
+    description: "The kind of transfer for the target dump in the migration dump transfer details"
+    required: true
+    visible: true
+
+  migration_exclude_objects_object:
+    type: string
+    default: "Myobject1"
+    title: "Excluded Object"
+    description: "The name of an object to be excluded from the migration"
+    required: true
+    visible: true
+
+  migration_exclude_objects_owner:
+    type: string
+    default: "Myowner1"
+    title: "Excluded Object Owner"
+    description: "The owner of the object to be excluded from the migration"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_rest_admin_credentials_password:
+    type: string
+    default: "12345"
+    title: "GoldenGate Hub REST Admin Password"
+    description: "The password for the GoldenGate Hub REST admin credentials"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_rest_admin_credentials_username:
+    type: string
+    default: "admin1"
+    title: "GoldenGate Hub REST Admin Username"
+    description: "The username for the GoldenGate Hub REST admin credentials"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_source_db_admin_credentials_password:
+    type: string
+    default: "12345"
+    title: "GoldenGate Hub Source DB Admin Password"
+    description: "The password for the GoldenGate Hub source database admin credentials"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_source_db_admin_credentials_username:
+    type: string
+    default: "admin2"
+    title: "GoldenGate Hub Source DB Admin Username"
+    description: "The username for the GoldenGate Hub source database admin credentials"
+    required: true
+    visible: true
+
+  source_microservices_deployment_name:
+    type: string
+    default: "Mysource"
+    title: "Source Microservices Deployment Name"
+    description: "The name of the deployment for the source microservices"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_target_db_admin_credentials_password:
+    type: string
+    default: "12345"
+    title: "GoldenGate Hub Target DB Admin Password"
+    description: "The password for the GoldenGate Hub target database admin credentials"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_target_db_admin_credentials_username:
+    type: string
+    default: "admin3"
+    title: "GoldenGate Hub Target DB Admin Username"
+    description: "The username for the GoldenGate Hub target database admin credentials"
+    required: true
+    visible: true
+
+  target_microservices_deployment_name:
+    type: string
+    default: "Mytarget"
+    title: "Target Microservices Deployment Name"
+    description: "The name of the deployment for the target microservices"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_url:
+    type: string
+    default: "myurl.com"
+    title: "GoldenGate Hub URL"
+    description: "The URL for the GoldenGate Hub"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_source_container_db_admin_credentials_password:
+    type: string
+    default: "12345"
+    title: "GoldenGate Hub Source Container DB Admin Password"
+    description: "The password for the GoldenGate Hub source container database admin credentials"
+    required: true
+    visible: true
+
+  migration_golden_gate_details_hub_source_container_db_admin_credentials_username:
+    type: string
+    default: "admin4"
+    title: "GoldenGate Hub Source Container DB Admin Username"
+    description: "The username for the GoldenGate Hub source container database admin credentials"
+    required: true
+    visible: true
+
+  migration_include_objects_object:
+    type: string
+    default: "Myobject"
+    title: "Included Object"
+    description: "The name of an object to be included in the migration"
+    required: true
+    visible: true
+
+  migration_include_objects_owner:
+    type: string
+    default: "Myowner"
+    title: "Included Object Owner"
+    description: "The owner of the object to be included in the migration"
+    required: true
+    visible: true
+  
+  test_key_ocid:
+    type: string
+    default: ""
+    title: "Test Key OCID"
+    description: "The OCID (Oracle Cloud Identifier) of the test key"
+    required: true
+    visible: true
+
+  test_vault_ocid:
+    type: string
+    default: ""
+    title: "Test Vault OCID"
+    description: "The OCID (Oracle Cloud Identifier) of the test vault"
+    required: true
+    visible: true
+
+  

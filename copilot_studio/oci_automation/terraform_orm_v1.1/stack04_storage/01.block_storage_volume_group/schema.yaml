@@ -1,0 +1,83 @@
+title: Create  Volume group
+description: Volume group Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+ 
+ 
+  - title: "Volume group Configuration"
+    variables:
+    - ${volume_group_display_name}
+    - ${volume_ocids}
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${availability_domain}
+
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+ 
+  availability_domain:
+    type: oci:identity:availabilitydomain:name
+    visible: true
+    title: Select the availability domain to deploy resources
+    description: Choose the availability domain to deploy the resources
+    dependsOn: 
+      compartmentId: ${compartment_ocid}   
+      
+
+########### Volume group #########################
+
+  volume_group_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "test_volume_group"
+    title: "Enter Volume group display name"
+
+  volume_ocids:
+    type: list
+    visible: true
+    title: "Select the Volume OCIDs"
+    required: true
+    default: []
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+

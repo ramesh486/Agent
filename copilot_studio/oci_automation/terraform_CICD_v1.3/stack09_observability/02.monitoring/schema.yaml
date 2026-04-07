@@ -1,0 +1,197 @@
+title: Create notifications, Create events and trigger alarms
+description: monitoring Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${monitoring_compartment_id_in_subtree}
+      - ${monitoring_compartment_name}
+      - ${app_compartment_id_in_subtree}
+      - ${app_compartment_name}
+      - ${region}
+      - ${project_tag}
+
+  - title: "OCI objectStorage High critical"
+    variables:
+      - ${alarm_metric_compartment_id_in_subtree}
+      - ${alarm_objectstorage_alarm_display_name}
+      - ${alarm_objectstorage_alarm_severity}
+      - ${alarm_objectstorage_alarm_body}
+      - ${alarm_objectstorage_alarm_namespace}
+      - ${alarm_objectstorage_alarm_query}
+      - ${alarm_objectstorage_alarm_pending_duration}
+      - ${alarm_objectstorage_alarm_repeat_notification_duration}
+      - ${alarm_objectstorage_alarm_resolution}
+      - ${alarm_objectstorage_alarm_message_format}
+      - ${alarm_objectstorage_alarm_is_enabled}
+      - ${topic_dispaly_name_oci_objectstorage_event_notifications}
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  tenancy_ocid:
+    visible: false
+    required: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  monitor_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name"
+    description: "The name of the compartment containing the metric being evaluated by the alarm"
+    required: true
+    visible: true
+
+  monitor_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment id in subtree oci monitor compartment"
+    description: "Compartment ID in Subtree"
+    default: true
+    required: true
+    visible: true
+  
+  app_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  app_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true   
+
+#####################################
+ # OCI objectStorage High critical
+#####################################
+
+  alarm_metric_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment id in subtree"
+    description: "Alarm metric compartment id in subtree"
+    default: true
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_display_name:
+    type: string
+    default: "objectstorage_alarm"
+    title: "Alarm_objectstorage_alarm_display_name"
+    description: "Name for the alarm"
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_severity:
+    type: enum
+    default: "CRITICAL"
+    title: "Alarm objectstorage alarm severity"
+    description: "Choose event action type"
+    required: true
+    visible: true
+    enum:
+      - "CRITICAL"
+      - "ERROR"
+      - "WARN"
+      - "INFO"
+
+  alarm_objectstorage_alarm_body:
+    type: string
+    default: "number of objects"
+    title: "Alarm objectstorage alarm_body"
+    description: "Objectstorage alarm body"
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_namespace:
+    type: string
+    title: "Alarm objectstorage alarm namespace"
+    description: "The source service or application emitting the metric that is evaluated by the alarm."
+    default: "oci_objectstorage"
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_query:
+    type: string
+    title: "Alarm objectstorage alarm query"
+    description: "The Monitoring Query Language (MQL) expression to evaluate for the alarm."
+    default: "ObjectCount[1m]{resourceDisplayName = bucket}.count()"
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_pending_duration:
+    type: string
+    title: "Alarm_objectstorage alarm pending duration"
+    description: "The period of time that the condition defined in the alarm must persist before the alarm state changes."
+    default: "PT2M"
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_repeat_notification_duration:
+    type: string
+    title: "Alarm objectstorage alarm repeat notification duration"
+    description: "The frequency at which notifications are re-submitted, if the alarm keeps firing without interruption."
+    default: "PT1H"
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_resolution:
+    type: string
+    title: "Alarm objectstorage alarm resolution"
+    description: "The time between calculated aggregation windows for the alarm."
+    default: "1m"
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_message_format:
+    type: string
+    title: "Alarm objectstorage alarm message format"
+    description: "The format to use for notification messages sent from this alarm."
+    default: "ONS_OPTIMIZED"
+    required: true
+    visible: true
+
+  alarm_objectstorage_alarm_is_enabled:
+    type: bool
+    title: "Alarm objectstorage alarm is enabled"
+    description: "Whether the alarm is enabled"
+    default: true
+    required: true
+    visible: true
+  
+  topic_dispaly_name_oci_objectstorage_event_notifications:
+    type: string
+    title: "Topic dispaly name oci objectstorage event notifications"
+    default: "oci_objectstorage_event_notifications"
+    description: "Name of the topic in which the alarm is associated"
+    required: true
+    visible: true
+
+
+

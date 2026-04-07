@@ -1,0 +1,121 @@
+title:  Terraform Input Variables
+description:  Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select the Target Tenancy"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+      
+
+  - title: "Bastion Configuration"
+    variables:
+      - ${security_compartment_id_in_subtree}
+      - ${security_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${network_compartment_name}
+      - ${subnet_display_name}
+      - ${bastion_type}
+      - ${client_cidr_block_allow_list}
+      - ${max_session_ttl_in_seconds}
+      - ${bastion_name}
+    
+
+#####################################
+
+# Common variables
+
+#####################################
+variables:
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+  
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false   
+
+####### Bastion Configuration ##########
+
+  security_compartment_id_in_subtree:
+    required: true
+    visible: true
+    type: bool
+    description: Compartment ID in Subtree
+    default: true
+  
+  security_compartment_name:
+    required: true
+    visible: true
+    type: string
+    description: Compartment Name to deploy 
+    default: ""
+  
+  network_compartment_id_in_subtree:
+    required: true
+    visible: true
+    type: bool
+    description: Compartment ID in Subtree
+    default: true
+  
+  network_compartment_name:
+    required: true
+    visible: true
+    type: string
+    description: Compartment Name of the subnet
+    default: ""
+
+  subnet_display_name:
+    required: true
+    visible: true
+    type: string
+    description: The subnet in which the application is deployed
+    default: ""
+
+  bastion_type:
+    required: true
+    visible: true
+    type: string
+    description: The type of bastion to create
+    default: "standard"
+
+  client_cidr_block_allow_list:
+    required: true
+    visible: true
+    type: string
+    description: A list of allowed CIDR blocks for clients connecting to the bastion
+    default: "10.0.0.0/16"
+
+  max_session_ttl_in_seconds:
+    required: true
+    visible: true
+    type: number
+    description: The maximum session time-to-live (TTL) for the bastion, in seconds
+    default: 3600
+
+  bastion_name:
+    required: true
+    visible: true
+    type: string
+    description: The name of the bastion to create
+    default: "Bastion002"

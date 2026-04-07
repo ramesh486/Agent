@@ -1,0 +1,1 @@
+# This data source provides details about a specific Managed Database Group resource in Oracle Cloud Infrastructure Database Management service.

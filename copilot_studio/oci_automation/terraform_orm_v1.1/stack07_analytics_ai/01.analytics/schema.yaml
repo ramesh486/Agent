@@ -1,0 +1,131 @@
+title: Analytics
+description: Analytics
+schemaVersion: 1.1.0
+version: "19062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+      - ${description}
+      - ${feature_set}
+      - ${license_type}
+      - ${capacity_type}
+      - ${capacity_value}
+      - ${name}
+      - ${state}
+      - ${idcs_access_token}
+      - ${network_endpoint_type}
+      - ${project_tag}
+
+variables:
+
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: string
+    visible: true
+    title: Select the Compartment to deploy resources
+    default : ""
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    required: true
+    title: Region
+    description: Provide Region
+    default: "us-ashburn-1"
+
+  
+  description:
+    title: Description
+    type: string
+    required: true
+    visible: true
+    default: "OAC instance"
+    description: description
+
+  feature_set:
+    title: Feature set
+    type: string
+    required: true
+    visible: true
+    default: "ENTERPRISE_ANALYTICS"
+    description: Analytics feature set
+
+  license_type:
+    title: License type
+    type: string
+    required: true
+    visible: true
+    default: "LICENSE_INCLUDED"
+    description: license type
+
+  capacity_type:
+    title: Capacity type
+    type: string
+    required: true
+    visible: true
+    default: "OLPU_COUNT"
+    description: The capacity model to use
+
+  capacity_value:
+    title: Capacity value
+    type: number
+    required: true
+    visible: true
+    default: 2
+    description: The capacity value selected
+
+  name:
+    title:  Name
+    type: string
+    required: true
+    visible: true
+    default: "testoacinstance1"
+    description: The name of the Analytics instance
+
+  state:
+    title: State
+    type: string
+    required: true
+    visible: true
+    default: "ACTIVE"
+    description: The target state for the Analytics Instance
+
+  idcs_access_token:
+    title: Idcs access token
+    type: string
+    required: true
+    visible: true
+    default: ""
+    description: IDCS access token identifying a stripe and service administrator user
+
+  network_endpoint_type:
+    title: Network endpoint type
+    type: string
+    required: true
+    visible: true
+    default: "PUBLIC"
+    description: Base representation of a network endpoint
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

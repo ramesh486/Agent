@@ -1,0 +1,57 @@
+title: Create CA Bundle
+description: CA Bundle Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "OCI_Certificates_Management_CA_Bundle"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${ca_bundle_ca_bundle_pem}
+      - ${description}
+      - ${ca_bundle_name}
+      
+variables:
+#####################################
+# oci certificates management ca bundle
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "The OCID of the compartment"
+
+  region:
+    visible: true
+    title: "Region"
+    description: "The region where the resources will be provisioned"
+
+  ca_bundle_ca_bundle_pem:
+    type: string
+    default: ""
+    title: "CA Bundle PEM"
+    description: "The PEM-encoded certificate bundle to be uploaded"
+    required: true
+    visible: true
+
+  description:
+    type: string
+    default: "Demo"
+    title: "CA Bundle Description"
+    description: "A description for the CA Bundle"
+    required: true
+    visible: true
+
+  ca_bundle_name:
+    type: string
+    default: "MyCAbundle"
+    title: "CA Bundle Name"
+    description: "The name of the CA bundle"
+    required: true
+    visible: true
+  

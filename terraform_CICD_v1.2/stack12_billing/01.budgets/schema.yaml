@@ -1,0 +1,139 @@
+title: Create OCI Budget
+description: OCI Budget Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_ocid}
+      - ${project_tag}
+
+############# OCI Budget ##########
+
+  - title: "OCI Budget"
+    variables:
+
+      - ${budget_amount}
+      - ${budget_reset_period}
+      - ${budget_target_name}
+      - ${budget_target_type}
+      - ${budget_alert_rule_threshold}
+      - ${budget_alert_rule_threshold_type}
+      - ${budget_alert_rule_type}
+      - ${budget_alert_rule_message}
+      - ${budget_alert_rule_recipients}
+      
+
+variables:
+#####################################
+# OCI Budget
+#####################################
+
+  region:
+    visible: true
+    title: "Region"
+    description: "The region where the resources will be provisioned"
+
+  tenancy_ocid:
+    visible: true
+    title: "Tenancy OCID"
+    description: "Tenancy OCID"
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "The OCID of the compartment"
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach the Tags"
+    visible: true
+    required: true 
+
+### Variables for Budget###
+  
+  budget_amount:
+    type: number
+    required: true
+    visible: true
+    default: "100000"
+    title: "The Amount for the budget"
+    description: "The Amount for the budget"
+
+  budget_reset_period:
+    type: string
+    required: true
+    visible: true
+    default: "MONTHLY"
+    title: "Reset period"
+    description: "The reset period for the budget."
+
+  budget_target_name:
+    type: string
+    required: true
+    visible: true
+    default: "Test_budget"
+    title: "Target name"
+    description: "The Display name for the budget"
+
+  budget_target_type:
+    type: string
+    required: true
+    visible: true
+    default: "COMPARTMENT"
+    title: "Target type"
+    description: "The target type for the budget"
+ 
+  budget_alert_rule_threshold:
+    type: number
+    required: true
+    visible: true
+    default: "100"
+    title: "Alert Rule"
+    description: "The threshold rule for the budget"
+
+  budget_alert_rule_threshold_type:
+    type: string
+    required: true
+    visible: true
+    default: "ABSOLUTE"
+    title: "Threshold Type"
+    description: "The threshold type for the budget"
+
+  budget_alert_rule_type:
+    type: string
+    required: true
+    visible: true
+    default: "ACTUAL"
+    title: "Threshold Type"
+    description: "The type of alert for the budget"
+
+  budget_alert_rule_message:
+    type: string
+    required: true
+    visible: true
+    default: "Default budget alert"
+    title: "Budget Alert Message"
+    description: "The alert message for budget alerts."
+
+  budget_alert_rule_recipients:
+    type: string
+    required: true
+    visible: true
+    default: "example@gmail.com"
+    title: "Alert Rule Recipients"
+    description: "The rule recipients for the budget"
+  
+  
+  
+
+    

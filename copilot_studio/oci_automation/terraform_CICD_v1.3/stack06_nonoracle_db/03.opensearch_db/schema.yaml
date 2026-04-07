@@ -1,0 +1,255 @@
+title: Open Search Cluster Terraform Input Variables
+description: Open Search Cluster Terraform Input Variables
+schemaVersion: 1.1.0
+version: "03032022"
+
+###########################
+# Variable Groupings
+############################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag}
+      - ${db_compartment_name}
+      - ${db_compartment_id_in_subtree}
+      - ${network_compartment_name}
+      - ${network_compartment_id_in_subtree}
+     
+
+  - title: "Open Search Cluster Configuration"
+    variables:
+      - ${opensearch_cluster_data_node_count}
+      - ${opensearch_cluster_data_node_host_memory_gb}
+      - ${opensearch_cluster_data_node_host_ocpu_count}
+      - ${opensearch_cluster_data_node_host_type}
+      - ${opensearch_cluster_data_node_storage_gb}
+      - ${opensearch_cluster_display_name}
+      - ${opensearch_cluster_master_node_count}
+      - ${opensearch_cluster_master_node_host_memory_gb}
+      - ${opensearch_cluster_master_node_host_ocpu_count}
+      - ${opensearch_cluster_master_node_host_type}
+      - ${opensearch_cluster_opendashboard_node_count}
+      - ${opensearch_cluster_opendashboard_node_host_memory_gb}
+      - ${opensearch_cluster_opendashboard_node_host_ocpu_count}
+      - ${opensearch_cluster_software_version}
+      - ${opensearch_cluster_data_node_host_bare_metal_shape}
+      - ${opensearch_cluster_master_node_host_bare_metal_shape}
+      - ${security_mode}
+      - ${security_master_user_name}
+      - ${security_master_user_password_hash}
+
+  
+variables:
+
+
+  tenancy_ocid:
+    visible: true
+    required: true    
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    required: true    
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true    
+
+  db_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  db_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  subnet_display_name:
+    type: string
+    title: "Subnet Display Name"
+    default: ""
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+### Open Search Cluster Configuration
+
+  opensearch_cluster_data_node_count:
+    type: number
+    required: true
+    title:  OpenSearch Cluster Data Node Count
+    visible: true
+    default: 1
+    description : "The number of data nodes to configure for the cluster."
+
+  opensearch_cluster_data_node_host_memory_gb:
+    type: number
+    required: true
+    title:  OpenSearch Cluster Data Node Host Memory in GB
+    visible: true
+    default: 20
+    description : "The amount of memory in GB, to configure per node for the cluster's data nodes."
+
+  opensearch_cluster_data_node_host_ocpu_count:
+    type: number
+    required: true
+    title: OpenSearch Cluster Data Node Host OCPU Count
+    visible: true
+    default: 2
+    description : "The number of OCPUs to configure for the cluster's data nodes."
+
+  opensearch_cluster_data_node_host_type:
+    type: string
+    required: true
+    title: OpenSearch Cluster Data Node Host Type
+    visible: true
+    default: "FLEX"
+    description : "The instance type for the cluster's data nodes."
+
+  opensearch_cluster_data_node_storage_gb:
+    visible: true
+    type: number
+    required: true
+    default: 50
+    title: OpenSearch Cluster Data Node Storage in GB
+    description: The amount of storage in GB, to configure per node for the cluster's data nodes.
+  
+  opensearch_cluster_display_name:
+    type: string
+    visible: true
+    title: OpenSearch Cluster Display Name
+    description: The name of the cluster
+    required: true
+    default: "Opensearchcluster"
+
+  opensearch_cluster_master_node_count:
+    title: OpenSearch Cluster Master Node Count
+    type: number
+    default: 1
+    required: true
+    visible: true
+    description : "The number of master nodes to configure for the cluster."
+  
+  opensearch_cluster_master_node_host_memory_gb:
+    type: number
+    required: true
+    title: OpenSearch Cluster Master Node Host Memory in GB
+    visible: true
+    default: 20
+    description : "The amount of memory in GB, to configure per node for the cluster's master nodes."
+
+  opensearch_cluster_master_node_host_ocpu_count:
+    type: number
+    required: true
+    title: OpenSearch Cluster Master Node Host OCPU Count
+    visible: true
+    default: 1
+    description : "The number of OCPUs to configure for the cluser's master nodes."
+
+  opensearch_cluster_master_node_host_type:
+    type: string
+    required: true
+    title: OpenSearch Cluster Master Node Host Type
+    visible: true
+    default: "FLEX"
+    description : "The instance type for the cluster's master nodes."
+
+  opensearch_cluster_opendashboard_node_count:
+    type: number
+    required: true
+    title: OpenSearch Cluster Opendashboard Node Count 
+    visible: true
+    default: 1
+    description : "The number of OpenSearch Dashboard nodes to configure for the cluster."
+
+  opensearch_cluster_opendashboard_node_host_memory_gb:
+    type: number
+    title: OpenSearch Cluster Opendashboard Node Host Memory in GB
+    default: 10
+    required: true
+    visible: true
+    description : "The amount of memory in GB, to configure for the cluster's OpenSearch Dashboard nodes."
+  
+  opensearch_cluster_opendashboard_node_host_ocpu_count:
+    type: number
+    required: true
+    title: OpenSearch Cluster Opendashboard Node Host OCPU Count
+    visible: true
+    default: 2
+    description : "The number of OCPUs to configure for the cluster's OpenSearch Dashboard nodes."
+  
+  opensearch_cluster_software_version:
+    type: string
+    required: true
+    default: "1.2.4"
+    title: OpenSearch Cluster Software Version
+    description: "The version of the software the cluster is running."
+
+
+  opensearch_cluster_data_node_host_bare_metal_shape:
+    type: string
+    visible: true
+    title: Data Node Bare Metal Shape
+    description: The bare metal shape for the cluster's data nodes.
+    default: "dataNodeHostBareMetalShape" 
+
+  opensearch_cluster_master_node_host_bare_metal_shape:
+    type: string
+    visible: true
+    title: Master Node Bare Metal Shape
+    description: The bare metal shape for the cluster's master nodes.
+    default: "masterNodeHostBareMetalShape"     
+
+  security_mode:
+    type: string
+    visible: true
+    title: Cluster Security Mode
+    description: The security mode of the cluster.
+    default: "ENFORCING" 
+
+  security_master_user_name:
+    type: string
+    visible: true
+    title: Security Master Username
+    description: The name of the master user that are used to manage security config
+    default: "" 
+
+  security_master_user_password_hash:
+    type: string
+    visible: true
+    title: Security Master User Password Hash
+    description: The password hash of the master user that are used to manage security config
+    default: "" 

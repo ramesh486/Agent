@@ -1,0 +1,82 @@
+title: Create Service Mesh
+description: Service Mesh Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "oci_service_mesh_mesh"
+    variables:
+      - ${tenancy_ocid}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${region}
+      - ${certificate_authority_name}
+      - ${mesh_display_name}
+      - ${mesh_mtls_minimum}
+      - ${project_tag}
+      - ${mesh_certificate_authorities_ocid}
+      
+variables:
+#####################################
+# OCI Service Mesh
+#####################################
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  region:
+    visible: true
+    title: "Region"
+    description: "The region where the resources will be provisioned"
+
+  mesh_certificate_authorities_ocid:
+    type: string
+    default: ""
+    title: "Certificate Authority OCID"
+    description: "Certificate Authority OCID"
+    required: true
+    visible: true
+
+  mesh_display_name:
+    type: string
+    default: "Myservicemesh"
+    title: "Mesh Display Name"
+    description: "The display name for the Service Mesh"
+    required: true
+    visible: true
+
+  mesh_mtls_minimum:
+    type: string
+    default: "STRICT"
+    title: "MTLS Minimum Security Level"
+    description: "The minimum security level for mutual TLS (mTLS) within the Service Mesh"
+    required: true
+    visible: true

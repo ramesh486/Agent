@@ -1,0 +1,22 @@
+module "golden_gate_deployment" {
+    source                                              = "./golden_gate_module"
+   compartment_ocid                                     = var.compartment_ocid
+    project_tag                                         = var.project_tag
+    deployment_cpu_core_count                           = var.deployment_cpu_core_count
+    deployment_deployment_type                          = var.deployment_deployment_type
+    deployment_display_name                             = var.deployment_display_name
+    deployment_is_auto_scaling_enabled                  = var.deployment_is_auto_scaling_enabled
+    deployment_license_model                            = var.deployment_license_model
+    subnet_ocid                                         = var.subnet_ocid
+    deployment_description                              = var.deployment_description
+    deployment_fqdn                                     = var.deployment_fqdn
+    deployment_is_public                                = var.deployment_is_public
+    deployment_maintenance_window_day                   = var.deployment_maintenance_window_day
+    deployment_maintenance_window_start_hour            = var.deployment_maintenance_window_start_hour
+    deployment_nsg_ocids                                = var.deployment_nsg_ocids
+    deployment_ogg_data_admin_password                  = var.deployment_ogg_data_admin_password
+    deployment_ogg_data_admin_username                  = var.deployment_ogg_data_admin_username
+    golden_gate_deployment_instance_name                = var.golden_gate_deployment_instance_name
+    deployment_ogg_data_certificate                     = var.deployment_ogg_data_certificate
+    deployment_ogg_data_key                             = var.deployment_ogg_data_key
+}

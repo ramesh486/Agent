@@ -1,0 +1,126 @@
+title: Create Data catalog, metastore and privateendpoint
+description: Data catalog Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+
+#####################################
+# catalog_private_endpoint
+#####################################
+ 
+  - title: "catalog_private_endpoint"
+    variables:
+      - ${catalog_private_endpoint_display_name}
+      - ${catalog_private_endpoint_dns_zones}
+      - ${subnet_id}
+
+#######################################
+#   catalog metastore
+#######################################
+
+  - title: "catalog metastore"
+    variables:
+      - ${metastore_default_external_table_location}
+      - ${metastore_default_managed_table_location}
+      - ${metastore_display_name}
+     
+########################################
+#  data_catalog
+########################################
+
+  - title: "data_catalog"
+    variables:
+      - ${catalog_display_name}
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+#####################################
+# catalog_private_endpoint
+#####################################
+
+  catalog_private_endpoint_display_name:
+    type: string
+    default: "Example_endpoint"
+    title: "Catalog Private Endpoint Name"
+    description: "The display name for the catalog private endpoint"
+    required: true
+    visible: true
+  
+  catalog_private_endpoint_dns_zones:
+    type: string
+    default: ""
+    title: "Catalog Private Endpoint DNS Zones"
+    description: "The list of DNS zones for the catalog private endpoint"
+    required: true
+    visible: true
+
+  subnet_id:
+    type: string
+    default: ""
+    title: "Subnet OCID"
+    description: "The OCID of the subnet where the catalog private endpoint will be created"
+    required: true
+    visible: true
+
+##################################################
+#  catalog metastore
+##################################################
+
+  metastore_default_external_table_location:
+    type: string
+    default: "oci://bucket-20230619-1053@idennsb6k3kt/Datatest.txt"
+    title: "Metastore Default External Table Location"
+    description: "The default location for external tables in the metastore"
+    required: true
+    visible: true
+    
+  metastore_default_managed_table_location:
+    type: string
+    default: "oci://bucket-20230619-1053@idennsb6k3kt/Datatest.txt"
+    title: "Metastore Default Managed Table Location"
+    description: "The default location for managed tables in the metastore"
+    required: true
+    visible: true
+
+  metastore_display_name:
+    type: string
+    default: "Example_metastore"
+    title: "Metastore Display Name"
+    description: "The display name for the metastore"
+    required: true
+    visible: true
+
+###################################################
+# data catalog
+###################################################
+
+  catalog_display_name:
+    type: string
+    default: "Example_catalog"
+    title: "Data Catalog Display Name"
+    description: "The display name for the data catalog"
+    required: true
+    visible: true
+

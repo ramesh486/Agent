@@ -1,0 +1,76 @@
+import smtplib
+import email.utils
+import os
+import argparse
+from email.message import EmailMessage
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import ssl
+from pathlib import Path
+
+SMTP_SERVER = "smtp.email.us-ashburn-1.oci.oraclecloud.com"
+SMTP_PORT = 587
+SENDER_EMAIL = 'support@aisol4biz.ai'
+SENDER_NAME = 'AIAGENTS4BIZ SUPPORT'
+
+def send_email(to_email, subject, body, attachments=None):
+    """
+    Send email via OCI SMTP with optional attachments
+    Args:
+        to_email (str): Recipient email address
+        subject (str): Email subject
+        body (str): Email body content
+        attachments (list): List of file paths to attach
+    """
+    try:
+        # Create multipart message if attachments exist, otherwise simple EmailMessage
+        if attachments:
+            msg = MIMEMultipart()
+            msg.attach(MIMEText(body))
+        else:
+            msg = EmailMessage()
+            msg.set_content(body)
+
+        msg['From'] = email.utils.formataddr((SENDER_NAME, SENDER_EMAIL))
+        msg['To'] = to_email
+        msg['Subject'] = subject
+
+        # Add attachments if provided
+        if attachments:
+            for file_path in attachments:
+                if not os.path.exists(file_path):
+                    print(f"Warning: Attachment file not found: {file_path}")
+                    continue
+                
+                filename = Path(file_path).name
+                with open(file_path, "rb") as f:
+                    part = MIMEApplication(f.read(), Name=filename)
+                
+                # Add header
+                part['Content-Disposition'] = f'attachment; filename="{filename}"'
+                msg.attach(part)
+
+        # Send email
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.ehlo()
+            server.starttls(context=ssl.create_default_context())
+            server.ehlo()
+            server.login(os.getenv('SMTP_USERNAME'), os.getenv('SMTP_PASSWORD'))
+            server.send_message(msg)
+        
+        print(f"Email sent successfully to {to_email}")
+        return True
+    except Exception as e:
+        print(f"Error sending email: {str(e)}")
+        return False
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Send emails via OCI SMTP')
+    parser.add_argument('--to', required=True, help='Recipient email address')
+    parser.add_argument('--subject', required=True, help='Email subject')
+    parser.add_argument('--body', required=True, help='Email body content')
+    parser.add_argument('--attachments', nargs='+', help='List of file paths to attach')
+    
+    args = parser.parse_args()
+    send_email(args.to, args.subject, args.body, args.attachments)

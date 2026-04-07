@@ -1,0 +1,256 @@
+title:  Load Balancer Terraform Input Variables
+description: Load Balancer Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${region}
+      - ${project_tag}
+
+  - title: "Application Load Balancer Configuration"
+    variables:
+      - ${app_lb_display_name}
+      - ${app_lb_is_private}
+      - ${app_lb_lb_shape}
+      - ${app_lb_minimum_bandwidth_in_mbps}
+      - ${app_lb_maximum_bandwidth_in_mbps}
+      - ${subnet_display_name}
+      
+  - title: "Application Load Balancer Listener"
+    variables:
+      - ${app_lb_listener_display_name}
+      - ${app_lb_listener_protocol}
+      - ${app_lb_listener_port}
+
+  - title: "Application Load Balancer Backend Server" 
+    variables:  
+      - ${app_lb_backend_weight}
+      - ${app_lb_backend_port}
+      - ${app_lb_backend_ip_address}
+
+  - title: "Application  Load Balancer Backend Set"
+    variables: 
+      - ${app_lb_load_balancing_policy}
+      - ${app_lb_backend_set_display_name}
+      - ${app_lb_backend_set_protocol}
+      - ${app_lb_backend_set_port}
+      - ${app_lb_backend_set_interval_ms}
+      - ${app_lb_backend_set_timeout_in_millis}
+      - ${app_lb_backend_set_retries}
+
+#####################################
+# Common Compartment
+#####################################
+
+variables:
+
+  tenancy_ocid:
+    visible: false
+    title: "Tenancy OCID"
+    description: "Tenancy OCID"
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: "true"
+    description: "Compartment ID in Subtree"
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+  
+  compartment_name:
+    type: string
+    default: "network"
+    title: "Target Compartment Name"
+    description: "Target Compartment Name"
+    visible: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach Tags"
+    visible: true
+    required: false
+
+##############################################   
+# Application Load Balancer Configuration
+##############################################
+
+  app_lb_display_name:
+    type: string
+    title: "Name for Application load balancer"
+    default: "app_lb"
+    description: "Name for Application load balancer"
+    visible: true
+    required: true
+
+  app_lb_is_private:
+    type: bool
+    title: "Select false for Public_LB or select true for Private_LB"
+    default: "false"
+    description: "Select false for Public_LB or select true for Private_LB"
+    visible: true
+    required: true
+
+  app_lb_lb_shape:
+    type: string
+    title: "Select load balancer shape"
+    default: "flexible"
+    description: "Select load balancer shape"
+    visible: true
+    required: true
+  
+  app_lb_minimum_bandwidth_in_mbps:
+    type:  string
+    title: "Select the minimum bandwidth in mbps"
+    default: "10"
+    description: "Select the minimum bandwidth in mbps"
+    visible: true
+    required: true
+  
+  app_lb_maximum_bandwidth_in_mbps:
+    type: string
+    title: "Select the maximum bandwidth in mbps"
+    default:  "100"
+    description:  "Select the maximum bandwidth in mbps"
+    visible: true
+    required: true
+  
+  subnet_display_name:
+    type: string
+    title: "The subnet in which the application load balancer will be created"
+    default: "np_nlb_pub_subnet"
+    description: "The subnet in which the application load balancer will be created"
+    visible: true
+    required: true
+
+#################################################
+#Application  Load Balancer Listener 
+#################################################
+
+  app_lb_listener_display_name:
+    type: string
+    title: "Listener Display Name"
+    default: "stgdev_db_listener"
+    description: "Name for the Listener" 
+    visible: true
+    required: true
+  
+  app_lb_listener_protocol:
+    type: string
+    title: "Listener Protocol"
+    default: "TCP"
+    description: "Listener Protocol"
+    visible: true
+    required: true
+  
+  app_lb_listener_port:
+    type: string
+    title: "Provide Listener Port"
+    default: "1522"
+    description: "Provide Listener Port"
+    visible: true
+    required: true
+
+##############################################
+# Application  Load Balancer Backend Server 
+##############################################
+
+  app_lb_backend_weight:
+    type: string
+    title: "Network load balancing backend weight assigned to the server"
+    default: "1"
+    description: "Network load balancing backend weight assigned to the server"
+    visible: true
+    required: true
+  
+  app_lb_backend_port:
+    type: string
+    title: "Network load balancing backend port"
+    default: "1522"
+    description: "Network load balancing backend port"
+    visible: true
+    required: true  
+  
+  app_lb_backend_ip_address:
+    type: string
+    title: "IP Address of ATP"
+    default: ""
+    description: "IP Address of ATP"
+    visible: true
+    required: true
+
+###########################################
+# Application  Load Balancer Backend Set 
+###########################################
+
+  app_lb_load_balancing_policy:
+    type: string
+    title: "Load balancing policy"
+    default: "ROUND_ROBIN"
+    description: "Load balancing policy" 
+    visible: true
+    required: true
+
+  app_lb_backend_set_display_name:
+    type: string
+    title: "Name for the Backend Set"
+    default: "stgdev_db_backend_set"
+    description: "Name for the Backend Set"
+    visible: true
+    required: true
+  
+  app_lb_backend_set_protocol:
+    type: string
+    title: "Backend Set Protocol"
+    default: "TCP"
+    description: "Backend Set Protocol"
+    visible: true
+    required: true
+  
+  app_lb_backend_set_port:
+    type: string
+    title: "Backend Set Port"
+    default: "1522"
+    description: "Backend Set Port"
+    visible: true
+    required: true
+
+  app_lb_backend_set_interval_ms:
+    type: string
+    title: "Interval between health checks, in milliseconds"
+    default: "10000"
+    description: "Interval between health checks, in milliseconds"
+    visible: true
+    required: true
+
+  app_lb_backend_set_timeout_in_millis:
+    type: string
+    title: "Maximum time, in milliseconds, to wait for a reply to a health check"
+    default: "3000"
+    description: "Maximum time, in milliseconds, to wait for a reply to a health check"
+    visible: true
+    required: true
+  
+  app_lb_backend_set_retries:
+    type: string
+    title: "Number of retries; he number of retries to attempt before a backend server is considered unhealthy"
+    default: "3"
+    description: "Number of retries; he number of retries to attempt before a backend server is considered unhealthy"
+    visible: true
+    required: true
+  
+
+

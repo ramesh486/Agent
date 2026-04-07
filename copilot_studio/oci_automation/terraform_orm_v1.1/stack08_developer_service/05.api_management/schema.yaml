@@ -1,0 +1,299 @@
+title: Create API Gateway
+description: API Gateway Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${subnet_display_name}
+     
+
+  - title: "API Gateway Connection"
+    variables:
+      - ${gateway_endpoint_type}
+      - ${gateway_display_name}
+      - ${api_content}
+      - ${api_display_name}
+
+  - title: "Certificate"
+    variables:
+      - ${certificate_certificate}
+      - ${certificate_private_key}
+      - ${certificate_display_name}
+  
+  - title: "Usageplan and Subscription"
+    variables:
+      - ${subscriber_clients_name}
+      - ${subscriber_clients_token}
+      - ${subscriber_usage_plans}
+      - ${subscriber_display_name}
+      - ${usage_plan_entitlements_name}
+      - ${usage_plan_entitlements_description}
+      - ${usage_plan_entitlements_quota_operation_on_breach}
+      - ${usage_plan_entitlements_quota_reset_policy}
+      - ${usage_plan_entitlements_quota_unit}
+      - ${usage_plan_entitlements_quota_value}
+      - ${usage_plan_entitlements_rate_limit_unit}
+      - ${usage_plan_entitlements_rate_limit_value}
+
+    
+  - title: "Gateway Deployment"
+    variables:
+      - ${path_prefix}
+      - ${token_locations}
+      - ${type}
+      - ${url}
+      - ${path}
+      - ${methods}
+              
+variables:
+#####################################
+# Common Variables
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    type: string
+    default: ""
+    title: Region Name
+    description: The region where the resources will be provisioned
+    visible: true
+    required: true
+
+  compartment_id_in_subtree:
+    type: bool
+    default: "true"
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    type: string
+    default: ""
+    title: "Tenancy OCID"
+    description: "Tenancy OCID"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    default: "network"
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+  subnet_display_name:
+    type: string
+    default: "example_subnet"
+    title: "Subnet Name"
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  gateway_endpoint_type:
+    type: string
+    default: "PRIVATE"
+    title: "Gateway endpoint type"
+    description: "The type of endpoint for the gateway. Possible values are PUBLIC or PRIVATE"
+    visible: true
+    required: true
+
+  gateway_display_name:
+    type: string
+    default: "example_gateway"
+    title: "Name of the gateway"
+    description: "The display name of the gateway"
+    visible: true
+    required: true
+
+  api_content:
+    type: text
+    multiline: true
+    title: "Content of API"
+    description: "The content of the API definition in OpenAPI format"
+    visible: true
+    required: true
+
+  api_display_name:
+    type: string
+    default: "test API definiton"
+    title: "Name of the API"
+    description: "The display name of the API definition"
+    visible: true
+    required: true
+
+  certificate_certificate:
+    type: string
+    default: ""
+    title: "Certificate"
+    description: "The certificate in PEM format"
+    visible: true
+
+  certificate_private_key:
+    type: string
+    default: ""
+    title: "Certificate Private Key"
+    description: "The private key in PEM format"
+    visible: true
+
+  certificate_display_name:
+    type: string
+    default: "Example_certificate"
+    title: "Certificate Display Name"
+    description: "The display name of the certificate"
+    visible: true
+
+  subscriber_clients_name:
+    type: string
+    default: "subscriber_clients_name"
+    title: "Name of the subscriber client"
+    description: "The name of the subscriber client"
+    visible: true
+    required: true
+
+  subscriber_clients_token:
+    type: string
+    default: "subscriber_clients_token"
+    title: "Subscriber client token"
+    description: "The token associated with the subscriber client"
+    visible: true
+    required: true
+
+  subscriber_display_name:
+    type: string
+    default: "Example_subscriber"
+    title: "Name of the subscriber"
+    description: "The display name of the subscriber"
+    visible: true
+    required: true
+
+  usage_plan_entitlements_name:
+    type: string
+    default: "usagePlanEntitlementsName"
+    title: "Name of the plan entitlement"
+    description: "The name of the usage plan entitlement"
+    visible: true
+    required: true
+
+  usage_plan_entitlements_description:
+    type: string
+    default: "usage_plan_entitlements_description"
+    title: "Description of plan entitlement"
+    description: "The description of the usage plan entitlement"
+    visible: true
+    required: true
+
+  usage_plan_entitlements_quota_operation_on_breach:
+    type: string
+    default: "REJECT"
+    title: "Quota Operation on Breach"
+    description: "The operation to perform when the quota limit is breached"
+    visible: true
+    required: true
+
+  usage_plan_entitlements_quota_reset_policy:
+    type: string
+    default: "CALENDAR"
+    title: "Quota Reset Policy"
+    description: "The reset policy for the quota limit"
+    visible: true
+    required: true
+
+  usage_plan_entitlements_quota_unit:
+    type: string
+    default: "MINUTE"
+    title: "Quota Unit"
+    description: "The unit of measurement for the quota limit"
+    visible: true
+    required: true
+
+  usage_plan_entitlements_quota_value:
+    type: number
+    default: 10
+    title: "Quota Limit Value"
+    description: "The value of the quota limit"
+    visible: true
+    required: true
+
+  usage_plan_entitlements_rate_limit_unit:
+    type: string
+    default: "SECOND"
+    title: "Rate Limit Unit"
+    description: "The unit of measurement for the rate limit"
+    visible: true
+    required: true
+
+  usage_plan_entitlements_rate_limit_value:
+    type: number
+    default: 10
+    title: "Rate Limit Value"
+    description: "The value of the rate limit"
+    visible: true
+    required: true
+
+  path_prefix:
+    title: "Path Prefix"
+    description: "The prefix added to the path of the resource."
+    default: "/v1"
+    type: string
+    visibility: true
+    required: true
+
+  url:
+    title: "Backend URL"
+    description: "The URL of the backend resource."
+    default: "https://api.weather.gov"
+    type: string
+    visibility: true
+    required: true
+
+  path:
+    title: "Resource Path"
+    description: "The path of the resource."
+    default: "/hello"
+    type: string
+    visibility: true
+    required: true
+
+  methods:
+    title: "Supported Methods"
+    description: "The list of HTTP methods supported by the resource."
+    default: "GET"
+    type: list(string)
+    visibility: true
+    required: true
+
+  type:
+    title: "Backend Type"
+    description: "The type of backend for the resource."
+    default: "HTTP_BACKEND"
+    type: string
+    visibility: true
+    required: true
+
+  token_locations:
+    title: "Token Location"
+    description: "The token Location."
+    default: "request.headers[apiKeyLocation]"
+    type: list(string)
+    visibility: true
+    required: true
+
+

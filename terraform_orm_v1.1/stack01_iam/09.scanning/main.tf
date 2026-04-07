@@ -1,0 +1,36 @@
+module "container_scan_recipe" {
+  source                                   = "./container_scan_recipe_module"
+
+  compartment_ocid                         = var.compartment_ocid
+  container_scan_recipe_image_count        = var.container_scan_recipe_image_count
+  container_scan_recipe_display_name       = var.container_scan_recipe_display_name
+  container_scan_recipe_state              = var.container_scan_recipe_state
+  project_tag                              = var.project_tag
+  scan_level                               = var.scan_level
+
+}
+module "host_scan_recipe" {
+  source                               = "./host_scan_recipe_module"                       
+  
+  scan_level1                          = var.scan_level1  
+  vendor                               = var.vendor
+  scan_level2                          = var.scan_level2
+  vendor_type                          = var.vendor_type   
+  compartment_ocid                     = var.compartment_ocid
+  scan_level3                          = var.scan_level3       
+  type                                 = var.type
+  day_of_week                          = var.day_of_week
+  display_name                         = var.display_name
+}
+module "host_scan_target" {
+  source                              = "./host_scan_target_module"
+
+  
+  host_scan_recipe_ocid               = var.host_scan_recipe_ocid
+  compartment_ocid                    = var.compartment_ocid
+  description                         = var.description
+  display_name1                       = var.display_name1
+  project_tag                        = var.project_tag
+ 
+}
+

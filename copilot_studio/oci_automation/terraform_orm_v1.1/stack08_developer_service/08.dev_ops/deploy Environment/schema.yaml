@@ -1,0 +1,85 @@
+title: Deploy Environment
+description: Deploy Environment
+schemaVersion: 1.1.0
+version: "12072023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+      - ${deploy_environment_type}
+      - ${function_id}
+      - ${deploy_environment_display_name}
+      - ${project_name}
+      - ${notification_topic}
+      
+variables:
+
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: string
+    visible: true
+    title: Select the Compartment to deploy resources
+    default : ""
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Region
+    default: "us-ashburn-1"
+
+  deploy_environment_type:
+    type: string
+    visible: true
+    required: true
+    title: Deploy Environment Type
+    description: "Deployment environment type"
+    default: "FUNCTION"
+
+  function_id:
+    type: string
+    visible: true
+    required: true
+    title: Function OCID
+    default: "defaultValue"
+  
+  deploy_environment_display_name:
+    type: string
+    visible: true
+    required: true
+    title: Deploy Environment Display Name
+    description: "Deployment environment display name."
+    default: "test_deploy_environment"
+  
+  project_name:
+    type: string
+    visible: true
+    required: true
+    title: Project Name
+    description: "Provide the Project name "
+    default: "build_project"
+
+  notification_topic:
+    type: string
+    visible: true
+    required: true
+    title: Notification Topic Name
+    description: "Provide name for Notification Topic"
+    default: "test_topic"

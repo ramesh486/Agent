@@ -1,0 +1,19 @@
+module "cloud_exadata_infrastructure_module" {
+    source                                                                              = "./cloud_exadata_module"
+    compartment_ocid                                                                    = local.compartment_ocid
+    project_tag                                                                         = var.project_tag
+    availability_domain                                                                 = local.availability_domain
+    cloud_exadata_infrastructure_display_name                                           = var.cloud_exadata_infrastructure_display_name
+    cloud_exadata_infrastructure_shape                                                  = var.cloud_exadata_infrastructure_shape
+    cloud_exadata_infrastructure_compute_count                                          = var.cloud_exadata_infrastructure_compute_count
+    cloud_exadata_infrastructure_customer_contacts_email                                = var.cloud_exadata_infrastructure_customer_contacts_email
+    cloud_exadata_infrastructure_maintenance_window_preference                          = var.cloud_exadata_infrastructure_maintenance_window_preference
+    cloud_exadata_infrastructure_maintenance_window_is_custom_action_timeout_enabled    = var.cloud_exadata_infrastructure_maintenance_window_is_custom_action_timeout_enabled
+    cloud_exadata_infrastructure_maintenance_window_custom_action_timeout_in_mins       = var.cloud_exadata_infrastructure_maintenance_window_custom_action_timeout_in_mins
+    cloud_exadata_infrastructure_maintenance_window_days_of_week_name                   = var.cloud_exadata_infrastructure_maintenance_window_days_of_week_name
+    cloud_exadata_infrastructure_maintenance_window_hours_of_day                        = var.cloud_exadata_infrastructure_maintenance_window_hours_of_day
+    cloud_exadata_infrastructure_maintenance_window_is_monthly_patching_enabled         = var.cloud_exadata_infrastructure_maintenance_window_is_monthly_patching_enabled
+    cloud_exadata_infrastructure_maintenance_window_lead_time_in_weeks                  = var.cloud_exadata_infrastructure_maintenance_window_lead_time_in_weeks
+    cloud_exadata_infrastructure_maintenance_window_months_name                         = var.cloud_exadata_infrastructure_maintenance_window_months_name
+    cloud_exadata_infrastructure_maintenance_window_patching_mode                       = var.cloud_exadata_infrastructure_maintenance_window_patching_mode
+}

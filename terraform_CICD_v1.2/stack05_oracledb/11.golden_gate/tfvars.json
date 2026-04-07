@@ -1,0 +1,16 @@
+{
+
+"region" : "us-ashburn-1",
+"connection_type" : "GOLDENGATE",
+"connection_technology_type" : "GOLDENGATE",
+"golden_gate_deployment_ocid" : "ocid1.goldengatedeployment.oc1.us-sanjose-1.amaaaaaaoq56wdqane3xjwi2ylockljmmn2jevg2xsvjnfav3flnr5ydoywa",
+"connection_string" : "ORACLE_DATABASE",
+"connection_nsg_ocids" : "",
+"connection_username" : "oggadmin",
+"connection_password"  : "WElcome_#123", 
+"connection_session_mode" : "DIRECT",
+"compartment_ocid"  : "ocid1.compartment.oc1..aaaaaaaal2d2fu4rzryonr46ithqynjtgwvwzmw5vikxjmdrcewdxv2qwqka",
+"subnet_ocid"        : "ocid1.subnet.oc1.iad.aaaaaaaatpjlt5bafstvzgl3fv2dhlcoe6hgr7lnqykdobd5sjejoqu3xfxq"
+
+
+}

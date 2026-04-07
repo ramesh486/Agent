@@ -1,0 +1,377 @@
+title: OKE Terraform Input Variables
+description: OKE Terraform Input Variables
+schemaVersion: 1.1.0
+version: "26102022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "OKE Cluster Variables"
+    variables:
+      - ${create_private_k8s_endpoint}
+      - ${oke_display_name}
+      - ${instance_vm_image_ocid}
+      - ${node_pool_node_source_details_boot_volume_size_in_gbs}
+      - ${node_pool_count}
+      - ${node_pool_regional_size}
+      - ${node_instance_shape}
+      - ${node_config_memory_in_gbs}
+      - ${node_config_ocpus}
+      - ${use_custom_ssh_public_key}
+      - ${ssh_public_key}
+
+
+  - title: "OKE Network Configuration"
+    variables:
+      - ${pod_network_option_details_cni_type}
+      - ${pod_network_option_details_max_pods_per_node}
+      - ${k8s_cluster_pods_cidr_blocks}
+      - ${k8s_cluster_services_cidr_blocks}
+      - ${vcn_compartment_ocid}
+      - ${vcn_ocid}
+      - ${subnet_compartment_ocid}
+      - ${load_balancer_subnet_ocid}
+      - ${worker_node_subnet_ocid}
+      - ${k8s_api_endpoint_subnet}
+      - ${pod_network_option_details_pod_subnet_ids}
+      - ${pod_network_option_details_pod_nsg_ids}
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+######################################
+
+# Core OKE variables
+
+######################################
+
+  oke_display_name:
+    type: string
+    title: OKE Display Name
+    description: Provide custom display name for Core Kubernetes Cluster
+    visible: true
+    required: true
+    default: ""
+
+  create_private_k8s_endpoint:
+    type: boolean
+    title: Create Private OKE Cluster ?
+    description: Whether the cluster should be assigned a public IP address, If it is unchecked PUBLIC endpoint will be created
+    visible: true
+    required: true
+    default: true
+
+  use_custom_ssh_public_key:
+    type: boolean
+    title: Use Custom SSH Public Key for Worker Nodes ?
+    description: IF you choose this, you will be asked to provide the SSH public key, If Unchecked terraform will generate one.
+    default: false
+    required: true
+
+  ssh_public_key:
+    type: oci:core:ssh:publickey
+    title: Provide the SSH Public Key for Worker Nodes
+    visible: ${use_custom_ssh_public_key}
+    required: true
+
+  node_instance_shape:
+    type: oci:core:instanceshape:name
+    title: OKE Cluster Worker Node Shape
+    description: OKE Cluster Worker Node Shape
+    visible: true
+    required: true
+    default: "VM.Optimized3.Flex"
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+
+  node_config_memory_in_gbs:
+    type: number
+    title: OKE Cluster Worker Node Memory Size in GB
+    description: OKE Cluster Worker Node Memory Size in GB
+    minimum: 1
+    visible:
+      or:
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Optimized3.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Standard.E3.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.DenseIO.E4.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Standard.A1.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Standard.E4.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Standard3.Flex
+    required: true
+    default: 16
+
+  node_config_ocpus:
+    type: number
+    title: OKE Cluster Worker Node OCPU Count
+    description: OKE Cluster Worker Node OCPU Count
+    minimum: 1
+    visible:
+      or:
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Optimized3.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Standard.E3.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.DenseIO.E4.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Standard.A1.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Standard.E4.Flex
+        - and:
+          - eq:
+            - ${node_instance_shape}
+            - VM.Standard3.Flex
+    required: true
+    default: 4
+
+  instance_vm_image_ocid:
+    type: string
+    title: OKE Cluster Worker Node Image OCID 
+    description: OKE Cluster Worker Node Image OCID, Worker Nodes created by this OKE cluster will use this image
+    visible: true
+    required: true
+    default: "ocid1.image.oc1.iad.aaaaaaaamoajldhwrmbzx7s4xnrajj5b7nfrnutuebgwne4bxc7vpiap3gga"
+
+  node_pool_node_source_details_boot_volume_size_in_gbs:
+    type: number
+    title: Worker Node Boot Volume Size in GB
+    description: Boot Volume Size in GB, Minimum 50 GB is required
+    visible: true
+    required: true
+    default: "100"
+    minimum: 50
+
+  node_pool_count:
+    type: number
+    title: Number of Node Pools to create for OKE Cluster
+    description: Each node pool will be created with the number of worker nodes you specify
+    visible: true
+    required: true
+    default: 1
+    minimum: 1
+
+  node_pool_regional_size:
+    type: number
+    title: Number of Worker Nodes to create for OKE Cluster
+    description: Each node pool will be created with the number of worker nodes you specify
+    visible: true
+    required: true
+    default: 3
+    minimum: 1
+
+
+#####################################
+# Network Configuration
+#####################################
+
+  pod_network_option_details_cni_type:
+    type: enum
+    title: OKE Cluster Container Networking Type
+    description: Select the CNI Plugin
+    visible: true
+    required: true
+    default: FLANNEL_OVERLAY
+    enum:
+      - OCI_VCN_IP_NATIVE
+      - FLANNEL_OVERLAY
+
+  pod_network_option_details_max_pods_per_node:
+    type: number
+    title: Provide Maximum Number of Pods can be deployed to each worker node
+    description: The max number of pods per node in the node pool. This value will be limited by the number of VNICs attachable to the node pool shape
+    required: false
+    default: 110
+    visible:
+      not:
+        - eq:
+            - ${pod_network_option_details_cni_type}
+            - FLANNEL_OVERLAY
+
+  k8s_cluster_pods_cidr_blocks:
+    type: string
+    title: OKE Cluster Pods CIDR Block
+    visible:
+      and:
+        - eq:
+            - ${pod_network_option_details_cni_type}
+            - FLANNEL_OVERLAY
+    required: true
+    default: "172.17.0.0/16"
+
+  k8s_cluster_services_cidr_blocks:
+    type: string
+    title: OKE Cluster Services CIDR Block
+    description: OKE Cluster Services CIDR Block
+    visible:
+      and:
+        - eq:
+            - ${pod_network_option_details_cni_type}
+            - FLANNEL_OVERLAY
+    required: true
+    default: "172.16.0.0/16"
+
+
+  vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+    required: true
+
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: true
+    title: Select the VCN
+    description: In this VCN your OKE will be provisioned
+    dependsOn: 
+      compartmentId: ${vcn_compartment_ocid}
+    required: true
+
+  subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Subnet Compartment
+    description: Choose the Subnet Compartment
+    required: true
+
+  load_balancer_subnet_ocid:
+    type: oci:core:subnet:id
+    visible: true
+    title: Select the Subnet for Load Balancer
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+      hidePublicSubnet: ${create_private_k8s_endpoint}
+      hidePrivateSubnet:
+        not:
+          - ${create_private_k8s_endpoint}
+    required: true
+
+  worker_node_subnet_ocid:
+    type: oci:core:subnet:id
+    visible:  true
+    title: Select the Subnet for Worker Nodes
+    description: Select the Worker Node Subnet
+    dependsOn:
+      compartmentId: ${subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+      hidePublicSubnet: ${create_private_k8s_endpoint}
+      hidePrivateSubnet: 
+        not:
+          - ${create_private_k8s_endpoint}
+    required: true
+
+  k8s_api_endpoint_subnet:
+    type: oci:core:subnet:id
+    visible:  true
+    title: Select the Subnet for Kubernetes API Endpoint
+    description: Select the Kubernetes API Endpoint Subnet
+    dependsOn:
+      compartmentId: ${subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+      hidePublicSubnet: ${create_private_k8s_endpoint}
+      hidePrivateSubnet: 
+        not:
+          - ${create_private_k8s_endpoint}
+    required: true
+
+  pod_network_option_details_pod_subnet_ids:
+    type: oci:core:subnet:id
+    visible:
+      not:
+        - eq:
+            - ${pod_network_option_details_cni_type}
+            - FLANNEL_OVERLAY
+    title: Select the Subnet for Pods
+    description: Select the Pods Subnet
+    dependsOn:
+      compartmentId: ${subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+      hidePublicSubnet: ${create_private_k8s_endpoint}
+      hidePrivateSubnet: 
+        not:
+          - ${create_private_k8s_endpoint}
+    required: true
+  
+  pod_network_option_details_pod_nsg_ids:
+    type: oci:core:nsg:id
+    title: "Select Network Security Group for Pods"
+    description: "Select Network Security Group for Pods, Traffic to your Pods will be managed by Network Security Group"
+    visible:
+      not:
+        - eq:
+            - ${pod_network_option_details_cni_type}
+            - FLANNEL_OVERLAY
+    dependsOn:
+      compartmentId: ${vcn_compartment_ocid}
+
+
+
+

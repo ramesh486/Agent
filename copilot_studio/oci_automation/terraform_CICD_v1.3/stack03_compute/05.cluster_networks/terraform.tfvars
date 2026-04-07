@@ -1,0 +1,6 @@
+ tenancy_ocid                        = "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+ region                              = "us-ashburn-1"
+ app_compartment_name                = "nonprod_app"
+ network_compartment_name            = "network"
+ instance_configuration_display_name = "TestInstanceConfiguration"
+ subnet_display_name                 = "np_trust_subnet"

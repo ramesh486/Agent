@@ -1,0 +1,89 @@
+title: Capacity Reservation
+description: Capacity Reservation
+schemaVersion: 1.1.0
+version: "06062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${project_tag}
+  
+  - title: "capacity reservation variables"
+    variables:
+      - ${instance_count}
+      - ${capacity_reservation_display_name}
+      - ${instance_shape}
+    
+variables:
+
+####################################
+#  Common Compartment
+####################################
+
+  compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy ocid
+    description: Tenancy ocid
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+  instance_count:
+    type: number
+    required: true
+    visible: true
+    default: 1
+    title: "Number of instances to launch."
+    description: "Number of instances to launch."
+  
+  capacity_reservation_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "capacity_reservation"
+    title: "Capacity reservation display name"
+    description: "Capacity reservation display name"
+
+  instance_shape:
+    type: string
+    required: true
+    visible: true
+    default: "VM.Standard2.1"
+    title: "Instance shape"
+    description: "Instance shape"
+
+  

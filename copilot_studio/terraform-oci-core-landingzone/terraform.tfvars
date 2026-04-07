@@ -1,0 +1,13 @@
+add_oke_vcn1 = true
+add_oke_vcn3 = false
+budget_alert_email_endpoints = ["kirankumar@ebizoncloud.com"]
+budget_amount = 100
+cis_level = "1"
+create_budget = true
+define_net = true
+enable_cloud_guard = false
+network_admin_email_endpoints = ["kirankumar@ebizoncloud.com"]
+oci_core_compartment_name = "root"
+oke_vcn1_attach_to_drg = false
+security_admin_email_endpoints = ["kirankumar@ebizoncloud.com"]
+service_label = "k8s"

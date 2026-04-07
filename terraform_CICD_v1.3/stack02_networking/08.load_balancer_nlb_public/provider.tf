@@ -1,0 +1,9 @@
+provider oci {
+	region = var.region
+	ignore_defined_tags = ["Oracle-Tags.CreatedBy", "Oracle-Tags.CreatedOn", "Tags.CostCenter", "Tags.ResourceType"]
+}
+
+# provider "oci" {
+#   region           = var.region
+#   ignore_defined_tags = ["Oracle-Tags.CreatedBy", "Oracle-Tags.CreatedOn"]
+# }

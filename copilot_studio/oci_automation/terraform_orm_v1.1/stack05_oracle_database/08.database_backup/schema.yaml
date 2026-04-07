@@ -1,0 +1,60 @@
+title: Database Backup Terraform Input Variables
+description: Database Backup Terraform Input Variables
+schemaVersion: 1.1.0
+version: "09052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+
+  - title: "Database Backup Variables"
+    variables:
+      - ${database_ocid}
+      - ${backup_display_name}
+
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+
+#####################################
+
+#   Database Backup Variables
+
+#####################################
+
+  database_ocid:
+    type: string
+    required: true
+    title: Database OCID
+    visible: true
+    description: Database OCID
+
+  backup_display_name:
+    type: string
+    required: true
+    title: Database Backup Display Name
+    visible: true

@@ -1,0 +1,22 @@
+module "Exadata_VMcluster" {
+  source                                    = "./exadata_vmcluster_module"  
+  region                                    = var.region
+  tenancy_ocid                              = var.tenancy_ocid
+  compartment_ocid                          = local.compartment_ocid
+  project_tag                               = var.project_tag
+  backup_subnet_ocid                        = var.backup_subnet_ocid
+  cloud_exadata_infrastructure_ocid         = var.cloud_exadata_infrastructure_ocid
+  cloud_vm_cluster_cpu_core_count           = var.cloud_vm_cluster_cpu_core_count           
+  cloud_vm_cluster_display_name             = var.cloud_vm_cluster_display_name
+  cloud_vm_cluster_gi_version               = var.cloud_vm_cluster_gi_version
+  cloud_vm_cluster_hostname                 = var.cloud_vm_cluster_hostname
+  cloud_vm_cluster_ssh_public_keys          = var.cloud_vm_cluster_ssh_public_keys
+  subnet_ocid                               = var.subnet_ocid
+  cloud_vm_cluster_cluster_name             = var.cloud_vm_cluster_cluster_name
+  cloud_vm_cluster_data_storage_size_in_tbs = var.cloud_vm_cluster_data_storage_size_in_tbs
+  cloud_vm_cluster_db_node_storage_size_in_gbs = var.cloud_vm_cluster_db_node_storage_size_in_gbs
+  cloud_vm_cluster_is_local_backup_enabled  = var.cloud_vm_cluster_is_local_backup_enabled
+  cloud_vm_cluster_license_model            = var.cloud_vm_cluster_license_model
+  cloud_vm_cluster_memory_size_in_gbs       = var.cloud_vm_cluster_memory_size_in_gbs
+  cloud_vm_cluster_ocpu_count               = var.cloud_vm_cluster_ocpu_count
+}

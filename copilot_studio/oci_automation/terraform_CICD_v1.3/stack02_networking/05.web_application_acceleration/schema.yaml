@@ -1,0 +1,105 @@
+title: Web Application Accelaration
+description: web application accelaration
+schemaVersion: 1.1.0
+version: "29062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${web_app_acceleration_policy_display_name}
+      - ${is_response_header_based_caching_enabled}
+      - ${gzip_compression_is_enabled}
+      - ${web_app_acceleration_display_name}
+      - ${backend_type}
+      - ${load_balancer_display_name}
+      - ${project_tag}
+
+variables:
+
+####################################
+#  Common Compartment
+####################################
+
+  compartment_name:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "Compartment Name to deploy the WAA"
+
+  compartment_id_in_subtree:
+    type: boolean
+    required: true
+    visible: true
+    default: true
+    title: "Compartment ID in Subtree"
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: This is Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: This is Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach Tags"
+    visible: true
+    required: false    
+  
+  web_app_acceleration_policy_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "WAAPolicy1"
+    title: "Display name of WAA policy name"
+  
+  is_response_header_based_caching_enabled:
+    type: bool
+    required: true
+    visible: true
+    default: true
+    title: "Is response header based caching enabled"  
+    description: "Enable caching at the reverse proxy"
+  
+  gzip_compression_is_enabled:
+    type: bool
+    required: true
+    visible: true
+    default: true
+    title: "Is Gzip compression enabled"
+    description: "Enable GZIP compression of server responses before returning them to the client. Can only be selected if caching is enabled."
+  
+  web_app_acceleration_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "WAA1"
+    title: "Display name of Web App Acceleration"
+  
+  backend_type:
+    type: string
+    required: true
+    visible: true
+    default: "LOAD_BALANCER"
+    title: "Backend type"
+  
+  load_balancer_display_name:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "Name of the load balancer"

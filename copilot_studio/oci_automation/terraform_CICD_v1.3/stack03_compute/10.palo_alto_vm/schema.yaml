@@ -1,0 +1,408 @@
+title: creating paloalto VM
+description: creating paloalto VM
+schemaVersion: 1.1.0
+version: "14062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${app_compartment_id_in_subtree}
+      - ${app_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${network_compartment_name}
+      - ${project_tag}
+      - ${subnet_display_name}
+    
+  - title: "virtual machine variables"
+    variables:
+      - ${is_management_disabled}
+      - ${is_monitoring_disabled}
+      - ${ssh_authorized_keys}
+      - ${desired_state1}
+      - ${name1}
+      - ${desired_state2}
+      - ${name2}
+      - ${desired_state3}
+      - ${name3}
+      - ${desired_state4}
+      - ${name4}
+      - ${desired_state5}
+      - ${name5}
+      - ${desired_state6}
+      - ${name6}
+      - ${desired_state7}
+      - ${name7}
+      - ${desired_state8}
+      - ${name8}
+      - ${desired_state9}
+      - ${name9}
+      - ${desired_state10}
+      - ${name10}
+      - ${recovery_action}
+      - ${assign_private_dns_record}
+      - ${assign_public_ip}
+      - ${are_legacy_imds_endpoints_disabled}
+      - ${display_name}
+      - ${shape}
+      - ${memory_in_gbs}
+      - ${ocpus}
+      - ${source_id}
+      - ${source_type}
+
+variables:
+
+####################################
+# Common Compartment
+####################################
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+
+  app_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  app_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+  
+  network_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name of the Subnet"
+    description: "Compartment Name of the Subnet"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+####################################
+# Virtual machine variables
+####################################
+
+  subnet_display_name:
+    type: string
+    default: ""
+    title: "Subnet Name"
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  is_management_disabled:
+    type: bool
+    required: true
+    visible: true
+    title: "is management disabled"
+    description: "is management disabled"
+    default: false
+
+  is_monitoring_disabled:
+    type: bool
+    required: true
+    visible: true
+    title: "is monitoring disabled"
+    description: "is monitoring disabled"
+    default: false
+   
+   
+  ssh_authorized_keys:
+    type: string
+    required: true
+    visible: true
+    title: "ssh authorized keys"
+    description: "ssh authorized keys"
+    default: ""
+  
+  desired_state1:
+    type: string
+    required: true
+    visible: true
+    title: "desired state1"
+    description: "desired state1"
+    default: "DISABLED"
+   
+   
+  name1:
+    type: string
+    required: true
+    visible: true
+    title: "name1"
+    description: "name1"
+    default: "Vulnerability Scanning"
+  
+  desired_state2:
+    type: string
+    required: true
+    visible: true
+    title: "desired state2"
+    description: "desired state2"
+    default: "DISABLED"
+   
+   
+  name2:
+    type: string
+    required: true
+    visible: true
+    title: "name2"
+    description: "name2"
+    default: "Oracle Java Management Service"
+  
+  desired_state3:
+    type: string
+    required: true
+    visible: true
+    title: "desired state3"
+    description: "desired state3"
+    default: "DISABLED"
+   
+   
+  name3:
+    type: string
+    required: true
+    visible: true
+    title: "name3"
+    description: "name3"
+    default: "Oracle Autonomous Linux"
+
+  desired_state4:
+    type: string
+    required: true
+    visible: true
+    title: "desired state4"
+    description: "desired state4"
+    default: "ENABLED"
+   
+   
+  name4:
+    type: string
+    required: true
+    visible: true
+    title: "name4"
+    description: "name4"
+    default: "OS Management Service Agent"
+
+
+  desired_state5:
+    type: string
+    required: true
+    visible: true
+    title: "desired state5"
+    description: "desired state5"
+    default: "DISABLED"
+   
+   
+  name5:
+    type: string
+    required: true
+    visible: true
+    title: "name5"
+    description: "name5"
+    default: "Management Agent"
+  
+  desired_state6:
+    type: string
+    required: true
+    visible: true
+    title: "desired state6"
+    description: "desired state6"
+    default: "ENABLED"
+   
+   
+  name6:
+    type: string
+    required: true
+    visible: true
+    title: "name6"
+    description: "name6"
+    default: "Custom Logs Monitoring"
+  
+  desired_state7:
+    type: string
+    required: true
+    visible: true
+    title: "desired state7"
+    description: "desired state7"
+    default: "ENABLED"
+   
+   
+  name7:
+    type: string
+    required: true
+    visible: true
+    title: "name7"
+    description: "name7"
+    default: "Compute Instance Run Command"
+  
+  desired_state8:
+    type: string
+    required: true
+    visible: true
+    title: "desired state8"
+    description: "desired state8"
+    default: "ENABLED"
+   
+   
+  name8:
+    type: string
+    required: true
+    visible: true
+    title: "name8"
+    description: "name8"
+    default: "Compute Instance Monitoring"
+
+  desired_state9:
+    type: string
+    required: true
+    visible: true
+    title: "desired state9"
+    description: "desired state9"
+    default: "DISABLED"
+   
+   
+  name9:
+    type: string
+    required: true
+    visible: true
+    title: "name9"
+    description: "name9"
+    default: "Block Volume Management"
+
+  desired_state10:
+    type: string
+    required: true
+    visible: true
+    title: "desired state10"
+    description: "desired state10"
+    default: "DISABLED"
+   
+   
+  name10:
+    type: string
+    required: true
+    visible: true
+    title: "name10"
+    description: "name10"
+    default: "Bastion"
+
+  recovery_action:
+    type: string
+    required: true
+    visible: true
+    title: "recovery action"
+    description: "recovery action"
+    default: "RESTORE_INSTANCE"
+   
+   
+  assign_private_dns_record:
+    type: bool
+    required: true
+    visible: true
+    title: "assign private dns record"
+    description: "assign private dns record"
+    default: true
+
+  assign_public_ip:
+    type: bool
+    required: true
+    visible: true
+    title: "assign public ip"
+    description: "assign public ip"
+    default: false
+  
+  are_legacy_imds_endpoints_disabled:
+    type: bool
+    required: true
+    visible: true
+    title: "are legacy imds endpoints disabled"
+    description: "are legacy imds endpoints disabled"
+    default: false
+  
+  display_name:
+    type: string
+    required: true
+    visible: true
+    title: "display name"
+    description: "display name"
+    default: "PaloAltoVM"
+  
+  shape:
+    type: string
+    required: true
+    visible: true
+    title: "shape"
+    description: "shape"
+    default: "VM.Optimized3.Flex"
+
+  memory_in_gbs:
+    type: number
+    required: true
+    visible: true
+    title: "memory in gbs"
+    description: "memory in gbs"
+    default: 14
+  
+  ocpus:
+    type: number
+    required: true
+    visible: true
+    title: "ocpus"
+    description: "ocpus"
+    default: 1
+
+  source_id:
+    type: string
+    required: true
+    visible: true
+    title: "source id"
+    description: "source id"
+    default: "ocid1.image.oc1..aaaaaaaafw745srawcq6wdqifnsx4z2q3jrc74taxechflcv3ttrtmzsmlca"
+  
+  source_type:
+    type: string
+    required: true
+    visible: true
+    title: "source type"
+    description: "source type"
+    default: "image"
+
+
+
+
+    
+    
+
+

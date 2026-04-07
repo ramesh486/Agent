@@ -1,0 +1,12 @@
+# Creating Instance Pool in OCI 
+# Prerequisites
+#     Appropriate IAM permissions to create and manage instance pools
+#     Image ocid
+#     subnet ocid
+#     Cidr block
+#     Availablity Domain
+#     SSH Key 
+
+# If you want to associate the instance pool with a load balancer or network load balancer, you need a load balancer or network load balancer and backend set.
+
+# An instance configuration. An instance configuration is a template that defines the settings to use when creating instances.

@@ -1,0 +1,255 @@
+title: Create Big data service
+description: Big data service Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${project_tag}
+
+
+  - title: "Big data service"
+    variables:
+      - ${display_name}
+      - ${cluster_admin_password}
+      - ${is_high_availability}
+      - ${is_secure}
+      - ${cluster_version}
+      - ${master_node_shape}
+      #- ${subnet_ocid}
+      - ${app_compartment_name}
+      - ${network_compartment_name}
+      - ${app_compartment_id_in_subtree}
+      - ${network_compartment_id_in_subtree}
+      - ${master_subnet_display_name}
+      - ${util_subnet_display_name}
+      - ${worker_subnet_display_name}
+      - ${master_node_block_volume_size_in_gbs}
+      - ${master_node_number_of_nodes}
+      - ${util_node_shape}
+      - ${util_node_shape_block_volume_size_in_gbs}
+      - ${util_node_shape_number_of_nodes}
+      - ${worker_node_shape}
+      - ${worker_node_shape_block_volume_size_in_gbs}
+      - ${worker_node_number_of_nodes}
+      - ${cluster_public_key}
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  # compartment_ocid:
+  #   type: oci:identity:compartment:id
+  #   visible: true
+  #   title: Select the Compartment to deploy resources
+  #   description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  app_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: "oci_db"
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  app_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: "network"
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+    
+  master_subnet_display_name:
+    type: string
+    title: " Master subnet Display Name"
+    default: ""
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  util_subnet_display_name:
+    type: string
+    title: "Util subnet Display Name"
+    default: ""
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  worker_subnet_display_name:
+    type: string
+    title: "Worker subnet Display Name"
+    default: ""
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+########### big data service ###########
+
+  display_name:
+    type: string
+    default: "bds-example"
+    title: "BDS display name"
+    description: "The name of the BDS instance."
+    required: true
+    visible: true
+
+  cluster_admin_password:
+    type: string
+    default: "S5pdAxQA=="
+    title: "Cluster admin password"
+    description: "The password for the BDS instance's cluster."
+    required: true
+    visible: true
+
+  is_high_availability:
+    type: bool
+    default: false
+    title: "High availability"
+    description: "Specifies whether the BDS instance has high availability."
+    required: true
+    visible: true
+  
+  is_secure:
+    type: bool
+    default: false
+    title: "Secure"
+    description: "Specifies whether the BDS instance is secure."
+    required: true
+    visible: true
+
+  cluster_version:
+    type: string
+    default: "CDH6"
+    title: "Cluster version"
+    description: "The version of the BDS cluster."
+    required: true
+    visible: true
+  
+  master_node_shape:
+    type: string
+    default: "VM.Standard2.4"
+    title: "Master node shape"
+    description: "The shape  for the master node in the BDS cluster."
+    required: true
+    visible: true
+      
+  # subnet_ocid:
+  #   type: string
+  #   default: ""
+  #   title: "Subnet OCID"
+  #   description: "The OCID of the subnet where the BDS cluster will be provisioned."
+  #   required: true
+  #   visible: true
+
+  master_node_block_volume_size_in_gbs:
+    type: number
+    default: 150
+    title: "Master node block volume size "
+    description: "The block volume size in gigabytes for the master node in the BDS cluster."
+    required: true
+    visible: true
+  
+  master_node_number_of_nodes:
+    type: number
+    default: 1
+    title: "Number of nodes in master node"
+    description: "The number of nodes in the master node group of the BDS cluster."
+    required: true
+    visible: true
+
+  util_node_shape:
+    type: string
+    default: "VM.Standard2.4"
+    title: "Util node shape"
+    description: "The shape  for the utility nodes in the BDS cluster."
+    required: true
+    visible: true
+
+  util_node_shape_block_volume_size_in_gbs:
+    type: number
+    default: 150
+    title: "Util node block volume size"
+    description: "The block volume size in gigabytes for the utility nodes in the BDS cluster."
+    required: true
+    visible: true
+
+  util_node_shape_number_of_nodes:
+    type: number
+    default: 1
+    title: "Number of nodes in util node"
+    description: "The number of nodes in the utility node group of the BDS cluster."
+    required: true
+    visible: true
+  
+  worker_node_shape:
+    type: string
+    default: "VM.Standard2.1"
+    title: "Worker node shape"
+    description: "The shape  for the worker nodes in the BDS cluster."
+    required: true
+    visible: true
+
+  worker_node_shape_block_volume_size_in_gbs:
+    type: number
+    default: 150
+    title: "Worker node block volume size"
+    description: "The block volume size in gigabytes for the worker nodes in the BDS cluster."
+    required: true
+    visible: true
+  
+  worker_node_number_of_nodes:
+    type: number
+    default: 3
+    title: "Number of nodes in Worker node"
+    description: "The number of nodes in the worker node group of the BDS cluster."
+    required: true
+    visible: true
+  
+  cluster_public_key:
+    type: string
+    default: ""
+    title: "Cluster public key"
+    description: "Provide the public key in OpenSSH format."
+    required: true
+    visible: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

@@ -1,0 +1,159 @@
+title: OCI NonProd VCN Terraform Input Variables
+description: Non-prod VCN
+schemaVersion: 1.1.0
+version: "28062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${network_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${project_tag}
+
+  - title: "vcn variables"
+    variables: 
+  
+      - ${nonprod_vcn_display_name}
+      - ${nonprod_vcn_dns_label}
+      - ${nonprod_hub_vcn_cidr_block}
+      - ${nonprod_vcn_cidr_block}
+
+  - title: "AppDev Subnet Configuration Variables"
+    variables:
+      - ${appdev_subnet_display_name}
+      - ${appdev_subnet_dns_label}
+      - ${appdev_subnet_cidr_block}
+      - ${appdev_subnet_prohibit_internet_ingress}
+      - ${appdev_subnet_prohibit_public_ip_on_vnic}
+      - ${appdev_project_tag}
+
+  - title: "ddDev Subnet Configuration Variables"
+    variables:
+
+
+      - ${dbdev_subnet_display_name}
+      - ${dbdev_subnet_dns_label}
+      - ${dbdev_subnet_cidr_block}
+      - ${dbdev_subnet_prohibit_internet_ingress}
+      - ${dbdev_subnet_prohibit_public_ip_on_vnic}
+      - ${dbdev_project_tag}
+
+  - title: "AppTst Subnet Configuration Variables"
+    variables:
+  
+      - ${apptst_subnet_display_name}
+      - ${apptst_subnet_dns_label}
+      - ${apptst_subnet_cidr_block}
+      - ${apptst_subnet_prohibit_internet_ingress}
+      - ${apptst_subnet_prohibit_public_ip_on_vnic}
+      - ${apptst_project_tag}
+
+  - title: "DBTst Subnet Configuration Variables"
+    variables:
+
+      - ${dbtst_subnet_display_name}
+      - ${dbtst_subnet_dns_label}
+      - ${dbtst_subnet_cidr_block}
+      - ${dbtst_subnet_prohibit_internet_ingress}
+      - ${dbtst_subnet_prohibit_public_ip_on_vnic}
+      - ${dbtst_project_tag}
+
+  - title: "VCN Components Variables"
+    variables:
+  
+      - ${nonprod_vcn_servicegateway_private_display_name}
+      - ${nonprod_vcn_natgateway_display_name}
+      - ${nonprod_vcn_natgateway_block_traffic}
+      - ${nonprod_vcn_natgateway_public_ip_lifetime}
+      - ${nonprod_vcn_intgw_display_name}
+      - ${nonprod_vcn_intgw_enabled}
+
+  - title: "VCN Route Table Variables"
+    variables:
+      
+      - ${nonprod_vcn_routetable_private_appdev_display_name}
+      - ${nonprod_vcn_routetable_private_dbdev_display_name}
+      - ${nonprod_vcn_routetable_private_apptst_display_name}
+      - ${nonprod_vcn_routetable_private_dbtst_display_name}
+
+  - title: "DRG Variables"
+    variables:
+
+      - ${drg_display_name}
+      - ${nonprod_vcn_drg_attachment_display_name}
+  
+  - title: "Security List Variables"
+    variables:
+
+      - ${nonprod_vcn_seclist_private_display_name}
+      - ${nonprod_vcn_seclist_private_is_stateless}
+
+
+
+variables:
+
+#####################################
+# Common Compartment
+#####################################
+  network_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  network_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+    
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  appdev_project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  dbdev_project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  apptst_project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+  dbtst_project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

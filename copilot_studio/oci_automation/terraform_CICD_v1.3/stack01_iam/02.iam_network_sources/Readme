@@ -1,0 +1,10 @@
+# Terraform Network source for Oracle Cloud Infrastructure Region
+
+# This resource provides the Network Source resource in Oracle Cloud Infrastructure Identity service.
+
+# Network source create only in the root compartment 
+
+# Pre-request:
+   # compartment ocid
+   # cidr block
+

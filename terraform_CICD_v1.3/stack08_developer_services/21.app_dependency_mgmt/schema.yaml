@@ -1,0 +1,74 @@
+title: Create ADM Knowledge
+description: ADM Knowledge Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${project_tag}      
+      - ${knowledge_base_display_name}
+      
+
+variables:
+#####################################
+# Common Variables
+#####################################
+
+  compartment_name:
+    type: string
+    visible: true
+    title: Compartment Name
+    description: Compartment Name of the Resource
+    default: ""
+    required: true
+
+  compartment_id_in_subtree:
+    type: boolean
+    visible: true
+    title: Compartment ID in Subtree
+    description: Compartment ID in Subtree
+    default: true
+    required: true
+
+  region:
+    type: string
+    default: ""
+    title: Select the Region
+    visible: true
+    required: true
+
+  tenancy_ocid:
+    type: string
+    default: ""
+    title: "Tenancy OCID"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true    
+    
+#####################################
+# Adm Knowledge  Variables
+#####################################
+
+  knowledge_base_display_name:
+    type: string
+    default: "Example_knowledge"
+    title: "Knowledge Base Display Name"
+    description: "Specifies the display name for the knowledge base."
+    visible: true
+
+ 

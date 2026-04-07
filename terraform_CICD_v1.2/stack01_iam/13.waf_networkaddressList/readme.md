@@ -1,0 +1,1 @@
+# Network address lists are collections of individual public IP addresses and CIDR IP ranges or private IP addresses used by WAF policies.

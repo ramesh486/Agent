@@ -1,0 +1,8 @@
+{
+  "tenancy_ocid": "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla",
+  "region": "us-ashburn-1",
+  "compartment_name": "Sandbox",
+  "vcn_cidr_block": "10.96.4.0/22",
+  "vcn_display_name": "copilot_vcn",
+  "vcn_dns_label": "copilotvcn"
+}

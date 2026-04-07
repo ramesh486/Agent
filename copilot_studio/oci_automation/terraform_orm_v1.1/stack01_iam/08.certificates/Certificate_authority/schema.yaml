@@ -1,0 +1,155 @@
+title: Create Certificate Authority
+description: Certificate Authority Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "oci_certificates_management_certificate_authority"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${certificate_authority_certificate_authority_config_config_type}
+      - ${certificate_authority_certificate_authority_config_signing_algorithm}
+      - ${certificate_authority_certificate_authority_config_validity_time_of_validity_not_after}
+      - ${certificate_authority_certificate_authority_config_validity_time_of_validity_not_before}
+      - ${certificate_authority_certificate_authority_config_version_name}
+      - ${certificate_authority_name}
+      - ${certificate_authority_certificate_authority_rules_rule_type}
+      - ${certificate_authority_certificate_authority_rules_certificate_authority_max_validity_duration}
+      - ${certificate_authority_certificate_authority_rules_leaf_certificate_max_validity_duration}
+      - ${certificate_authority_certificate_revocation_list_details_object_storage_config_object_storage_object_name_format}
+      - ${certificate_authority_description}
+      - ${kms_key_ocid}
+      - ${certificate_authority_certificate_authority_config_subject_common_name}
+      - ${object_storage_bucket_name}
+      
+variables:
+#####################################
+# oci certificates management certificate authority
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "Choose the Compartment where to deploy the resources"
+
+  region:
+    visible: true
+    title: "Region"
+    description: "The region where the resources will be provisioned"
+  
+  certificate_authority_certificate_authority_config_config_type:
+    type: string
+    default: "ROOT_CA_GENERATED_INTERNALLY"
+    title: "Configuration Type"
+    description: "The configuration type for the certificate authority"
+    required: true
+    visible: true
+
+  certificate_authority_certificate_authority_config_signing_algorithm:
+    type: string
+    default: "SHA256_WITH_RSA"
+    title: "Signing Algorithm"
+    description: "The signing algorithm to be used by the certificate authority"
+    required: true
+    visible: true
+
+  certificate_authority_certificate_authority_config_validity_time_of_validity_not_after:
+    type: string
+    default: "2024-07-05T21:10:29.999Z"
+    title: "Time of validity not after"
+    description: "The time of validity indicating when the certificate authority is no longer valid after."
+    required: true
+    visible: true
+
+  certificate_authority_certificate_authority_config_validity_time_of_validity_not_before:
+    type: string
+    default: "2023-07-04T21:10:29.999Z"
+    title: "Time of validity not before"
+    description: "The time of validity indicating when the certificate authority becomes valid"
+    required: true
+    visible: true
+
+  certificate_authority_certificate_authority_config_version_name:
+    type: string
+    default: "versionName"
+    title: "CA configuration version name"
+    description: "The version name for the certificate authority configuration"
+    required: true
+    visible: true
+
+  certificate_authority_name:
+    type: string
+    default: "Sample_CA"
+    title: "Certificate Authority name"
+    description: "The name of the certificate authority"
+    required: true
+    visible: true
+
+  certificate_authority_certificate_authority_rules_rule_type:
+    type: string
+    default: "CERTIFICATE_AUTHORITY_ISSUANCE_EXPIRY_RULE"
+    title: "Rule Type"
+    description: "The rule type for the certificate authority."
+    required: true
+    visible: true
+    
+  certificate_authority_certificate_authority_rules_certificate_authority_max_validity_duration:
+    type: string
+    default: "P3650D"
+    title: "CA max validity duration"
+    description: "The maximum validity duration for the certificate authority. "
+    required: true
+    visible: true
+
+  certificate_authority_certificate_authority_rules_leaf_certificate_max_validity_duration:
+    type: string
+    default: "P30D"
+    title: "Leaf certificate max validity duration"
+    description: "The maximum validity duration for leaf certificates issued by the certificate authority."
+    required: true
+    visible: true
+
+  certificate_authority_certificate_revocation_list_details_object_storage_config_object_storage_object_name_format:
+    type        : string
+    default     : "ca-1-crl"
+    title : "Object name format"
+    description: "The object name format for the certificate revocation list stored in Object Storage."
+    required: true
+    visible: true
+
+  certificate_authority_description:
+    type: string
+    default: "My Example CA"
+    title: "Certificate authority description"
+    description: "A description of the certificate authority."
+    required: true
+    visible: true 
+
+  kms_key_ocid:
+    type: string
+    default: "ocid1.key.oc1.ap-hyderabad-1.frsj262oaagiq.abuhsljru56esqyjslft5be6r5dbvfmoqjlmbee5i3haooeptly2l4ryjxhq"
+    title: "KMS Key OCID"
+    description: "The OCID (Oracle Cloud Identifier) of the KMS (Key Management Service) key to use for encryption"
+    required: true
+    visible: true
+
+  certificate_authority_certificate_authority_config_subject_common_name:
+    type: string
+    default: "www.example.com"
+    title: "Common name"
+    description: "The common name to be used in the subject of the certificate authority."
+    required: true
+    visible: true
+
+  object_storage_bucket_name:
+    type: string
+    default: "ca-crl-bucket"
+    title: "Object Storage Bucket name"
+    description: "The name of the Object Storage bucket where the CA Certificate Revocation List (CRL) will be stored"
+    required: true
+    visible: true

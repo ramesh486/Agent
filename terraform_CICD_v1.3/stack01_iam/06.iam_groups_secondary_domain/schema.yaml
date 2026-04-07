@@ -1,0 +1,58 @@
+title: Create Groups for Secondary Domain  
+description: Groups for Secondary Domain Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${identity_domain_idcs_endpoint}
+      - ${group_defined_tags_key}
+      - ${group_defined_tags_namespace}
+      - ${group_defined_tags_value}
+      - ${group_freeform_tags_key}
+      - ${group_freeform_tags_value}
+    
+  - title: "IntegrationViewers Groups Configuration"
+    variables:
+      - ${group_integrationviewers_name}
+  
+  - title: "IntegrationDevelopers Groups Configuration"
+    variables:
+      - ${group_integrationdevelopers_name}
+
+  - title: "IntegrationAdmins Groups Configuration"
+    variables:
+      - ${group_integrationadmins_name}
+
+  
+###################################
+# Common Compartment
+###################################
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region

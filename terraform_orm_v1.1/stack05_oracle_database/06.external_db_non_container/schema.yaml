@@ -1,0 +1,166 @@
+title: External Non-Container DB Terraform Input Variables
+description:   External Non-Container DB Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "External Non-Container DB & Connector Configuration"
+    variables:
+      - ${external_non_container_database_display_name}
+      - ${connector_credential_type}
+      - ${connector_credential_name}
+      - ${connection_string_hostname}
+      - ${connection_string_port}
+      - ${connection_string_protocol}
+      - ${connection_string_service}
+      - ${connector_agent_id}
+      - ${external_database_connector_display_name}
+      - ${connector_type}
+      - ${db_management_license_model}
+      - ${enable_management}                        
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag} 
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#####################################
+
+# External Non-Container DB Variables
+
+#####################################          
+
+  external_non_container_database_display_name:
+    type: string
+    required: true
+    title: External DB Name
+    visible: true
+    description:  Name for the external database.
+    default: "myTestExternalNonContainerDatabase"
+
+  connector_credential_type:
+    type: string
+    required: true
+    title: Type of Credential
+    visible: true
+    description: The type of credential used to connect to the database    
+    default: "NAME_REFERENCE"
+
+  connector_credential_name:
+    type: string
+    required: true
+    title: Connector Credential Name
+    visible: true
+    description: The name of the credential information that used to connect to the database
+    default: "test.connector"  
+      
+  connection_string_hostname:
+    type: string
+    required: true
+    title: DB Host Name
+    visible: true
+    description:  The host name of the database
+    default: "hostname"
+
+  connection_string_port:
+    type: number
+    required: true
+    title: Port to Connect to DB
+    visible: true
+    description: The port used to connect to the database    
+    default: 10
+
+  connection_string_protocol:
+    type: string
+    required: true
+    title: Protocol to Connect to DB
+    visible: true
+    description: The protocol used to connect to the database.
+    default: "TCP"
+
+  connection_string_service:
+    type: string
+    required: true
+    title: Service to Connect to DB
+    visible: true
+    description: The name of the service alias used to connect to the database.
+    default: "myService"  
+      
+  connector_agent_id:
+    type: string
+    required: true
+    title: Connector Agent ID
+    visible: true
+    description:  The ID of the agent used for the external database connector.
+    default: ""
+
+  external_database_connector_display_name:
+    type: string
+    required: true
+    title: External DB Connector Name
+    visible: true
+    description:  Name for the external database connector
+    default: "myTestConnector"    
+
+  connector_type:
+    type: string
+    required: true
+    title: Connector Type
+    visible: true
+    description: The type of connector used by the external database resource.    
+    default: "MACS"
+
+  db_management_license_model:
+    type: string
+    required: true
+    title: DB Management License Model
+    visible: true
+    description: The Oracle license model that applies to the external database.
+    default: "BRING_YOUR_OWN_LICENSE"
+
+  enable_management:
+    type: boolean
+    required: true
+    title: Enable Management
+    visible: true
+    description: Is management enabled?
+    default: true    

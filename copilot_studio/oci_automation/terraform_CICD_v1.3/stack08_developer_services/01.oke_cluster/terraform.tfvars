@@ -1,0 +1,8 @@
+k8s_api_endpoint_subnet_display_name = "k8s_k8s_api_subnet"
+load_balancer_subnet_display_name = "k8s_lb_subnet"
+network_compartment_name = "k8s-network-cmp"
+oke_compartment_name = "k8s-app-cmp"
+oke_display_name = "k8s_oke_cluster"
+pod_network_option_details_cni_type = "FLANNEL_OVERLAY"
+vcn_display_name = "k8s_oke_vcn"
+worker_subnet_display_name = "k8s_workernode_subnet"

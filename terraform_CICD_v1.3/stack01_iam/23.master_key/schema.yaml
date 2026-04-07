@@ -1,0 +1,104 @@
+title: "Master Encryption Key"
+stackDescription: "Master Encryption Key"
+schemaVersion: 1.1.0
+version: "20190404"
+
+groupings:
+
+  - title: General Configuration
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${security_compartment_name}
+      - ${security_compartment_id_in_subtree}
+      
+  - title: Required Configuration  
+    variables:
+      - ${key_display_name}
+      - ${key_shape_algorithm}
+      - ${key_shape_length}
+      - ${key_management_endpoint}
+      - ${key_protection_mode}
+      - ${project_tag} 
+
+  #######################################    
+
+variables:
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false   
+
+    
+  security_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+      
+  security_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  key_display_name: 
+    type: string
+    visible: true
+    required: true
+    title: "Key dispaly name"
+    description: "Enter Key display name?"
+
+  key_shape_algorithm: 
+    visible: true
+    required: false
+    default: "AES"
+    title: "Master Key algorithm"
+    description: "Enter Master Key algorithm"
+    type: enum
+    enum:
+      - AES
+
+  key_shape_length: 
+    visible: true
+    required: false
+    default: "32"
+    title: "Master Key length"
+    type: enum
+    enum:
+      - 32 
+
+  key_protection_mode: 
+    visible: true
+    required: false
+    default: "HSM"
+    title: "Master Key Protection mode"
+    type: enum
+    enum:
+      - HSM 
+
+  key_management_endpoint: 
+    type: string
+    visible: true
+    required: true
+    default: ""
+    title: "Key management endpoint"
+    description: "Enter management endpoint"
+                     

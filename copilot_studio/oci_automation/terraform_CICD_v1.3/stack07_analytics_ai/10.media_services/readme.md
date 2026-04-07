@@ -1,0 +1,2 @@
+### media flow
+# Media Flow is a fully managed service for configuring content processing workflows that can be used to process video source content. The processing includes transcoding, thumbnail generation, ABR packaging, and integration with OCI AI services such as Speech, Language, and Vision.

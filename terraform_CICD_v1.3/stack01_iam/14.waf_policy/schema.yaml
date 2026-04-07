@@ -1,0 +1,464 @@
+title: Create WAF Policy
+description: WAF Policy Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${security_compartment_name}
+      - ${security_compartment_id_in_subtree}
+      - ${project_tag}
+    
+  - title: "WAF Policy Configuration"
+    variables:
+      - ${web_app_firewall_policy_display_name}
+      - ${web_app_firewall_policy_actions_name1}
+      - ${web_app_firewall_policy_actions_type1}
+      - ${web_app_firewall_policy_actions_name2}
+      - ${web_app_firewall_policy_actions_type2}
+      - ${web_app_firewall_policy_actions_name3}
+      - ${web_app_firewall_policy_actions_type3}
+      - ${web_app_firewall_policy_actions_code}
+      - ${web_app_firewall_policy_actions_headers_name}
+      - ${web_app_firewall_policy_actions_headers_value}
+      - ${web_app_firewall_policy_actions_body_text}
+      - ${web_app_firewall_policy_actions_body_type}
+
+  - title: "Access Control Configuration"
+    variables:
+      - ${web_app_firewall_policy_request_access_control_default_action_name}
+      - ${web_app_firewall_policy_request_access_control_rules_action_name}
+      - ${web_app_firewall_policy_request_access_control_rules_name}
+      - ${web_app_firewall_policy_request_access_control_rules_type}
+      - ${web_app_firewall_policy_request_access_control_rules_condition}
+      - ${web_app_firewall_policy_request_access_control_rules_condition_language}
+
+  - title: "Protection Configuration"
+    variables:
+      - ${web_app_firewall_policy_request_protection_body_inspection_size_limit_in_bytes}
+      - ${web_app_firewall_policy_request_protection_rules_action_name}
+      - ${web_app_firewall_policy_request_protection_rules_condition_language}
+      - ${web_app_firewall_policy_request_protection_rules_is_body_inspection_enabled}
+      - ${web_app_firewall_policy_request_protection_rules_name}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key1}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version1}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key2}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version2}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key3}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version3}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key4}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version4}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_key5}
+      - ${web_app_firewall_policy_request_protection_rules_protection_capabilities_version5}
+      - ${web_app_firewall_policy_request_protection_rules_type}
+
+  - title: "Rate Limiting Configuration"
+    variables:
+      - ${web_app_firewall_policy_request_rate_limiting_rules_action_name}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_configurations_period_in_seconds}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_configurations_requests_limit}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_configurations_action_duration_in_seconds}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_name}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_type}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_condition}
+      - ${web_app_firewall_policy_request_rate_limiting_rules_condition_language}
+  
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  security_compartment_name:
+    type: string
+    title: "Compartment Name"
+    default: ""
+    description: "Provide Compartment name"
+    visible: true
+    required: true
+
+  security_compartment_id_in_subtree:
+    type: bool
+    title: "Compartment ID in Subtree"
+    default: true
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+##############################
+### WAF Policy
+##############################
+
+  web_app_firewall_policy_display_name:
+    type: string
+    title: "WepApp Firewall Policy Name"
+    default: "webappfirewallpolicy-test1"
+    description: "Web App Firewall Policy display name"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_name1:
+    type: string
+    title: "Action Name"
+    default: "Pre-configured Check Action"
+    description: "Action name"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_type1:
+    type: string
+    title: "Action Type"
+    default: "CHECK"
+    description: "Action Type"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_name2:
+    type: string
+    title: "Action name"
+    default: "Pre-configured Allow Action"
+    description: "Action name"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_type2:
+    type: string
+    title: "Action Type"
+    default: "ALLOW"
+    description: "Action Type"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_name3:
+    type: string
+    title: "Action name"
+    default: "Pre-configured 401 Response Code Action"
+    description: "Action name"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_type3:
+    type: string
+    title: "Action Type"
+    default: "RETURN_HTTP_RESPONSE"
+    description: "Action Type"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_code:
+    type: number
+    title: "Response code"
+    default: 401
+    description: "Response code"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_headers_name:
+    type: string
+    title: "WAF policy Action Header Name"
+    default: "Content-Type"
+    description: "The name of the header field"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_headers_value:
+    type: string
+    title: "WAF policy Action Header Value"
+    default: "application/json"
+    description: "The value of the header field"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_body_text:
+    type: string
+    title: "WAF policy Action body text"
+    default: "{\"code\":\"401\",\"message\":\"Unauthorized\"}"
+    description: "Static response body text"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_actions_body_type:
+    type: string
+    title: "WAF policy Action body Type"
+    default: "STATIC_TEXT"
+    description: "Type of HttpResponseBody"
+    visible: true
+    required: true
+
+##############################
+###  Access Control
+##############################
+
+
+  web_app_firewall_policy_request_access_control_default_action_name:
+    type: string
+    title: "WAF policy access control default action name"
+    default: "Pre-configured Allow Action"
+    description: "References an default Action to take if no AccessControlRule was matched"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_access_control_rules_action_name:
+    type: string
+    title: "WAF policy access control rules action name"
+    default: "Pre-configured 401 Response Code Action"
+    description: "References action by name from actions defined in WebAppFirewallPolicy"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_access_control_rules_name:
+    type: string
+    title: "WAF policy access control rules name"
+    default: "accesscontrol-test1"
+    description: "WAF policy access control rules name"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_access_control_rules_type:
+    type: string
+    title: "WAF policy access control rules type"
+    default: "ACCESS_CONTROL"
+    description: "Type of WebAppFirewallPolicyRule"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_access_control_rules_condition_language:
+    type: string
+    title: "WAF policy access control rules condition language"
+    default: "JMESPATH"
+    description: "The language used to parse condition from field"
+    visible: true
+    required: true
+
+##############################
+###  Protection
+##############################
+
+ 
+  web_app_firewall_policy_request_protection_body_inspection_size_limit_in_bytes:
+    type: string
+    title: "WAF policy request protection body inspection size limit in bytes"
+    default: "8192"
+    description: "Maximum size of inspected HTTP message body in bytes"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_action_name:
+    type: string
+    title: "WAF policy request ptotection rules action name"
+    default: "Pre-configured 401 Response Code Action"
+    description: "References action by name from actions defined in WebAppFirewallPolicy"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_protection_rules_condition_language:
+    type: string
+    title: "WAF policy request ptotection rules condition language"
+    default: "JMESPATH"
+    description: "The language used to parse condition from field "
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_is_body_inspection_enabled:
+    type: bool
+    title: "WAF policy request protection rules is body inspection enabled"
+    default: false
+    description: "Enables/disables body inspection for this protection rule"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_name:
+    type: string
+    title: "WAF policy request protection rules name"
+    default: "Rule name"
+    description: "WAF policy request protection rules name"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_key1:
+    type: string
+    title: "WAF policy request protection rules capabilities key"
+    default: "944300"
+    description: "Unique key of referenced protection capability"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_version1:
+    type: string
+    title: "WAF policy request protection rules capabilities version"
+    default: "1"
+    description: "Version of referenced protection capability"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_key2:
+    type: string
+    title: "WAF policy request protection rules capabilities key"
+    default: "944250"
+    description: "Unique key of referenced protection capability"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_version2:
+    type: string
+    title: "WAF policy request protection rules capabilities version"
+    default: "1"
+    description: "Version of referenced protection capability"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_key3:
+    type: string
+    title: "WAF policy request protection rules capabilities key"
+    default: "944240"
+    description: "Unique key of referenced protection capability"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_version3:
+    type: string
+    title: "WAF policy request protection rules capabilities version"
+    default: "1"
+    description: "Version of referenced protection capability"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_key4:
+    type: string
+    title: "WAF policy request protection rules capabilities key"
+    default: "944210"
+    description: "Unique key of referenced protection capability"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_version4:
+    type: string
+    title: "WAF policy request protection rules capabilities version"
+    default: "1"
+    description: "Version of referenced protection capability"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_key5:
+    type: string
+    title: "WAF policy request protection rules capabilities key"
+    default: "944200"
+    description: "Unique key of referenced protection capability"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_protection_rules_protection_capabilities_version5:
+    type: string
+    title: "WAF policy request protection rules capabilities version"
+    default: "1"
+    description: "Version of referenced protection capability"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_protection_rules_type:
+    type: string
+    title: "WAF policy request protection rules type"
+    default: "PROTECTION"
+    description: "Type of WebAppFirewallPolicyRule"
+    visible: true
+    required: true
+
+
+##############################
+###  Rate Limiting
+##############################
+
+  web_app_firewall_policy_request_rate_limiting_rules_action_name:
+    type: string
+    title: "WAF policy request rate limiting rules action name"
+    default: "Pre-configured Check Action"
+    description: "References action by name from actions defined in WebAppFirewallPolicy"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_rate_limiting_rules_configurations_period_in_seconds:
+    type: string
+    title: "WAF policy request rate limiting rules configurations period in seconds"
+    default: "3"
+    description: "Evaluation period in seconds"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_rate_limiting_rules_configurations_requests_limit:
+    type: string
+    title: "WAF policy request rate limiting rules configurations request limit"
+    default: "3"
+    description: "Requests allowed per evaluation period"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_rate_limiting_rules_configurations_action_duration_in_seconds:
+    type: string
+    title: "WAF policy request rate limiting rules configurations action duration in seconds"
+    default: "3"
+    description: "Evaluation period in seconds"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_rate_limiting_rules_name:
+    type: string
+    title: "WAF request limit rate"
+    default: "ratelimit-test1"
+    description: "Rule Name"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_rate_limiting_rules_type:
+    type: string
+    title: "WAF request limit rate rules type"
+    default: "REQUEST_RATE_LIMITING"
+    description: "Type of WebAppFirewallPolicyRule"
+    visible: true
+    required: true
+
+  web_app_firewall_policy_request_rate_limiting_rules_condition:
+    type: string
+    title: "WAF request limit rate rules condition"
+    default: "!i_contains(['US'], connection.source.geo.countryCode)"
+    description: "An expression that determines whether or not the rule action should be executed"
+    visible: true
+    required: true
+  
+  web_app_firewall_policy_request_rate_limiting_rules_condition_language:
+    type: string
+    title: "WAF request limit rate rules condition language"
+    default: "JMESPATH"
+    description: "The language used to parse condition from field"
+    visible: true
+    required: true
+

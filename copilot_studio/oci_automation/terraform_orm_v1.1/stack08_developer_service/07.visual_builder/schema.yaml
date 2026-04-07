@@ -1,0 +1,89 @@
+title: Visual Builder
+description: Visual Builder 
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Visual Builder variables"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${display_name}
+      - ${idcs_open_id}
+      - ${vb_instance_consumption_model}
+      - ${custom_endpoint_host_name}
+      - ${is_visual_builder_enabled}
+      - ${node_count}
+
+variables:
+
+####################################
+#  Compartment
+####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Security Compartment for centrally manage the encryption keys
+    description: Vault protects your data and the secret credentials that you use to securely access resources
+
+  region:
+    type: string
+    visible: true
+    default: "us-ashburn-1"
+    title: Region
+    description: Provide Region
+    
+  display_name:
+    type: string
+    required: true
+    visible: true
+    default: "vb_instance"
+    title: The display name of vb instance
+    description: The display name of vb instance
+
+  idcs_open_id:
+    type: password
+    required: true
+    visible: true
+    default: ""
+    title: Provide IDCS open id
+    description: Provide IDCS open id
+
+  vb_instance_consumption_model:
+    type: string
+    required: true
+    visible: true
+    default: "UCM"
+    title: Provide vb instance consumption model
+    description: Provide vb instance consumption model
+  
+  custom_endpoint_host_name:
+    type: string
+    required: true
+    visible: true
+    default: "hostname.com"
+    title: Provide custom endpoint host name
+    description: Provide custom endpoint host name
+
+  is_visual_builder_enabled:
+    type: bool
+    required: true
+    visible: true
+    default: true
+    title: Is visual builder enabled
+    description: Is visual builder enabled
+
+  node_count:
+    type: number
+    required: true
+    visible: true
+    default: 1
+    title: Provide node count
+    description: Provide node count
+  

@@ -1,0 +1,300 @@
+title: DBSystem Terraform Input Variables
+description: DBSystem Terraform Input Variables
+schemaVersion: 1.1.0
+version: "03052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Primary DBSystem Configuration"
+    variables:
+      - ${primary_dbs_display_name}
+      - ${primary_dbs_hostname}
+      - ${dbs_db_name}
+      - ${primary_dbs_availability_domain}
+      - ${admin_password}
+      - ${database_instance_shape}
+      - ${ssh_public_key}
+      - ${dbs_node_count}
+      - ${db_version}
+      - ${db_workload}
+      - ${database_edition}
+      - ${data_storage_size_in_gb}
+      - ${license_model}
+      - ${time_zone}
+      - ${auto_backup_enabled}
+      - ${primary_vcn_compartment_ocid}
+      - ${primary_vcn_ocid}
+      - ${primary_subnet_compartment_ocid}
+      - ${primary_dbs_subnet_ocid}
+
+  - title: "Dataguard Configuration"
+    variables:
+      - ${is_dataguard_enabled}
+      - ${secondary_dbs_display_name}
+      - ${secondary_dbs_hostname}
+      - ${secondary_dbs_availability_domain}
+      - ${secondary_vcn_compartment_ocid}
+      - ${secondary_vcn_ocid}
+      - ${secondary_dbs_subnet_compartment_ocid}
+      - ${secondary_dbs_subnet_ocid}
+
+  - title: "Select Target Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Variables
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: false
+    title: Region
+    description: Region
+
+#####################################
+
+  # DBSystem Instance Configuration
+
+#####################################
+
+  primary_dbs_display_name:
+    type: string
+    required: true
+    title: Primary DBSystem Display Name
+    visible: true
+
+  primary_dbs_hostname:
+    type: string
+    required: true
+    title: Primary DBSystem Hostname
+    visible: true
+
+  dbs_db_name:
+    type: string
+    required: true
+    title: Database Name
+    visible: true
+  
+  primary_dbs_availability_domain: 
+    type: oci:identity:availabilitydomain:name
+    visible: true
+    title: Select Availability Domain for Primary DBSystem
+    required: true
+    description: Select the Availability Domain
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+
+  database_instance_shape:
+    visible: true
+    type: string
+    required: true
+    default: VM.Standard2.1
+    title: Select DBSystem Shape
+    description: Please specify the Shape of the DBSystem
+  
+  ssh_public_key:
+    type: oci:core:ssh:publickey
+    visible: true
+    title: Provide SSH Public Key for DB System
+    description: Select the public key to be added to your DBSystem instance
+    required: true
+
+  dbs_node_count:
+    title: Number of DBSystem Nodes
+    type: enum
+    default: "1"
+    required: true
+    visible: true
+    enum:
+      - "1"
+      - "2"
+  
+  db_version:
+    type: string
+    required: true
+    title: Database Version
+    visible: true
+    default: 19.11.0.0
+
+  db_workload:
+    type: enum
+    required: true
+    title: Database Workload Type
+    visible: true
+    default: OLTP
+    enum:
+      - DW
+      - OLTP
+
+  database_edition:
+    type: enum
+    required: true
+    title: Database Edition
+    visible: true
+    default: ENTERPRISE_EDITION_EXTREME_PERFORMANCE
+    description: Select "ENTERPRISE_EDITION_EXTREME_PERFORMANCE" edition to enable Dataguard
+    enum:
+      - STANDARD_EDITION
+      - ENTERPRISE_EDITION
+      - ENTERPRISE_EDITION_HIGH_PERFORMANCE
+      - ENTERPRISE_EDITION_EXTREME_PERFORMANCE
+  
+  data_storage_size_in_gb:
+    type: string
+    required: true
+    title: Data Storage size in GB 
+    visible: true
+    default: 1024
+
+  license_model:
+    title: Select License Model
+    type: enum
+    default: "LICENSE_INCLUDED"
+    required: true
+    visible: true
+    enum:
+      - "LICENSE_INCLUDED"
+      - "BRING_YOUR_OWN_LICENSE"
+  
+  time_zone:
+    type: string
+    required: true
+    title: Time Zone
+    visible: true
+    default: "UTC"
+  
+  auto_backup_enabled:
+    type: boolean
+    required: false
+    default: false
+    title: Enable Auto Backup ?
+    description: To enable Dataguard, please disable this auto_backup, enabling auto_backup fails enabling "Dataguard"
+
+  # Network Configuration
+
+  primary_vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+    required: true
+
+  primary_vcn_ocid:
+    type: oci:core:vcn:id
+    visible: true
+    title: Select the VCN
+    description: Choose the VCN
+    dependsOn: 
+      compartmentId: ${primary_vcn_compartment_ocid}
+    required: true
+
+  primary_subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Subnet Compartment
+    description: Choose the Subnet Compartment
+    required: true
+
+  primary_dbs_subnet_ocid:
+    type: oci:core:subnet:id
+    visible:  true
+    title: Select the Subnet 
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${primary_subnet_compartment_ocid}
+      vcnId: ${primary_vcn_ocid}
+    required: true
+
+
+
+
+# DBS Dataguard Network Configuration
+
+  is_dataguard_enabled:
+    type: boolean
+    default: false
+    title: Enable Dataguard ?
+    description: Choose whether to enable the Dataguard
+  
+  secondary_dbs_display_name:
+    type: string
+    required: ${is_dataguard_enabled}
+    title: Secondary DBSystem Display Name
+    visible: ${is_dataguard_enabled}
+
+  secondary_dbs_hostname:
+    type: string
+    required: ${is_dataguard_enabled}
+    title: Secondary DBSystem Hostname
+    visible: ${is_dataguard_enabled} 
+
+  secondary_dbs_availability_domain: 
+    type: oci:identity:availabilitydomain:name
+    visible: ${is_dataguard_enabled}
+    title: Select Availability Domain for Secondary DBSystem
+    required: true
+    description: Select the Availability Domain
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+
+  secondary_vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: ${is_dataguard_enabled}
+    title: Select the VCN Compartment for Secondary DBS
+    description: Choose the Compartment of VCN
+    required: true
+
+  secondary_vcn_ocid:
+    type: oci:core:vcn:id
+    visible: ${is_dataguard_enabled}
+    title: Select the VCN for Secodary DBS
+    description: Choose the VCN
+    dependsOn: 
+      compartmentId: ${secondary_vcn_compartment_ocid}
+    required: true
+
+  secondary_dbs_subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: ${is_dataguard_enabled}
+    title: Select the Subnet Compartment
+    description: Choose the Subnet Compartment
+    required: ${is_dataguard_enabled}
+
+  secondary_dbs_subnet_ocid:
+    type: oci:core:subnet:id
+    visible: ${is_dataguard_enabled}
+    title: Select the Subnet 
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${secondary_dbs_subnet_compartment_ocid}
+      vcnId: ${secondary_vcn_ocid}
+    required: ${is_dataguard_enabled}
+      
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false

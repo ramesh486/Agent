@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../08.load_balancer_nlb_public"
+		},
+		{
+			"path": "../../09.dns_steering_policy_load_balance"
+		}
+	]
+}

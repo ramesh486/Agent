@@ -1,0 +1,143 @@
+title: Notification and Subscription 
+description: Notification and Subscription Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+   
+
+ - title:  "Notification and Subscription Configuration"
+   variables:
+      - ${notification_topic_name}
+      - ${topic_ocid}
+      - ${subscription_endpoint}
+      - ${subscription_protocol}
+      - ${announcement_subscription_description}
+      - ${announcement_subscription_display_name}
+      - ${announcement_subscription_filter_groups_filters_type}
+      - ${announcement_subscription_filter_groups_filters_value}
+      
+     
+
+ - title:  "Select Compartment"
+   variables:
+
+      - ${tenancy_ocid}
+      - ${region} 
+      - ${project_tag}
+      - ${compartment_ocid}
+      
+variables:
+
+###############################################
+  # Announcement & Subscription Configuration
+###############################################
+
+  notification_topic_name:
+    type: string
+    required: true
+    visible: true
+    default: "My_topic"
+    title: "notification topic name"
+    description: "Choose a name for notification topic"
+
+  topic_ocid:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "topic ocid"
+    description: "The ocid of the topic"
+   
+  subscription_endpoint:
+    required: true
+    visible: true
+    default: "example@gmail.com"
+    title: "subscription endpoint"
+    description: "Choose email id"
+
+  subscription_protocol:
+    type: enum
+    required: true
+    visible: true
+    default: "EMAIL"
+    title: "subscription protocol"
+    description: "Choose Subscription protocol"
+    enum:
+          - "CUSTOM_HTTPS"
+          - "EMAIL"
+          - "ORACLE_FUNCTIONS"
+          - "PAGERDUTY"
+          - "SLACK"
+          - "SMS"
+
+  announcement_subscription_display_name:
+    required: false
+    visible: true
+    default: "oci_announcement_subscription"
+    title: "announcement_subscription name"
+    description: "Choose announcement subscription name"
+  
+  announcement_subscription_description:
+    required: false
+    visible: true
+    default: "announcement subscription services"
+    title: "announcement_subscription_description"
+    description: "Choose description for announcement subscription"  
+
+  announcement_subscription_filter_groups_filters_type:
+    type: enum
+    required: true
+    visible: true
+    default: "PLATFORM_TYPE"
+    title: "announcement_subscription_filter_groups_filters_type"
+    description: "Choose announcement subscription filter groups filters type"
+    enum:
+          - "COMPARTMENT_ID"
+          - "PLATFORM_TYPE"
+          - "REGION"
+          - "SERVICE"
+          - "RESOURCE_ID"
+          - "ANNOUNCEMENT_TYPE"
+
+  announcement_subscription_filter_groups_filters_value:
+    required: true
+    visible: true
+    default: "IAAS"
+    title: "announcement_subscription_filter_groups_filters_value"
+    description: "Choose announcement subscription filter groups filters value as per the filter type"
+   
+#######################
+# Common variables
+########################
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    title: "Tenancy OCID"
+    description: "Tenancy OCID"
+  
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Enter the Region
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "The OCID of the compartment"
+
+  
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach the Tags"
+    visible: true
+    required: true
+ 

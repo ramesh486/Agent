@@ -1,0 +1,104 @@
+title: Create Content Management instance
+description: Content Management instance Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${tenancy_name}
+
+  - title: "oce instance configuration"
+    variables:
+      - ${oce_instance_admin_email}
+      - ${oce_instance_idcs_access_token}
+      - ${oce_instance_name}
+      - ${oce_instance_object_storage_namespace}
+      - ${oce_instance_instance_access_type}
+      - ${oce_instance_instance_license_type}
+   
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: The region where the resources will be provisioned
+
+  tenancy_ocid:
+    visible: true
+    default: ""
+    title: "Tenancy OCID"
+    description: The OCID of the tenancy
+
+  tenancy_name:
+    type: string
+    visible: true
+    default: ""
+    title: "Tenancy name" 
+    description: The name of the tenancy
+
+########### big data service ###########
+
+  oce_instance_admin_email:
+    type: string
+    default: ""
+    title: "Instance admin email"
+    description: "The email address of the OCE instance administrator"
+    required: true
+    visible: true
+
+  oce_instance_idcs_access_token:
+    type: string
+    default: ""
+    title: "Instance idcs access token"
+    description: "The IDCS access token for the OCE instance"
+    required: true
+    visible: true
+
+  oce_instance_name:
+    type: string
+    default: "Example_oce_instance"
+    title: "Instance name"
+    description: "The name of the OCE instance"
+    required: true
+    visible: true
+  
+  oce_instance_object_storage_namespace:
+    type: string
+    default: ""
+    title: "Instance object storage namespace"
+    description: "The object storage namespace for the OCE instance"
+    required: true
+    visible: true
+
+  oce_instance_instance_access_type:
+    type: string
+    default: "PUBLIC"
+    title: "Instance access type"
+    description: "The access type for the OCE instance"
+    required: true
+    visible: true
+  
+  oce_instance_instance_license_type:
+    type: string
+    default: "STARTER"
+    title: "License type"
+    description: "The license type for the OCE instance"
+    required: true
+    visible: true

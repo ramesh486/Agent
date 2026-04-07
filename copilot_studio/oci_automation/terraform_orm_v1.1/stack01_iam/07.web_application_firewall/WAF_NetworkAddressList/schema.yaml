@@ -1,0 +1,72 @@
+title: Create WAF Network Address List
+description: WAF Network Address List Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${vcn_compartment_ocid}
+      - ${vcn_ocid}
+      - ${project_tag}
+    
+  - title: "WAF Network IP Address Configuration"
+    variables:
+      - ${network_ip_address_list_display_name}
+      - ${network_ip_address_list_type}
+      - ${network_ip_address_list_address}
+
+  - title: "WAF Network VCN Address Configuration"
+    variables:
+      - ${network_vcn_address_list_display_name}
+      - ${network_vcn_address_list_type}
+      - ${network_address_list_vcn_addresses_addresses}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: true
+    title: Select the VCN 
+    description: Choose the VCN
+    dependsOn: 
+      compartmentId: ${vcn_compartment_ocid}
+
+

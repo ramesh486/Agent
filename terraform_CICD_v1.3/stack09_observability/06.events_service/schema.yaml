@@ -1,0 +1,236 @@
+title:  Create events and rules
+description: monitoring Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${monitoring_compartment_id_in_subtree}
+      - ${monitoring_compartment_name}
+      - ${region}
+      - ${project_tag}
+
+  - title: "IAM User Rules  Variables "
+    variables:
+      - ${iam_user_rule_actions_actions_action_type}
+      - ${iam_user_rule_actions_actions_description}
+      - ${iam_user_rule_actions_actions_is_enabled}
+      - ${iam_user_rule_condition}
+      - ${iam_user_rule_description}
+      - ${iam_user_rule_display_name}
+      - ${topic_display_name_user}
+      - ${user_topic_ocid}
+
+  - title: "ObjectStorage Rules Variables"
+    variables:
+      - ${objectstorage_bucket_create_rule_actions_actions_action_type}
+      - ${objectstorage_bucket_create_rule_actions_actions_description}
+      - ${objectstorage_bucket_create_rule_actions_actions_is_enabled}
+      - ${objectstorage_bucket_create_rule_condition}
+      - ${objectstorage_bucket_create_rule_description}
+      - ${objectstorage_bucket_create_rule_display_name}
+      - ${objectstorage_bucket_create_rule_is_enabled}
+      - ${topic_display_name_objectstorage}
+      - ${objectstorage_topic_ocid}
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+  monitoring_compartment_name:
+    type: string
+    visible: true
+    default: ""
+    title: compartment_name
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  monitoring_compartment_id_in_subtree:
+    type: boolean
+    visible: false
+    title: compartment_id_in_subtree
+    description: Choose the compartment id in subtree
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true
+
+#####################################
+ # IAM User Rules  Variables 
+#####################################
+
+  iam_user_rule_actions_actions_action_type:
+    type: enum
+    required: true
+    visible: true
+    default: "ONS"
+    title: "Iam user rule actions actions action type"
+    description: "Choose event action type"
+    enum:
+      - "ONS"
+      - "OSS"
+      - "FAAS"
+
+  iam_user_rule_actions_actions_description:
+    type: string
+    description: "A string that describes the details of the action." 
+    default: "Send to an Oracle Notification Service topic"
+    required: true
+    visible: true
+  
+  iam_user_rule_actions_actions_is_enabled:
+    type: boolean
+    required: true
+    default: "true"
+    title: " Iam user rule actions actions is currently enabled"
+    description: "Iam user rule actions actions is enabled"
+
+  iam_user_rule_condition:
+    type: string
+    required: true
+    default: "{\"eventType\":[\"com.oraclecloud.identitycontrolplane.createuser\",\"com.oraclecloud.identitycontrolplane.deleteuser\",\"com.oraclecloud.identitycontrolplane.updateuser\",\"com.oraclecloud.identitycontrolplane.updateusercapabilities\",\"com.oraclecloud.identitycontrolplane.updateuserstate\"]}"
+    title: "Iam user rule condition"
+    description: "Description of the rule"
+
+  iam_user_rule_description:
+    type: string
+    title: "Iam user rule description"
+    description: "A string that describes the details of the rule."
+    default: "Rule for  IAM User"
+    required: true
+    visible: true
+
+  iam_user_rule_display_name:
+    type: string
+    title: "Iam user rule display name"
+    description: "Name of the Rule" 
+    default: "iam_user_rule"
+    required: true
+    visible: true
+
+  iam_user_rule_is_enabled:
+    type: boolean
+    required: true
+    default: "true"
+    title: " Iam user rule is enabled is currently enabled"
+    description: "Iam user rule actions actions is enabled"
+  
+  topic_display_name_user:
+    type: string
+    title: "Topic display name user"
+    default: "oci_user_event_notifications"
+    description: "Name of the topic in which the rule is associated."
+    required: true
+    visible: true
+  
+
+
+################################
+#  ObjectStorage Rules Variables 
+#################################
+  
+  objectstorage_bucket_create_rule_actions_actions_action_type:
+    type: enum
+    description: "The action to perform if the condition in the rule matches an event" 
+    default: "ONS"
+    required: true
+    visible: true
+    title: "Iam_user_rule_actions_actions_action_type"
+    enum:
+      - "ONS"
+      - "OSS"
+      - "FAAS"
+  
+  objectstorage_bucket_create_rule_actions_actions_description:
+    type: string
+    description: "A string that describes the details of the action" 
+    default: "Send to an Oracle Notification Service topic"
+    title: "Objectstorage bucket create rule actions actions description"
+    required: true
+    visible: true
+  
+  objectstorage_bucket_create_rule_actions_actions_is_enabled:
+    type: boolean
+    required: true
+    default: "true"
+    title: "Iam user rule is enabled is currently enabled"
+    description: "Iam_user_rule_actions_actions_is_enabled"
+    visible: true
+
+  objectstorage_bucket_create_rule_condition:
+    type: string
+    title: "Objectstorage bucket create rule condition"
+    description: "Description of the rule" 
+    default: "{\"eventType\":[\"com.oraclecloud.objectstorage.updatebucket\",\"com.oraclecloud.objectstorage.createbucket\"],\"data\":{\"additionalDetails\":{\"publicAccessType\":\"NoPublicAccess\"}}}"
+    required: true
+    visible: true
+  
+  objectstorage_bucket_create_rule_description:
+    type: string
+    title: "Objectstorage bucket create rule description"
+    description: "A string that describes the details of the rule"
+    default: "Rule for  Object Storage"
+    required: true
+    visible: true
+
+  objectstorage_bucket_create_rule_display_name:
+    type: string
+    title: "objectstorage bucket create rule display name"
+    description: "Name of the Rule" 
+    default: "objectstorage_bucket_create_rule"
+    required: true
+    visible: true
+
+  objectstorage_bucket_create_rule_is_enabled:
+    type: boolean
+    title: "Objectstorage bucket create rule is enabled" 
+    required: true
+    default: "true"
+    description: "Objectstorage bucket create rule actions is enabled"
+  
+  topic_display_name_objectstorage:
+    type: string
+    title: "Topic display name objectstorage"
+    default: "oci_objectstorage_event_notifications"
+    description: "Name of the topic in which the rule is associated"
+    required: true
+    visible: true
+  
+ 
+
+
+
+
+  
+
+
+  
+
+    
+
+
+
+
+  
+
+
+      
+     
+

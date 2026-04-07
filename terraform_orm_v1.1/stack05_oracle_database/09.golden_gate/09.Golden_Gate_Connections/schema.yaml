@@ -1,0 +1,348 @@
+title: Golden Gate Connection Terraform Input Variables
+description: Golden Gate Connection Variables
+schemaVersion: 1.1.0
+version: "200602023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Golden Gate Connection Configuration"
+    variables:
+      - connection_display_name
+      - connection_description
+      - connection_type
+      - connection_technology_type
+      - enter_database_information
+      - enter_goldengate_information
+      - golden_gate_deployment_ocid
+      - host
+      - port
+      - connection_string
+      - database_ocid
+      - connection_username
+      - connection_password
+
+
+  - title: "Network Configuration"
+    variables:
+      - network_connectivity_via_private_endpoint
+      - connection_session_mode
+      - vcn_compartment_ocid
+      - vcn_ocid
+      - subnet_ocid
+      - connection_nsg_ocids
+      - connection_private_ip
+
+
+  - title: "Assign to a Golden Gate Deployment"
+    variables:
+      - attach_golden_gate_deployment_ocid
+
+
+variables:
+
+#####################################
+
+# Common Variables
+
+#####################################
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+
+# ----------------------------------------
+# Golden Gate Connection Variables
+# ----------------------------------------
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    required: true
+    title: Select the Target Compartment
+    description: Select the Compartment where your Golden Gate deployment connection will be created
+
+  connection_display_name:
+    type: string
+    visible: true
+    required: true
+    title: Golden Gate Connection Display Name
+    description: Golden Gate Connection Display Name
+    default: ""
+
+  connection_description:
+    type: string
+    visible: true
+    required: true
+    title: Golden Gate Connection Description
+    description: Golden Gate Connection Description
+
+  connection_type:
+    type: enum
+    visible: true
+    required: true
+    title: Connection Type
+    description: Select the Connection Type
+    enum:
+      - GOLDENGATE
+      - ORACLE
+  
+  connection_technology_type:
+    type: enum
+    visible:
+      not:
+        - eq:
+            - ${connection_type}
+            - GOLDENGATE
+    required: true
+    title: Connection Type
+    description: Select the Connection Type
+    enum:
+      - AMAZON_RDS_ORACLE
+      - OCI_AUTONOMOUS_DATABASE
+      - ORACLE_DATABASE
+      - ORACLE_EXADATA
+
+
+  enter_goldengate_information:
+    type: boolean
+    title: Enter GoldenGate information
+    required: false
+    visible:
+      and:
+        - eq:
+            - ${connection_type}
+            - GOLDENGATE
+  
+
+
+  golden_gate_deployment_ocid:
+    type: string
+    visible:
+      and:
+        - not: 
+            - ${enter_goldengate_information}
+        - eq:
+            - ${connection_type}
+            - GOLDENGATE
+
+    title: Golden Gate Deployment OCID
+    description: Provide Golden Gate Deployment OCID
+    required: true
+  
+  host:
+    type: string
+    title: The name or address of a host
+    description: The name or address of a host
+    visible: ${enter_goldengate_information}
+    required: false
+    default: ""
+  
+  port:
+    type: string
+    title: The port of an endpoint usually specified for a connection
+    description: The port of an endpoint usually specified for a connection
+    visible: ${enter_goldengate_information}
+    required: false
+    default: ""
+  
+  enter_database_information:
+    type: boolean
+    title: Enter Database information
+    required: false
+    visible:
+      or:
+        - eq:
+            - ${connection_technology_type}
+            - OCI_AUTONOMOUS_DATABASE
+        - eq:
+            - ${connection_technology_type}
+            - ORACLE_DATABASE
+        - eq:
+            - ${connection_technology_type}
+            - ORACLE_EXADATA
+
+  connection_string:
+    type: string
+    visible:
+      and: 
+        - ${enter_database_information}
+        - or:
+            - eq:
+                - ${connection_technology_type}
+                - AMAZON_RDS_ORACLE
+            - eq:
+                - ${connection_technology_type}
+                - ORACLE_DATABASE
+            - eq:
+                - ${connection_technology_type}
+                - ORACLE_EXADATA
+    title: Connection String
+    description: Provide Connection String 
+    required: true
+
+  database_ocid:
+    type: string 
+    visible: 
+      and:
+        - not: 
+            - ${enter_database_information}
+        - or:
+            - eq:
+                - ${connection_technology_type}
+                - OCI_AUTONOMOUS_DATABASE
+            - eq:
+                - ${connection_technology_type}
+                - ORACLE_DATABASE
+            - eq:
+                - ${connection_technology_type}
+                - ORACLE_EXADATA
+    title: Database OCID
+    description: Database OCID
+    required: true
+  
+  connection_username:
+    type: string
+    title: Connection Username 
+    description: "The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivity requirements defined in it"
+    visible:
+      or:
+        - eq:
+            - ${connection_technology_type}
+            - OCI_AUTONOMOUS_DATABASE
+        - eq:
+            - ${connection_technology_type}
+            - ORACLE_DATABASE
+        - eq:
+            - ${connection_technology_type}
+            - ORACLE_EXADATA
+        - eq:
+            - ${connection_technology_type}
+            - AMAZON_RDS_ORACLE  
+        - eq:
+            - ${connection_type}
+            - GOLDENGATE   
+    required: true
+
+  connection_password:
+    type: password 
+    title: Connection Password 
+    description: "The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on."
+    visible:
+      or:
+        - eq:
+            - ${connection_technology_type}
+            - OCI_AUTONOMOUS_DATABASE
+        - eq:
+            - ${connection_technology_type}
+            - ORACLE_DATABASE
+        - eq:
+            - ${connection_technology_type}
+            - ORACLE_EXADATA
+        - eq:
+            - ${connection_technology_type}
+            - AMAZON_RDS_ORACLE 
+        - eq:
+            - ${connection_type}
+            - GOLDENGATE 
+    required: true
+
+  network_connectivity_via_private_endpoint:
+    type: boolean
+    title: Network connectivity via private endpoint
+    description: Enabling connectivity via private endpoint can only be done during creation.
+    required: false
+    visible: ${enter_database_information}
+
+  connection_session_mode:
+    type: enum
+    title: Connection Session Mode 
+    description: "Direct - Use local listener running on database node, Redirect - Use SCAN FQDN listener in Oracle RAC Deployment."
+    visible: 
+      not:
+        - ${enter_database_information}
+      and:
+        - ${network_connectivity_via_private_endpoint}
+        - or:
+            - eq:
+                - ${connection_technology_type}
+                - OCI_AUTONOMOUS_DATABASE
+            - eq:
+                - ${connection_technology_type}
+                - ORACLE_DATABASE
+            - eq:
+                - ${connection_technology_type}
+                - ORACLE_EXADATA
+    enum:
+      - DIRECT
+      - REDIRECT
+
+  vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: ${network_connectivity_via_private_endpoint}
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+    required: ${network_connectivity_via_private_endpoint}
+
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: ${network_connectivity_via_private_endpoint}
+    title: Select the VCN
+    description: Choose the VCN
+    dependsOn: 
+      compartmentId: ${vcn_compartment_ocid}
+    required: ${network_connectivity_via_private_endpoint}
+
+  subnet_ocid:
+    type: oci:core:subnet:id
+    visible: ${network_connectivity_via_private_endpoint}
+    title: Select the Subnet 
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${vcn_compartment_ocid}
+      vcnId: ${vcn_ocid}
+    required: ${network_connectivity_via_private_endpoint}
+
+  connection_nsg_ocids:
+    type: oci:core:nsg:id
+    title: Select Network Security Groups
+    description: Select Network Security Groups
+    required: false
+    visible: ${network_connectivity_via_private_endpoint}
+    dependsOn:
+      compartmentId: ${vcn_compartment_ocid}
+      vcnId: ${vcn_ocid}
+
+  connection_private_ip:
+    type: string
+    title: Connection Private IP
+    description: "The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection"
+    visible:
+      and: 
+        - ${network_connectivity_via_private_endpoint}
+        - eq:
+            - ${connection_technology_type}
+            - ORACLE_EXADATA
+    required: false
+    default: ""
+
+  attach_golden_gate_deployment_ocid:
+    type: string
+    title: Provide OCID of Golden Gate to be attached with connection
+    description: Provided Golden Gate OCID will be attached with Golden Gate Connection
+    visible: true
+    required: true

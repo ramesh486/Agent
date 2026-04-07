@@ -1,0 +1,6 @@
+tenancy_ocid         = "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+region               = "us-ashburn-1"
+compartment_name     = "nonprod_app"
+sender_email_address = "reemayg99@gmail.com"
+email_domain_name    = "domain.com"
+dkim_selector        = "mydomain-ash-20210228"

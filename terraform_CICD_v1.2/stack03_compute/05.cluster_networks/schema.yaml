@@ -1,0 +1,122 @@
+title: OCI Core cluster network 
+description: OCI Core cluster network 
+schemaVersion: 1.1.0
+version: "25012022"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "common compartment"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${app_compartment_id_in_subtree}
+      - ${app_compartment_name}
+      - ${network_compartment_id_in_subtree}
+      - ${network_compartment_name}
+      - ${project_tag}
+      - ${subnet_display_name}
+      
+
+  - title: "OCI Core cluster network"
+    variables:
+      - ${instance_configuration_display_name}
+      - ${cluster_network_instance_pools_size}
+      - ${cluster_network_instance_pools_display_name}
+     
+    
+      
+
+variables:
+### Common Compartment 
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+    
+  app_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  app_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name to deploy the resource"
+    description: "Compartment Name to deploy the resource"
+    visible: true
+    required: true
+  
+  network_compartment_id_in_subtree:
+    type: bool
+    default: true
+    title: "Compartment id in subtree"
+    description: "Compartment ID in Subtree"
+    visible: true
+    required: true
+
+  network_compartment_name:
+    type: string
+    default: ""
+    title: "Compartment Name of the Subnet"
+    description: "Compartment Name of the Subnet"
+    visible: true
+    required: true
+
+  subnet_display_name:
+    type: string
+    default: ""
+    title: "Subnet Name"
+    description: "The subnet in which the application is deployed"
+    visible: true
+    required: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+ 
+ #"oci_core_cluster_network"
+
+
+  instance_configuration_display_name:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "select the instance configuration Name"
+    description: "select the instance configuration Name"
+
+  cluster_network_instance_pools_size:
+    type: number
+    visible: true
+    title: cluster network instance pools size
+    default: "1"
+    description: cluster network instance pools size
+    required: true
+
+  cluster_network_instance_pools_display_name:
+    type: string
+    visible: true
+    title: cluster network instance pools display name
+    default: "cluster network instance pool"
+    description: cluster network instance pools display_name
+    required: true
+
+ 

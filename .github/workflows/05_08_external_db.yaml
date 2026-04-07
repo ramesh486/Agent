@@ -1,0 +1,50 @@
+
+# On pull request events, this workflow will run
+# `terraform init`, and `terraform plan`. On successful pull request merge, `terraform apply` will be executed.
+# Update PROVIDER_NAME, BRANCH_NAME, STACK_NAME, WORKING_DIRECTORY, REPO_URL, TF_VERSION
+
+name: 'Deploy External DB'
+on:
+  pull_request:
+    types: [opened, closed]
+    branches:
+      - 'dev5'
+    paths:
+      - 'CICD/stack05_oracledb/08.external_db/*'
+
+# ---------------------------------------------
+# Permissions
+# ---------------------------------------------
+
+permissions:
+  contents: write
+
+jobs:
+  
+  stack05_external_db:
+    uses: ./.github/workflows/action_runner.yaml
+
+    # ---------------------------------------------
+    # Source Provider Details
+    # ---------------------------------------------
+
+    with:
+
+      PROVIDER_NAME: "oci_github"
+      BRANCH_NAME: "feature_stack05_oracledb"
+      STACK_NAME: "stack05_external_db"
+      WORKING_DIRECTORY: "CICD/stack05_oracledb/08.external_db"
+      REPO_URL: "https://github.com/Reemayg1999/oci_automation.git"
+      TF_VERSION: "1.2.x"
+
+    # ---------------------------------------------
+    # Secrets
+    # ---------------------------------------------
+
+    secrets:
+      USER_OCID: ${{secrets.USER_OCID}}
+      FINGERPRINT: ${{secrets.FINGERPRINT}}
+      COMPARTMENT_OCID: ${{secrets.COMPARTMENT_OCID}}
+      REGION: ${{secrets.REGION}}
+      TENANCY_OCID: ${{secrets.TENANCY_OCID}}
+      PRIVATE_KEY_FILE: ${{secrets.PRIVATE_KEY_FILE}}

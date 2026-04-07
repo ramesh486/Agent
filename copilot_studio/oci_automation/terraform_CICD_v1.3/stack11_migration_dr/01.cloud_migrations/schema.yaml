@@ -1,0 +1,252 @@
+title: Cloud Migration
+description: Cloud Migration
+schemaVersion: 1.1.0
+version: "19072023"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${project_tag}
+      - ${compartment_ocid}
+     
+
+  - title: "cloud Migration Asset"
+    variables:
+      - ${migration_asset_availability_domain}
+      - ${migration_asset_display_name}
+      - ${inventory_asset_ocid}
+      - ${replication_compartment_ocid}
+      - ${snap_shot_bucket_name}
+
+  - title: "Cloud Migration Plan"
+    variables:
+      - ${migration_plan_display_name}
+      - ${migration_plan_available_shape_availability_domain}
+      - ${migration_plan_strategies_resource_type}
+      - ${migration_plan_strategies_strategy_type}
+      - ${migration_plan_target_environments_subnet}
+      - ${migration_plan_target_environments_target_environment_type}
+      - ${migration_plan_target_environments_vcn}
+      
+  
+  - title: "cloud Migrations"
+    variables:
+      - ${migration_display_name}
+
+  - title: "Target Assets"
+    variables:
+      - ${target_asset_is_excluded_from_execution}
+      - ${target_asset_preferred_shape_type}
+      - ${target_asset_type}
+      - ${target_asset_user_spec_agent_config_plugins_config_desired_state}
+      - ${target_asset_user_spec_agent_config_plugins_config_name}
+      - ${target_asset_user_spec_preemptible_instance_config_preemption_action_type}
+      - ${target_asset_user_spec_source_details_source_type}
+      - ${boot_volume_ocid}
+              
+variables:
+#####################################
+# Common Variables
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "The OCID of the compartment"
+
+  tenancy_ocid:
+    visible: true
+    required: true
+    title: Tenancy OCID
+    description: Enter the Tenancy OCID
+
+  region:
+    visible: true
+    required: true
+    title: Region
+    description: Enter the Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: "Attach Tags"
+    description: "Attach the Tags"
+    visible: true
+    required: true
+
+#####################################
+# Cloud Migration
+#####################################
+
+  migration_asset_availability_domain:
+    type: string
+    default: "pMlX:US-ASHBURN-AD-2"
+    title: "Availability Domain"
+    description: "Availability Domain"
+    visible: true
+    required: true
+
+  migration_asset_display_name:
+    type: string
+    default: "displayName"
+    title: "Migration Asset Display Name"
+    description: "Migration Asset Display Name"
+    visible: true
+    required: true
+
+  inventory_asset_ocid:
+    type: string
+    default: ""
+    title: "Inventory Asset OCID"
+    description: "OCID of an asset for an inventory"
+    visible: true
+    required: true
+
+  replication_compartment_ocid:
+    type: string
+    default: "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+    title: "OCID of Replication Compartment"
+    description: "The display name of the gateway"
+    visible: true
+    required: true
+
+  snap_shot_bucket_name:
+    type: text
+    default: "My_bucket"
+    title: "Name of snapshot bucket"
+    description: "Name of snapshot bucket"
+    visible: true
+    required: true
+
+  migration_plan_display_name:
+    type: string
+    default: "displayName"
+    title: "Migration plan identifier"
+    description: "Migration plan identifier"
+    visible: true
+    required: true
+
+  migration_plan_available_shape_availability_domain:
+    type: string
+    default: "pMlX:US-ASHBURN-AD-3"
+    title: "Availability Domain"
+    description: "Availability Domain of the VM configuration"
+    visible: true
+
+  migration_plan_strategies_resource_type:
+    type: string
+    default: "CPU"
+    title: "Resource Type"
+    description: "The type of resource"
+    visible: true
+
+  migration_plan_strategies_strategy_type:
+    type: string
+    default: "AS_IS"
+    title: "Strategy Type"
+    description: "The type of strategy used for migration"
+    visible: true
+
+  migration_plan_target_environments_subnet:
+    type: string
+    default: ""
+    title: "Target Environments Subnet OCID"
+    description: "OCID of the VM configuration subnet"
+    visible: true
+    required: true
+
+  migration_plan_target_environments_target_environment_type:
+    type: string
+    default: "VM_TARGET_ENV"
+    title: "Target Type"
+    description: "The type of target environment"
+    visible: true
+    required: true
+
+  migration_plan_target_environments_vcn:
+    type: string
+    default: ""
+    title: "OCID of VCN"
+    description: "OCID of the VM configuration VCN"
+    visible: true
+    required: true
+
+  migration_display_name:
+    type: string
+    default: "displayName"
+    title: "Migrations Display Name"
+    description: "Migrations Display Name"
+    visible: true
+    required: true
+
+  target_asset_is_excluded_from_execution:
+    type: bool
+    default: false
+    title: "Target Asset Execution State"
+    description: "A boolean indicating whether the asset should be migrated"
+    visible: true
+    required: true
+
+  target_asset_preferred_shape_type:
+    type: string
+    default: "VM"
+    title: "Shape Type"
+    description: "Preferred VM shape type that you provide"
+    visible: true
+    required: true
+
+  target_asset_type:
+    type: string
+    default: "INSTANCE"
+    title: "Target Asset Type"
+    description: "The type of target asset"
+    visible: true
+    required: true
+
+  target_asset_user_spec_agent_config_plugins_config_desired_state:
+    type: string
+    default: "ENABLED"
+    title: "Desired State"
+    description: "Whether the plugin should be enabled or disabled."
+    visible: true
+    required: true
+
+  target_asset_user_spec_agent_config_plugins_config_name:
+    type: string
+    default: "name"
+    title: "Plugin Name"
+    description: "The plugin name"
+    visible: true
+    required: true
+
+  target_asset_user_spec_preemptible_instance_config_preemption_action_type:
+    type: string
+    default: "TERMINATE"
+    title: "Action Type"
+    description: "The Action type for the instance"
+    visible: true
+    required: true
+
+  target_asset_user_spec_source_details_source_type:
+    type: string
+    description: " The source type for the instance."
+    default: "bootvolume"
+    title: Source Type
+    visible: true
+    required: true
+
+  boot_volume_ocid:
+    title: "BootVolume OCID"
+    description: "The OCID of the boot volume used to boot the instance"
+    default: ""
+    type: string
+    visibility: true
+    required: true
+
+  

@@ -1,0 +1,6 @@
+
+    tenancy_ocid       = "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+    region             = "us-ashburn-1"
+    source_image_ocid  = "ocid1.image.oc1.iad.aaaaaaaahomjycgg77iewnat3pysjvnp4ukpjtpyamacwetgdoptwst3n23a"
+    vnic_display_name  = "TestInstanceConfigurationVNIC"
+    compartment_name   = "oci_nonprod_app"

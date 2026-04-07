@@ -1,0 +1,14 @@
+
+ region                   = "us-ashburn-1"
+ tenancy_ocid             = "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+ availability_domain      = "PMlX:US-ASHBURN-AD-1"
+ image_url                = "iad.ocir.io/idennsb6k3kt/repo_nginx:latest"
+ vm_display_name          = "oke"
+ vnic_hostname            = "oke"
+ app_compartment_name     = "nonprod_app"
+ network_compartment_name = "network"
+ subnet_display_name      = "np_mgmt_subnet"
+ 
+
+
+

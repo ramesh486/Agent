@@ -1,0 +1,100 @@
+title: Create Blockchain Platform
+description: Blockchain Platform Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "OCI_Blockchain_Platform_Configuration"
+    variables:
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}
+      - ${region}
+      - ${tenancy_ocid}
+      - ${blockchain_platform_compute_shape}
+      - ${blockchain_platform_display_name}
+      - ${blockchain_platform_idcs_access_token}
+      - ${blockchain_platform_platform_role}
+      - ${project_tag}
+
+variables:
+#####################################
+# Common Variables
+#####################################
+
+
+  compartment_name:
+    type: string
+    visible: true
+    title: Compartment Name
+    description: Compartment Name of the Resource
+    default: ""
+    required: true   
+
+  compartment_id_in_subtree:
+    type: boolean
+    visible: true
+    title: Compartment ID in Subtree
+    description: Compartment ID in Subtree
+    default: true
+    required: true   
+
+  region:
+    visible: true
+    required: true   
+    title: Region
+    description: Region
+
+  tenancy_ocid:
+    visible: true
+    required: true   
+    default: ""
+    title: "Tenancy OCID"
+    description: The OCID of the tenancy
+
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: true     
+
+#####################################
+# Block Chain platform variables
+#####################################
+
+
+  blockchain_platform_compute_shape:
+    type: string
+    default: "STANDARD"
+    title: "Blockchain platform compute shape"
+    description: "Select the blockchain platform compute shape"
+    required: true
+    visible: true
+    
+  blockchain_platform_display_name:
+    type: string
+    default: "MyBlockchain"
+    title: "Blockchain platform display name"
+    description: "Assign the display name"
+    required: true
+    visible: true
+
+  blockchain_platform_idcs_access_token:
+    type: string
+    default: ""
+    title: "Blockchain platform idcs access token"
+    description: "Provide idcs access token"
+    required: true
+    visible: true
+
+  blockchain_platform_platform_role:
+    type: string
+    default: "FOUNDER"
+    title: "Blockchain platform role"
+    description: "Select blockchain platform platform role"
+    required: true
+    visible: true

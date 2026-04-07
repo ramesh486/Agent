@@ -1,0 +1,8 @@
+
+tenancy_ocid                              = "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+compartment_ocid                          = "ocid1.tenancy.oc1..aaaaaaaaixdndclpk6ks2so5vdaca4q5efbz2rfxwlmy3djqlb46f6qo7xla"
+region                                    = "us-ashburn-1"
+inventory_asset_ocid                      = "ocid1.."
+migration_plan_target_environments_subnet = "ocid1.."
+migration_plan_target_environments_vcn    = "ocid2.."
+boot_volume_ocid                          = "ocid3.."

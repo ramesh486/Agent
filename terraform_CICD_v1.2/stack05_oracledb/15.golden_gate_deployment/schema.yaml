@@ -1,0 +1,284 @@
+title: OCI Golden Gate Terraform Input Variables
+description:  OCI Golden Gate Terraform Variables
+schemaVersion: 1.1.0
+version: "09062023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "GoldenGate Deployment Variables"
+    variables:
+      - deployment_cpu_core_count
+      - deployment_deployment_type
+      - deployment_display_name
+      - deployment_is_auto_scaling_enabled
+      - deployment_license_model
+      - deployment_description
+      - customize_maintenance_window
+      - deployment_maintenance_window_day
+      - deployment_maintenance_window_start_hour
+      - deployment_ogg_data_admin_username      
+      - deployment_ogg_data_admin_password
+      - golden_gate_deployment_instance_name
+
+
+  - title: "GoldenGate Deployment Network Configuration"
+    variables:
+      - deployment_is_public
+      - vcn_compartment_ocid
+      - vcn_ocid
+      - subnet_compartment_ocid
+      - subnet_ocid
+      - deployment_nsg_ocids
+      - customize_endpoint
+      - deployment_fqdn
+      - deployment_ogg_data_certificate
+      - deployment_ogg_data_key
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - compartment_ocid
+      - tenancy_ocid
+      - region
+
+variables:
+
+#####################################
+
+# Common Variables
+
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+
+  deployment_cpu_core_count:
+    type: string
+    title: "Golden Gate Deployment CPU Core Count"
+    visible: true
+    required: true
+    default: 1
+
+
+  deployment_deployment_type:
+    visible: true
+    title: Golden Gate Deployment Type
+    default: DATABASE_ORACLE
+    description: "Allowed values are: OGG, DATABASE_ORACLE, BIGDATA, DATABASE_MICROSOFT_SQLSERVER, DATABASE_MYSQL, DATABASE_POSTGRESQL"
+    type: enum
+    enum:
+      - DATABASE_ORACLE
+      - BIGDATA
+      - DATABASE_MICROSOFT_SQLSERVER
+      - DATABASE_MYSQL
+      - DATABASE_POSTGRESQL
+
+  deployment_display_name:
+    type: string
+    title: "Golden Gate Deployment Display Name"
+    visible: true
+    required: true
+
+  deployment_is_auto_scaling_enabled:
+    type: boolean
+    title: "Auto scaling"
+    description: "Allows system to use up to three times the provisioned number of cores as the workload increases up to a maximum of 24 cores."
+    required: true
+    visible: true
+
+
+  deployment_license_model:
+    type: enum 
+    visible: true
+    title: "Select License Model"
+    required: true
+    default: BRING_YOUR_OWN_LICENSE
+    enum:
+      - LICENSE_INCLUDED
+      - BRING_YOUR_OWN_LICENSE
+
+  deployment_description:
+    type: string
+    title: "Golden Gate Deployment Description"
+    visible: true
+    required: false
+
+  customize_maintenance_window:
+    type: boolean
+    title: "Customize maintenance window"
+    visible: true
+    required: true
+    default: false
+
+  deployment_maintenance_window_day:
+    type: enum
+    title: Golden Gate Deployment Maintenance Window Day
+    description: The maintenance window defines the start of the time period during which to upgrade the deployment when a new GoldenGate version is available.
+    visible: ${customize_maintenance_window}
+    required: true
+    enum:
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY
+  
+  deployment_maintenance_window_start_hour:
+    type: enum
+    title: Golden Gate Deployment Maintenance Window Start Hour
+    description: The maintenance window defines the start of the time period during which to upgrade the deployment when a new GoldenGate version is available.
+    visible: ${customize_maintenance_window}
+    required: true
+    enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13 
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19
+      - 20
+      - 21
+      - 22
+      - 23
+
+
+
+  deployment_ogg_data_admin_username:
+    type: string
+    title: Administrator username
+    visible: true
+    required: true
+
+  deployment_ogg_data_admin_password:
+    type: password
+    title: Administrator password
+    visible: true
+    required: true
+    description: "The password must be 8 to 30 characters, containing at least 1 uppercase, 1 lowercase, 1 numeric, and 1 special character. Special characters, '$', '^', and '?' are not allowed."
+
+  golden_gate_deployment_instance_name:
+    type: string
+    title: Golden Gate Instance Name
+    visible: true
+    required: true
+
+
+# --------------------------------------------------------
+# GoldenGate Deployment Network Configuration
+# --------------------------------------------------------
+
+  deployment_is_public:
+    type: boolean
+    title: "Enable GoldenGate console public access"
+    description: "If selected, Creates both public and private endpoints, If not, only a private endpoint is created."
+    visible: true
+    required: true
+    default: false
+
+  vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+    required: true
+
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: true
+    title: Select the VCN
+    description: In this VCN your OKE will be provisioned
+    dependsOn: 
+      compartmentId: ${vcn_compartment_ocid}
+    required: true
+
+  subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Subnet Compartment
+    description: Choose the Subnet Compartment
+    required: true
+
+  subnet_ocid:
+    type: oci:core:subnet:id
+    visible: true
+    title: Select the Subnet
+    description: Choose the Subnet
+    dependsOn:
+      compartmentId: ${subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+      hidePublicSubnet: 
+        not:
+          - ${deployment_is_public}
+      hidePrivateSubnet: ${deployment_is_public}
+    required: true
+
+  deployment_nsg_ocids:
+    type: oci:core:nsg:id
+    visible: true
+    title: Golden Gate Deployment NSG OCID
+    dependsOn:
+      compartmentId: ${subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+
+  customize_endpoint:
+    type: boolean
+    visible: true
+    title: Customize endpoint
+    required: false
+    default: false
+
+  deployment_fqdn:
+    type: string
+    visible: ${customize_endpoint}
+    title: FQDN
+    description: "The FQDN is used for the service console URL. An FQDN is generated if you don't provide one."
+    required: true
+
+  deployment_ogg_data_certificate:
+    type: file
+    visible: ${customize_endpoint}
+    title: Certificate
+    required: false
+  
+  deployment_ogg_data_key:
+    type: file
+    visible: ${customize_endpoint}
+    title: Private key
+    required: false

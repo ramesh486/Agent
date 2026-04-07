@@ -1,0 +1,3 @@
+# prerequisite: blockvolume
+
+# OCI Volume Groups, also known as Oracle Cloud Infrastructure Volume Groups, are a feature provided by Oracle Cloud Infrastructure (OCI) for managing and organizing multiple block volumes. A volume group is a collection of block volumes that can be treated as a single logical unit.

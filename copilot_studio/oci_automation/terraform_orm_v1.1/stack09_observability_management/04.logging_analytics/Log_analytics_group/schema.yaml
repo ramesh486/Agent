@@ -1,0 +1,60 @@
+title:  Create log analytics Group
+description: Log analytics Group
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+
+  - title: "log_analytics_entity"
+    variables:
+      - ${log_analytics_log_group_display_name}
+      - ${log_analytics_log_group_description}
+     
+variables:
+#####################################
+# Common Compartment
+#####################################  
+  
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+######################################
+# log_analytics_entity
+######################################
+
+  log_analytics_log_group_display_name:
+    type: string
+    default: "Example_group"
+    title: "log_analytics_log_group_display_name"
+    description: "Log analytic group name"
+    required: true
+    visible: true
+
+  log_analytics_log_group_description:
+    type: string
+    default: "Log_analytics_group_name"
+    title: "log_analytics_log_group_description"
+    description: "Log analytic group"
+    required: true
+    visible: true
+ 
+
+
+
+
+   

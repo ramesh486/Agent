@@ -1,0 +1,294 @@
+title: Identity Default Domain Group Terraform Input Variables
+description:  Identity Default Domain Group Input Variables
+schemaVersion: 1.1.0
+version: "29052023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Identity Default Domain Group Configuration"
+    variables:
+      - ${Auditors}
+      - ${Auditors_description}
+      - ${CostAdmins}
+      - ${project_tag}  
+      - ${CostAdmins_description}
+      - ${CredAdmins}
+      - ${CredAdmins_description}
+      - ${DatabaseAdmins}
+      - ${DatabaseAdmins_description}
+      - ${EmailFamilyAdministrator}
+      - ${EmailFamilyAdministrator_description}
+      - ${IAMAdmins_description}
+      - ${IntegrationAdmins} 
+      - ${IntegrationAdmins_description}
+      - ${IntegrationDevelopers}
+      - ${IntegrationDevelopers_description}
+      - ${IntegrationViewers}
+      - ${IntegrationViewers_description}
+      - ${NetworkAdmins}
+      - ${NetworkAdmins_description}
+      - ${ObjectStorageAdmins}
+      - ${ObjectStorageAdmins_description}
+      - ${ObjectStorageReaders} 
+      - ${ObjectStorageReaders_description}
+      - ${ObjectStorageWriters}  
+      - ${ObjectStorageWriters_description}
+      - ${SecurityAdmins} 
+      - ${SecurityAdmins_description}
+      - ${SysOpsTeam}
+      - ${SysOpsTeam_description}
+   
+
+  - title: "common compartment"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+#####################################
+
+  # Identity Default Domain Group Configuration
+
+#####################################
+
+  Auditors:
+    type: string
+    required: true
+    title: Auditors
+    visible: true
+    default: "Auditors"
+    description: Provide Auditors 
+  
+  Auditors_description:
+    type: string
+    required: true
+    title: Auditors description
+    visible: true
+    description: Auditors description
+    default: "Managing Auditors-related resources"
+
+  CostAdmins:
+    type: string
+    required: true
+    title: CostAdmins
+    visible: true
+    default: "CostAdmins"
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+  
+  CostAdmins_description:
+    type: string
+    required: true
+    title: CostAdmins description
+    visible: true
+    default: "Managing CostAdmins-related resources"
+
+  CredAdmins:
+    type: string
+    required: true
+    title: CredAdmins
+    visible: true
+    default: "CredAdmins"
+
+  CredAdmins_description:
+    type: string
+    required: true
+    title: CredAdmins description
+    visible: true
+    default: "Managing CredAdmins-related resources"
+
+  DatabaseAdmins:
+    type: string
+    required: true
+    title: DatabaseAdmins
+    visible: true
+    default: "DatabaseAdmins"
+
+  DatabaseAdmins_description:
+    type: string
+    required: true
+    title: DatabaseAdmins description
+    visible: true
+    default: "Managing DatabaseAdmins-related resources"
+
+  EmailFamilyAdministrator:
+    type: string
+    required: true
+    title: Email Family Administrator
+    visible: true
+    default: "EmailFamilyAdministrator"
+
+  EmailFamilyAdministrator_description:
+    type: string
+    required: true
+    title: Email Family Administrator
+    visible: true
+    default: "Managing EmailFamilyAdministrator-related resources"
+
+  IAMAdmins:
+    type: string
+    required: true
+    title: IAMAdmins
+    visible: true
+    default: "IAMAdmins"
+
+  IAMAdmins_description:
+    type: string
+    required: true
+    title: IAMAdmins description
+    visible: true
+    default: "Managing IAMAdmins-related resources"
+
+  IntegrationAdmins:
+    type: string
+    required: true
+    title: IntegrationAdmins
+    visible: true
+    default: "IntegrationAdmins"
+
+  IntegrationAdmins_description:
+    type: string
+    required: true
+    title: IntegrationAdmins description
+    visible: true
+    default: "Managing IntegrationAdmins-related resources"
+
+  IntegrationDevelopers:
+    type: string
+    required: true
+    title: IntegrationDevelopers
+    visible: true
+    default: "IntegrationDevelopers"
+
+  IntegrationDevelopers_description:
+    type: string
+    required: true
+    title: IntegrationDevelopers description
+    visible: true
+    default: "Managing IntegrationDevelopers-related resources"
+
+  IntegrationViewers:
+    type: string
+    required: true
+    title: IntegrationViewers
+    visible: true
+    default: "IntegrationViewers"
+
+  IntegrationViewers_description:
+    type: string
+    required: true
+    title: IntegrationViewers description
+    visible: true
+    default: "Managing IntegrationViewers-related resources"
+
+  NetworkAdmins:
+    type: string
+    required: true
+    title: NetworkAdmins
+    visible: true
+    default: "NetworkAdmins"
+
+  NetworkAdmins_description:
+    type: string
+    required: true
+    title: NetworkAdmins description
+    visible: true
+    default: "Managing NetworkAdmins-related resources"
+
+  ObjectStorageAdmins:
+    type: string
+    required: true
+    title: ObjectStorageAdmins
+    visible: true
+    default: "ObjectStorageAdmins"
+
+  ObjectStorageAdmins_description:
+    type: string
+    required: true
+    title: ObjectStorageAdmins description
+    visible: true
+    default: "Managing ObjectStorageAdmins-related resources"
+  
+  ObjectStorageReaders:
+    type: string
+    required: true
+    title: ObjectStorageReaders
+    visible: true
+    default: "ObjectStorageReaders"
+
+  ObjectStorageReaders_description:
+    type: string
+    required: true
+    title: ObjectStorageReaders description
+    visible: true
+    default: "Managing ObjectStorageReaders-related resources"
+
+  ObjectStorageWriters:
+    type: string
+    required: true
+    title: Object Storage Writers
+    visible: true
+    default: "ObjectStorageWriters"
+
+  ObjectStorageWriters_description:
+    type: string
+    required: true
+    title: ObjectStorageWriters description
+    visible: true
+    default: "Managing ObjectStorageWriters-related resources"
+
+  SecurityAdmins:
+    type: string
+    required: true
+    title: Security Admins
+    visible: true
+    default: "SecurityAdmins"
+
+  SecurityAdmins_description:
+    type: string
+    required: true
+    title: SecurityAdmins description
+    visible: true
+    default: "Managing SecurityAdmins-related resources"
+
+  SysOpsTeam:
+    type: string
+    required: true
+    title: SysOpsTeam
+    visible: true
+    default: "SysOpsTeam"
+
+  SysOpsTeam_description:
+    type: string
+    required: true
+    title: SysOpsTeam description
+    visible: true
+    default: "Managing SysOpsTeam-related resources"

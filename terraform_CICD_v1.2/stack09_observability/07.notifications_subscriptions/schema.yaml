@@ -1,0 +1,100 @@
+title:  Create notifications
+description: monitoring Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${compartment_id_in_subtree}
+      - ${compartment_name}
+      - ${region}
+      - ${project_tag}
+
+  - title: "ObjectStorage Notifications"
+    variables:
+      - ${oci_objectstorage_event_notifications_topic_name}
+      - ${oci_objectstorage_event_notifications_topic_description}
+
+  - title: "User Notifications"
+    variables:
+      - ${oci_user_event_notifications_topic_name}
+      - ${oci_user_event_notifications_topic_description}
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+  compartment_name:
+    type: string
+    visible: true
+    default: ""
+    title: compartment_name
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  compartment_id_in_subtree:
+    type: boolean
+    visible: false
+    title: compartment_id_in_subtree
+    description: Choose the compartment id in subtree
+
+  region:
+    visible: true
+    title: Region
+    description: Region     
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+  
+#############################
+# ObjectStorage Notifications
+#############################
+  
+  oci_objectstorage_event_notifications_topic_name:
+    type: string
+    title: "oci_objectstorage_event_notifications_topic_name"
+    description: "The name of the topic being created" 
+    default: "oci_objectstorage_event_notifications"
+    required: true
+    visible: true
+
+  oci_objectstorage_event_notifications_topic_description:
+    type: string
+    description: "The description of the topic being created."
+    default: "OCI ObjectStorage Event  Notifications"
+    title: "oci_objectstorage_event_notifications_topic_description"
+    required: true
+    visible: true
+
+###########################
+#  User Notifications
+###########################
+   
+  oci_user_event_notifications_topic_name:
+    type: string
+    title: "oci_user_event_notifications_topic_name"
+    default: "oci_user_event_notifications"
+    description: "The name of the topic being created."
+    required: true
+    visible: true
+  
+  oci_user_event_notifications_topic_description:
+    type: string
+    title: "oci_user_event_notifications_topic_description"
+    description: "The description of the topic being created."
+    default:  "OCI User Event Notifications"
+    required: true
+    visible: true
+  

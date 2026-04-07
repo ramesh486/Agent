@@ -1,0 +1,93 @@
+title: OCI Artifacts Repository Terraform Input Variables
+description:  OCI Artifacts Repository Variables
+schemaVersion: 1.1.0
+version: "03072023"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "OCI Artifacts Repository Configuration"
+    variables:
+      - ${artifacts_repository_display_name}
+      - ${artifacts_repository_description}
+      - ${artifacts_repository_type}
+      - ${artifacts_repository_is_immutable}
+
+
+
+  - title: "Select the target compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+
+#########################################
+
+# OCI Artifacts Repository Configuration
+
+#########################################
+
+  artifacts_repository_display_name:
+    type: string
+    required: true
+    title: Artifacts repository display name
+    visible: true
+  
+  artifacts_repository_description:
+    type: string
+    required: false
+    title: Artifacts repository description
+    visible: true
+
+  artifacts_repository_type:
+    type: string
+    required: false
+    default: "GENERIC"
+    title: Artifacts repository type
+    visible: false
+
+  artifacts_repository_is_immutable:
+    type: boolean
+    required: true
+    title: Immutable artifacts ?
+    description: "If selected, artifacts added to this repository can't be changed. If an artifact is deleted, then another artifact with the same name can't be added to this repository."
+    visible: true
+    default: true
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+

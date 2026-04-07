@@ -1,0 +1,17 @@
+
+resource "oci_email_sender" "sender" {
+  compartment_id    = var.compartment_ocid
+  email_address     = var.sender_email_address
+}
+
+resource "oci_email_email_domain" "test_email_domain" {
+  compartment_id    = var.compartment_ocid
+  name              = var.email_domain_name
+  defined_tags      = var.project_tag.definedTags
+  freeform_tags     = var.project_tag.freeformTags   
+}
+
+resource "oci_email_dkim" "test_dkim" {
+  email_domain_id   = oci_email_email_domain.test_email_domain.id
+  name              = var.dkim_selector
+}

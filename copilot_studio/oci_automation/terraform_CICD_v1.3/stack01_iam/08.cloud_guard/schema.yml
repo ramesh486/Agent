@@ -1,0 +1,131 @@
+title: Cloudguard Terraform Input Variables
+description:  Cloudguard Terraform Variables
+schemaVersion: 1.1.0
+version: "06102022"
+
+### Variable Groupings ###
+
+groupings:
+
+  - title: "Cloudguard Configuration"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${project_tag}
+      - ${is_cloud_guard_enabled}
+      - ${suffix}
+
+  - title: "Cloudguard Policy Varibles"
+    variables:
+      - ${cloud_guard_policy_name}
+      - ${policy_description}
+      - ${vulnerability_scanning_service_policy_name}
+
+  - title: "Cloudguard Target Variables"
+    variables:
+      - ${cloud_guard_target_name}
+      - ${target_description}
+      - ${target_resource_type}
+
+  - title: "Cloudguard Detector Recipe Variables"
+    variables:
+      - ${configuration_detector_recipe_display_name}
+      - ${activity_detector_recipe_display_name}
+      - ${threat_detector_recipe_display_name}
+      - ${responder_recipe_display_name}
+
+
+variables:
+
+### Common Variables ###
+
+  region:
+    visible: true
+    title: Region
+    description: "Region to deploy the Cloudguard"
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: "Tenancy to deploy the Cloudguard"
+
+  project_tag:
+     type: oci:identity:tag:value
+     title: Attach Tags
+     description: Attach the Tags
+     visible: true
+     required: false
+
+  is_cloud_guard_enabled:
+    type: bool  
+    visible: true
+    title: The status of the Cloud Guard tenant (Enable/Disable)
+    default: true
+
+  suffix:
+    type: string  
+    visible: true
+    title: Enter the suffix string used in a resource name
+    default: ""
+
+  cloud_guard_policy_name:
+    type: string  
+    visible: true
+    title: Name of Cloud Guard Policy
+    default: Cloud-Guard-Policy
+
+  policy_description:
+    type: string  
+    visible: true
+    title: Description for the Cloud Guard Policy
+    default: Cloud Guard Policy
+
+  vulnerability_scanning_service_policy_name:
+    type: string  
+    visible: true
+    title: Name of Scanning Service Policy
+    default: Scanning-Service-Policy
+
+  cloud_guard_target_name:
+    type: string  
+    visible: true
+    title: Enter Cloud Guard Target Name
+    default: Cloud-Guard-Target
+
+  target_description:
+    type: string  
+    visible: true
+    title: Enter Cloud Guard Target description
+    default: Target Description
+    
+  target_resource_type:
+    type: string  
+    visible: true
+    title: Enter the Cloud Guard target resource type
+    default: COMPARTMENT
+
+  configuration_detector_recipe_display_name:
+    type: string  
+    visible: true
+    title: Enter the display name for configuration detector recipe
+    default: OCI Configuration Detector Recipe
+    
+  activity_detector_recipe_display_name:
+    type: string  
+    visible: true
+    title: Enter the display name for activity detector recipe
+    default: OCI Activity Detector Recipe
+
+  threat_detector_recipe_display_name:
+    type: string  
+    visible: true
+    title: Enter the display name for threat detector recipe
+    default: OCI Threat Detector Recipe
+
+  responder_recipe_display_name:
+    type: string  
+    visible: true
+    title: Enter the display name for responder recipe
+    default: OCI Responder Recipe
+
+### END

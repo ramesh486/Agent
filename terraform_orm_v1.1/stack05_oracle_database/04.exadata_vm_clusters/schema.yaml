@@ -1,0 +1,193 @@
+title: Exadata VM Cluster Terraform Input Variables
+description: Exadata VM Cluster Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Exadata VM Cluster Configuration"
+    variables:
+      - ${backup_subnet_ocid}
+      - ${cloud_exadata_infrastructure_ocid}
+      - ${cloud_vm_cluster_cpu_core_count}
+      - ${cloud_vm_cluster_display_name}
+      - ${cloud_vm_cluster_gi_version}
+      - ${cloud_vm_cluster_hostname}
+      - ${cloud_vm_cluster_ssh_public_keys}
+      - ${subnet_ocid}
+      - ${cloud_vm_cluster_cluster_name}
+      - ${cloud_vm_cluster_data_storage_size_in_tbs}
+      - ${cloud_vm_cluster_db_node_storage_size_in_gbs}
+      - ${cloud_vm_cluster_is_local_backup_enabled}
+      - ${cloud_vm_cluster_license_model}
+      - ${cloud_vm_cluster_memory_size_in_gbs}
+      - ${cloud_vm_cluster_ocpu_count}
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag} 
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+################################
+
+# Exadata VM Cluster Variables
+
+################################         
+
+  backup_subnet_ocid:
+    type: string
+    required: true
+    title: Backup Network Subnet OCID
+    visible: true
+    description: The OCID of the backup network subnet associated with the cloud VM cluster.
+    default: ""
+
+  cloud_exadata_infrastructure_ocid:
+    type: string
+    required: true
+    title: Exadata Infrastructure OCID
+    visible: true
+    description: The OCID of the cloud Exadata infrastructure resource.    
+    default: ""
+
+  cloud_vm_cluster_cpu_core_count:
+    type: number
+    required: true
+    title: Number of CPU Cores
+    visible: true
+    description: The number of CPU cores to enable for a cloud VM cluster.
+    default: 2  
+
+  cloud_vm_cluster_display_name:
+    type: string
+    visible: true
+    title: VM Cluster Name
+    description: Name for the cloud VM cluster.
+    required: true
+    default: "TestExadataVMCluster"    
+
+  cloud_vm_cluster_gi_version:
+    type: string
+    visible: true
+    title: VM Cluster GI Version
+    description: A valid Oracle Grid Infrastructure (GI) software version.
+    required: true
+    default: "19c"    
+
+  cloud_vm_cluster_hostname:
+    type: string
+    visible: true
+    title: VM Cluster Hostname
+    description: The hostname for the cloud VM cluster
+    required: true
+    default: "vmhost"
+
+  cloud_vm_cluster_ssh_public_keys:
+    type: string
+    visible: true
+    title: VM Cluster SSH Public Key
+    description: The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.
+    required: true
+    default: ""    
+
+  subnet_ocid:
+    type: string
+    visible:  true
+    title: VM Cluster Subnet OCID 
+    description: The OCID of the subnet associated with the cloud VM cluster.
+    required: true
+    default: ""      
+
+  cloud_vm_cluster_cluster_name:
+    type: string
+    visible: true
+    title: VM Cluster Name
+    description: The cluster name for cloud VM cluster
+    required: true
+    default: "testVMcluster"        
+
+  cloud_vm_cluster_data_storage_size_in_tbs:
+    type: number
+    visible:  true
+    title: Storage Size in TBs 
+    description: The data disk group size to be allocated in TBs.
+    required: true 
+    default: 2.0      
+
+  cloud_vm_cluster_db_node_storage_size_in_gbs:
+    type: number
+    visible: true
+    title: Node Storage Size in GBs
+    description: The local node storage to be allocated in GBs.
+    required: true
+    default: 6
+
+  cloud_vm_cluster_is_local_backup_enabled:
+    type: boolean
+    visible:  true
+    title: Is Local Backup Enabled? 
+    description: If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster.
+    required: true 
+    default: false    
+
+  cloud_vm_cluster_license_model:
+    type: string
+    visible: true
+    title: Licence Model for VM Cluster
+    description: The Oracle license model that applies to the cloud VM cluster.
+    required: true
+    default: "BRING_YOUR_OWN_LICENSE"
+
+  cloud_vm_cluster_memory_size_in_gbs:
+    type: number
+    visible:  true
+    title: VM Cluster Memory in GBs 
+    description: The memory to be allocated in GBs.
+    required: true 
+    default: 12  
+
+  cloud_vm_cluster_ocpu_count:
+    type: number
+    visible:  true
+    title: VM Cluster OCPU Count 
+    description: The number of OCPU cores to enable for a cloud VM cluster.
+    required: true 
+    default: 2       

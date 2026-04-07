@@ -1,0 +1,130 @@
+title: File Storage Terraform Input Variables
+description:   File Storage Variables
+schemaVersion: 1.1.0
+version: "24082022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "File Storage Configuration"
+    variables:
+      - ${file_system_display_name}
+      - ${mount_target_display_name}
+      - ${export_path}
+
+  - title: "Network Configuration"
+    variables:
+      - ${vcn_compartment_ocid}
+      - ${vcn_ocid}
+      - ${subnet_compartment_ocid}
+      - ${subnet_ocid}
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${compartment_ocid}
+      - ${tenancy_ocid}
+      - ${region}
+      - ${project_tag} 
+
+variables:
+
+#####################################
+
+# Common Compartment
+
+#####################################
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#####################################
+
+# File Storage Variables
+
+#####################################          
+
+  file_system_display_name:
+    type: string
+    required: true
+    title: File Storage Display Name
+    visible: true
+    description: Name for File system
+    default: "test_file_system"
+
+  mount_target_display_name:
+    type: string
+    required: true
+    title: Mount Target Display Name
+    visible: true
+    description: Name for Mount target    
+    default: "test_mount_target"
+
+  export_path:
+    type: string
+    required: true
+    title: Path to access file system
+    visible: true
+    description: Path used to access the associated file system.
+    default: "/file_storage_file_system"  
+
+#####################################
+# Network Configuration
+#####################################
+
+  vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the VCN Compartment
+    description: Choose the Compartment of VCN
+    required: true
+
+  vcn_ocid:
+    type: oci:core:vcn:id
+    visible: true
+    title: Select the VCN
+    description: Choose the VCN
+    dependsOn: 
+      compartmentId: ${vcn_compartment_ocid}
+    required: true
+
+  subnet_compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Subnet Compartment
+    description: Choose the Subnet Compartment
+    required: true
+
+  subnet_ocid:
+    type: oci:core:subnet:id
+    visible:  true
+    title: Select the Private Subnet 
+    description: Choose the Private Subnet
+    dependsOn:
+      compartmentId: ${subnet_compartment_ocid}
+      vcnId: ${vcn_ocid}
+    required: true       
+

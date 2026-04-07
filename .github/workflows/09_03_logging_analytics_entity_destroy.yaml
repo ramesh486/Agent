@@ -1,0 +1,49 @@
+
+# On successful pull request merge, `terraform destroy` will be executed.
+# Update PROVIDER_NAME, BRANCH_NAME, STACK_NAME, WORKING_DIRECTORY, REPO_URL, TF_VERSION
+
+name: 'Destroy logging analytics entity '
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'dev9'
+    paths:
+      - '.github/workflows/09_03.logging_analytics_entity_destroy.yaml'
+
+# ---------------------------------------------
+# Permissions
+# ---------------------------------------------
+
+permissions:
+  contents: write
+
+jobs:
+  
+  stack9_logging_analytics_entity_destroy:
+    uses: ./.github/workflows/action_runner_destroy.yaml
+
+    # ---------------------------------------------
+    # Source Provider Details
+    # ---------------------------------------------
+
+    with:
+
+      PROVIDER_NAME: "oci_github"
+      BRANCH_NAME: "feature_stack09_observability_destroy"
+      STACK_NAME: "stack9_logging_analytics_entity_destroy"
+      WORKING_DIRECTORY: "CICD/stack09_observability/03.logging_analytics_entity"
+      REPO_URL: "https://github.com/ebizon-cloud/oci_automation.git"
+      TF_VERSION: "1.2.x"
+
+    # ---------------------------------------------
+    # Secrets
+    # ---------------------------------------------
+
+    secrets:
+      USER_OCID: ${{secrets.USER_OCID}}
+      FINGERPRINT: ${{secrets.FINGERPRINT}}
+      COMPARTMENT_OCID: ${{secrets.COMPARTMENT_OCID}}
+      REGION: ${{secrets.REGION}}
+      TENANCY_OCID: ${{secrets.TENANCY_OCID}}
+      PRIVATE_KEY_FILE: ${{secrets.PRIVATE_KEY_FILE}}

@@ -1,0 +1,50 @@
+
+# On pull request events, this workflow will run
+# `terraform init`, and `terraform plan`. On successful pull request merge, `terraform apply` will be executed.
+# Update PROVIDER_NAME, BRANCH_NAME, STACK_NAME, WORKING_DIRECTORY, REPO_URL, TF_VERSION
+
+name: 'Deploy Datalake Data Catalog'
+on:
+  pull_request:
+    types: [opened, closed]
+    branches:
+      - 'dev7'
+    paths:
+      - 'terraform_CICD_v1.3/stack07_analytics_AI/02.data_lake_data_catalog/*'
+
+# ---------------------------------------------
+# Permissions
+# ---------------------------------------------
+
+permissions:
+  contents: write
+
+jobs:
+  
+  stack07_data_lake_data_catalog:
+    uses: ./.github/workflows_1.3/action_runner.yaml
+
+    # ---------------------------------------------
+    # Source Provider Details
+    # ---------------------------------------------
+
+    with:
+
+      PROVIDER_NAME: "oci_github"
+      BRANCH_NAME: "feature_stack07_analytics_AI"
+      STACK_NAME: "stack07_data_lake_data_catalog"
+      WORKING_DIRECTORY: "terraform_CICD_v1.3/stack07_analytics_AI/02.data_lake_data_catalog"
+      REPO_URL: "https://github.com/ebizon-cloud/oci_automation.git"
+      TF_VERSION: "1.2.x"
+
+    # ---------------------------------------------
+    # Secrets
+    # ---------------------------------------------
+
+    secrets:
+      USER_OCID: ${{secrets.USER_OCID}}
+      FINGERPRINT: ${{secrets.FINGERPRINT}}
+      COMPARTMENT_OCID: ${{secrets.COMPARTMENT_OCID}}
+      REGION: ${{secrets.REGION}}
+      TENANCY_OCID: ${{secrets.TENANCY_OCID}}
+      PRIVATE_KEY_FILE: ${{secrets.PRIVATE_KEY_FILE}}

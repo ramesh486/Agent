@@ -1,0 +1,1 @@
+# This resource provides the Container Repository resource in Oracle Cloud Infrastructure Artifacts service.

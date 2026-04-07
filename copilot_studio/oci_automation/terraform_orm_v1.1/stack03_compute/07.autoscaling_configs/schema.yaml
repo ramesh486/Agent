@@ -1,0 +1,91 @@
+title: OCI Core autoscaling configurations
+description: OCI Core autoscaling configurations 
+schemaVersion: 1.1.0
+version: "02062023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select Compartment and Subnet"
+    variables:
+      - ${region}
+      - ${tenancy_ocid}
+      - ${compartment_ocid}
+
+  - title: "Select Auto Scaling Configuration"
+    variables:    
+
+      - ${cool_down_in_seconds}
+      - ${auto_scaling_configuration_display_name}
+      - ${policy_display_name}
+      - ${policy_type}
+
+ 
+
+variables:
+
+### Common Compartment 
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Enter Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Enter Region
+    default: "us-ashburn-1"
+    
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+
+  instance_pool_ocid:
+    type: string
+    visible:  true
+    title: instance pool ocid   
+    description: instance pool ocid  
+    default: ""
+
+
+# # ----------------------------------------
+#  Auto Scaling Configuration
+# ----------------------------------------
+  cool_down_in_seconds:
+    type: number
+    required: true
+    visible: true
+    default: "300"
+    title: "cool down in seconds"
+    description: "cool down in seconds"
+  
+  auto_scaling_configuration_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "TestAutoScalingConfiguration"
+    title: "auto scaling configuration display name"
+    description: "auto scaling configuration display name"
+  
+  policy_display_name:
+    type: string
+    required: true
+    visible: true
+    default: "TestPolicy"
+    title: "policy display name"
+    description: "policy display name"
+  
+  policy_type:
+    type: string
+    required: true
+    visible: true
+    default: "threshold"
+    title: "policy type"
+    description: "policy type"
+

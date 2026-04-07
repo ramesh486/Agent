@@ -1,0 +1,2 @@
+# Oracle Cloud Infrastructure uses images to launch instances. User can specify an image to use when you launch an instance.
+# User can create a custom image of an instance's boot disk and use it to launch other instances. Instances user launch from your image include the customizations, configuration, and software installed when you created the image.

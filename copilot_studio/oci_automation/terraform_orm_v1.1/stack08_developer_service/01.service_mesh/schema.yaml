@@ -1,0 +1,56 @@
+title: Create Service Mesh
+description: Service Mesh Terraform Input Variables
+schemaVersion: 1.1.0
+version: "25012022"
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "oci_service_mesh_mesh"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      - ${mesh_certificate_authorities_ocid}
+      - ${mesh_display_name}
+      - ${mesh_mtls_minimum}
+      
+variables:
+#####################################
+# OCI Service Mesh
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: "Select the Compartment to deploy resources"
+    description: "The OCID of the compartment"
+
+  region:
+    visible: true
+    title: "Region"
+    description: "The region where the resources will be provisioned"
+
+  mesh_certificate_authorities_ocid:
+    type: string
+    default: ""
+    title: "Mesh Certificate Authority OCID"
+    description: "The OCID of the Certificate Authority to be associated with the Service Mesh"
+    required: true
+    visible: true
+
+  mesh_display_name:
+    type: string
+    default: "Myservicemesh"
+    title: "Mesh Display Name"
+    description: "The display name for the Service Mesh"
+    required: true
+    visible: true
+
+  mesh_mtls_minimum:
+    type: string
+    default: "STRICT"
+    title: "MTLS Minimum Security Level"
+    description: "The minimum security level for mutual TLS (mTLS) within the Service Mesh"
+    required: true
+    visible: true

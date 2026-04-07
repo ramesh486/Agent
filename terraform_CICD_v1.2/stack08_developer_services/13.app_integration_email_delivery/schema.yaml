@@ -1,0 +1,84 @@
+title: Create Email-Delivery System
+stackDescription: "Deploy Email sender, Email Domain, DKIM Selector in selected compartment"
+schemaVersion: 1.1.0
+version: "20190404"
+
+
+
+groupings:
+
+
+  - title: "General Configuration"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_name}
+      - ${compartment_id_in_subtree}  
+      - ${project_tag}           
+      
+  - title: "Required Configuration"  
+    variables:
+      - ${email_domain_name}
+      - ${dkim_selector}
+      - ${sender_email_address}
+
+  #######################################    
+
+variables:
+
+  tenancy_ocid:
+    title: "Tenancy OCID"
+    type: string
+    required: true 
+
+  region:
+    type: oci:identity:region:name
+    required: true
+    visible: true
+    title: Region
+    description: Region where you want to deploy the resources defined by this stack.
+           
+  compartment_name:
+    type: string
+    visible: true
+    title: Compartment Name
+    description: Compartment Name of the Resource
+    default: ""
+
+  compartment_id_in_subtree:
+    type: boolean
+    visible: true
+    title: Compartment ID in Subtree
+    description: Compartment ID in Subtree
+    default: true
+
+  email_domain_name: 
+    type: string
+    visible: true
+    required: true
+    default: ""
+    title: Email Domain Name
+    description: Enter your email domain name. This should be a domain you own or control in DNS, since measures used to establish verification and authentication require a DNS record or similar actions. It should be the domain you plan to use for your 'From' email address for sending, and cannot be a public mailbox provider domain such as gmail.com or hotmail.com.
+
+  sender_email_address: 
+    type: string
+    visible: true
+    required: true
+    title: Sender Email Address
+    description: Enter Email Address For Sender
+
+  dkim_selector: 
+    type: string
+    visible: true
+    required: false
+    default: ""
+    title: DKIM Selector
+    description: "Example: tenancyname-shortregioncode-yyyymm  This prefix will be used to generate the DNS record name and value"
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+      

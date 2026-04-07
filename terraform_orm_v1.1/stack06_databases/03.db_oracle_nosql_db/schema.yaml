@@ -1,0 +1,87 @@
+title: Create NoSQL Database
+description: NoSQL Database Terraform Input Variables
+schemaVersion: 1.1.0
+version: "12072023"
+
+#####################################
+# Variable Groupings
+#####################################
+groupings:
+
+  - title: "common variables"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+      
+
+############# NoSQL Database CONFIG ##########
+
+  - title: "NoSQL Database CONFIGURATION"
+    variables:
+      - ${table_ddl_statement}
+      - ${table_name}
+      - ${max_read_units}
+      - ${max_write_units}
+      - ${max_storage_in_gbs}
+
+
+variables:
+#####################################
+# Common Compartment
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+  
+  region:
+    visible: true
+    title: Region
+    description: Region where the deployment will be created
+
+  #####################################
+  ## NOSQL CONFIG
+  #####################################
+  
+
+  table_ddl_statement:
+    type: string
+    default: "CREATE TABLE IF NOT EXISTS TEST_TABLE(id INTEGER, name STRING, age STRING, PRIMARY KEY(id))"
+    title: "DDL Statment for Create Table"
+    description: "Provide DDL statment for Creating Table"
+    required: true
+    visible: true
+
+  table_name:
+    type: string
+    default: "TEST_TABLE"
+    title: "Table Name"
+    description: "Provide Table Name"
+    required: true
+    visible: true
+    
+  max_read_units:
+    type: number
+    default: 50
+    title: "Maximum Read Units"
+    description: "Provide maximum read units for the table"
+    required: true
+    visible: true
+
+  max_write_units:
+    type: number
+    default: 50
+    title: "Maximum Write Units"
+    description: "Provide maximum write units for the table"
+    required: true
+    visible: true
+
+  max_storage_in_gbs:
+    type: number
+    default: 1
+    title: "Maximum Storage in gbs"
+    description: "Provide maximum storage in gbs for the table"
+    required: true
+    visible: true

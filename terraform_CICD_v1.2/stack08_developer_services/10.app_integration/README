@@ -1,0 +1,20 @@
+## Introduction
+## In Oracle Cloud Infrastructure (OCI), an Integration Instance is a fully managed, serverless platform for integrating applications and services within your OCI environment or between OCI and external systems. It enables you to build, deploy, and manage integrations using a graphical user interface (UI) and pre-built adapters.
+
+## Creating Integration Instance throgh Terraform Script
+
+## Please provide the below details
+
+## 1 : Region 
+
+## 2 : Compartment :app
+
+## 3 : Display name for  Instance  ## Integration Instance ##
+
+## Message Pack 1
+
+## Consumption Model UCM
+
+## Edition ENTERPRISE
+
+

@@ -1,0 +1,62 @@
+title: database Management 
+description: database Management group
+schemaVersion: 1.1.0
+version: "25012022"
+
+######################################
+#  Variable Groupings
+# #####################################
+
+groupings:
+ 
+  - title: "common compartment"
+    variables:
+      - ${compartment_ocid}
+      - ${region}
+
+  - title: "database Management group configurations"
+    variables:
+      - ${managed_database_group_name}
+      - ${managed_database_group_description}
+      
+
+#####################################
+# Common Compartment
+#####################################
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+##########################################
+# database Management group configurations
+##########################################
+
+managed_database_group_name:
+    type: string
+    default: "TestGroup"
+    title: "managed_database_group_name"
+    description: "management database group"
+    required: true
+    visible: true
+
+managed_database_group_description:
+    type: string
+    default: "managed_database_group"
+    title: "managed_database_group_description"
+    description: "management database"
+    required: true
+    visible: true
+
+
+
+      

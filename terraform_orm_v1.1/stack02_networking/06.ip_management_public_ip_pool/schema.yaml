@@ -1,0 +1,57 @@
+title: Public IP pool
+description: Public IP pool
+schemaVersion: 1.1.0
+version: "05072023"
+
+#####################################
+# Variable Groupings
+#####################################
+
+groupings:
+
+  - title: "Select the target compartment to create the resources"
+    variables:
+      - ${tenancy_ocid}
+      - ${region}
+      - ${compartment_ocid}
+      - ${byoip_range_id}
+      - ${public_ip_pool_cidr_block}
+
+variables:
+
+####################################
+#  Common Compartment
+####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Security Compartment for centrally manage the encryption keys
+    description: Vault protects your data and the secret credentials that you use to securely access resources
+
+  tenancy_ocid:
+    visible: true
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Enter the Region
+    description: Enter the Region
+  
+  byoip_range_id:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "BYOIP Range ID"
+    description: "Enter your BYOIP Range ID here"
+
+  public_ip_pool_cidr_block:
+    type: string
+    required: true
+    visible: true
+    default: ""
+    title: "Pubic IP pool CIDR Block"
+    description: "Enter the CIDR Block Range here"
+  

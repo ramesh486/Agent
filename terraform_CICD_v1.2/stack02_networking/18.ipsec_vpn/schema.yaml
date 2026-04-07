@@ -1,0 +1,264 @@
+title: OCI Terraform code for Site to Site IPSec VPN
+description:  OCI Terraform code for Site to Site IPSec VPN
+schemaVersion: 1.1.0
+version: "20102022"
+
+#####################################
+
+# Variable Groupings
+
+#####################################
+
+groupings:
+
+  - title: "Customer Premises Equipment(CPE) Configuration"
+    variables:
+      - ${drg_ocid}
+      - ${cpe_device_display_name}
+      - ${cpe_public_ip_address}
+
+  - title: "Site to Site IPSec VPN Configuration"
+    variables:
+      - ${ip_sec_connection_tunnel_management_routing_type}
+      - ${ip_sec_connection_static_routes}
+      - ${ipsec_connection_display_name}
+      - ${ip_sec_connection_cpe_local_identifier_type}
+      - ${ip_sec_connection_cpe_local_identifier}
+
+  - title: "Site to Site IPSec VPN Tunnel 1 Configuration"
+    variables:
+      - ${ip_sec_connection_tunnel1_management_display_name}
+      - ${ip_sec_connection_tunnel1_management_bgp_session_info_customer_bgp_asn}
+      - ${ip_sec_connection_tunnel1_management_bgp_session_info_customer_interface_ip}
+      - ${ip_sec_connection_tunnel1_management_bgp_session_info_oracle_interface_ip}
+      - ${use_shared_secret_for_tunnel1}
+      - ${ip_sec_connection_tunnel1_management_shared_secret}
+      - ${ip_sec_connection_tunnel1_ike_version}
+
+  - title: "Site to Site IPSec VPN Tunnel 2 Configuration"
+    variables:
+      - ${ip_sec_connection_tunnel2_management_display_name}
+      - ${ip_sec_connection_tunnel2_management_bgp_session_info_customer_bgp_asn}
+      - ${ip_sec_connection_tunnel2_management_bgp_session_info_customer_interface_ip}
+      - ${ip_sec_connection_tunnel2_management_bgp_session_info_oracle_interface_ip}
+      - ${use_shared_secret_for_tunnel2}
+      - ${ip_sec_connection_tunnel2_management_shared_secret}
+      - ${ip_sec_connection_tunnel2_ike_version}
+
+  - title: "Select Compartment"
+    variables:
+      - ${tenancy_ocid}
+      - ${compartment_ocid}
+      - ${region}
+
+
+variables:
+
+#####################################
+
+# Common Variables
+
+#####################################
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    visible: true
+    title: Select the Target Compartment to deploy resources
+    description: Choose the Compartment where to deploy the resources
+
+
+  tenancy_ocid:
+    visible: false
+    title: Tenancy OCID
+    description: Tenancy OCID
+
+  region:
+    visible: true
+    title: Region
+    description: Region
+
+  project_tag:
+    type: oci:identity:tag:value
+    title: Attach Tags
+    description: Attach the Tags
+    visible: true
+    required: false
+
+#   drg_ocid:
+#     type: string
+#     title: "Dynamic Routing Gateway(DRG) OCID"
+#     description: "This DRG will be attached with IPSec VPN"
+#     visible: true
+#     required: true
+
+#   cpe_device_display_name:
+#     type: string
+#     title: "CPE Device Display Name"
+#     visible: true
+#     required: true
+
+#   cpe_public_ip_address:
+#     type: string
+#     title: "CPE Public IP Address, Provide NAT Public IP Address if the CPE is behind the NAT Device"
+#     visible: true
+#     required: true
+
+#   ip_sec_connection_tunnel_management_routing_type:
+#     visible: true
+#     title: IPSec Connection Routing Type
+#     default: "STATIC"
+#     type: enum
+#     enum:
+#       - BGP
+#       - STATIC
+
+#   ip_sec_connection_static_routes:
+#     type: array
+#     items:
+#       type: string
+#     title: "Routes to your On-Premises Network"
+#     description: "Static routes to the CPE. A static route's CIDR must not be a multicast address or class E address. Used for routing a given IPSec tunnel's traffic only if the tunnel is using static routing. If you configure at least one tunnel to use static routing, then you must provide at least one valid static route."
+#     required: true
+#     visible: true
+
+#   ipsec_connection_display_name:
+#     type: string
+#     title: "IPSec VPN Connection Display Name"
+#     visible: true
+#     required: true
+
+
+#   ip_sec_connection_cpe_local_identifier_type:
+#     type: enum 
+#     visible: true
+#     title: "Select IPSec VPN Local Identifier type for your CPE(Customer Premises Equipment)"
+#     required: true
+#     default: IP_ADDRESS
+#     enum:
+#       - IP_ADDRESS
+#       - HOSTNAME
+
+#   ip_sec_connection_cpe_local_identifier:
+#     type: string
+#     title: "CPE's Local IKE ID"
+#     description: "If you select Local identifier as IP_ADDRESS then provide IP-Address, If you select local identifier as HOSTNAME, provide HOSTNAME value"
+#     visible: true
+#     required: true
+
+# # ---------------------------------------------------
+# # TUNNEL 1 Configuration
+# # ---------------------------------------------------
+
+#   ip_sec_connection_tunnel1_management_display_name:
+#     type: string
+#     title: IPSec VPN Tunnel 1 Display Name
+#     visible: true
+#     required: true
+
+#   ip_sec_connection_tunnel1_management_bgp_session_info_customer_bgp_asn:
+#     type: string
+#     title: "Customer BGP ASN"
+#     description: "This ASN is required and used for the tunnel's BGP session. This is the ASN of the network on the CPE end of the BGP session. Can be a 2-byte or 4-byte ASN. Uses 'asplain' format"
+#     visible:
+#       and:
+#         - eq:
+#           - ${ip_sec_connection_tunnel_management_routing_type}
+#           - BGP
+#     required: true
+
+#   ip_sec_connection_tunnel1_management_bgp_session_info_customer_interface_ip:
+#     type: string
+#     title: "Tunnel 1 Customer Interface IP"
+#     description: "The IP address for the CPE end of the inside tunnel interface, The value must be a /30 or /31, Example: 10.0.0.5/31"
+#     required: true
+#     visible: true
+#     default: ""
+
+#   ip_sec_connection_tunnel1_management_bgp_session_info_oracle_interface_ip:
+#     type: string
+#     title: "Tunnel 1 Oracle Interface IP"
+#     description: "The IP address for the Oracle end of the inside tunnel interface. The value must be a /30 or /31. Example: 10.0.0.4/31"
+#     required: true
+#     visible: true
+#     default: ""
+  
+#   use_shared_secret_for_tunnel1:
+#     type: boolean
+#     title: "Use Shared Secret for Tunnel 1"
+#     default: false
+#     visible: true
+
+#   ip_sec_connection_tunnel1_management_shared_secret:
+#     type: string
+#     title: "Provide Shared Secret for Tunnel 1"
+#     required: true
+#     visible: ${use_shared_secret_for_tunnel1}
+
+#   ip_sec_connection_tunnel1_ike_version:
+#     type: enum
+#     title: Select IKE Version for Tunnel 1
+#     required: true
+#     visible: true
+#     default: V1
+#     enum:
+#       - V1
+#       - V2
+
+# # ---------------------------------------------------
+# # TUNNEL 2 Configuration
+# # ---------------------------------------------------
+
+#   ip_sec_connection_tunnel2_management_display_name:
+#     type: string
+#     title: IPSec VPN Tunnel 2 Display Name
+#     visible: true
+#     required: true
+
+#   ip_sec_connection_tunnel2_management_bgp_session_info_customer_bgp_asn:
+#     type: string
+#     title: "Tunnel 2 Customer BGP ASN"
+#     description: "This ASN is required and used for the tunnel's BGP session. This is the ASN of the network on the CPE end of the BGP session. Can be a 2-byte or 4-byte ASN. Uses 'asplain' format"
+#     visible:
+#       and:
+#         - eq:
+#           - ${ip_sec_connection_tunnel_management_routing_type}
+#           - BGP
+#     required: true
+
+#   ip_sec_connection_tunnel2_management_bgp_session_info_customer_interface_ip:
+#     type: string
+#     title: "Tunnel 2 Customer Interface IP"
+#     description: "The IP address for the CPE end of the inside tunnel interface, The value must be a /30 or /31, Example: 10.0.0.5/31"
+#     required: true
+#     visible: true
+#     default: ""
+
+#   ip_sec_connection_tunnel2_management_bgp_session_info_oracle_interface_ip:
+#     type: string
+#     title: "Tunnel 2 Oracle Interface IP"
+#     description: "The IP address for the Oracle end of the inside tunnel interface. The value must be a /30 or /31. Example: 10.0.0.4/31"
+#     required: true
+#     visible: true
+#     default: ""
+
+#   use_shared_secret_for_tunnel2:
+#     type: boolean
+#     title: "Use Shared Secret for Tunnel 2"
+#     default: false
+#     visible: true
+
+#   ip_sec_connection_tunnel2_management_shared_secret:
+#     type: string
+#     title: "Provide Shared Secret for Tunnel 2"
+#     required: true
+#     visible: ${use_shared_secret_for_tunnel2}
+
+#   ip_sec_connection_tunnel2_ike_version:
+#     type: enum
+#     title: Select IKE Version for Tunnel 2
+#     required: true
+#     visible: true
+#     default: V1
+#     enum:
+#       - V1
+#       - V2
